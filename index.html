@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono:wght@400&display=swap" rel="stylesheet">
     
     <!-- Structured data for SEO -->
     <script type="application/ld+json">
@@ -38,8 +39,8 @@
             <div class="hero-text">
                 <div class="hero-title-section">
                     <div class="title-wrapper">
-                        <h1>Andre Boufama</h1>
-                        <p class="subtitle">Mechanical Engineering Student | <span class="cornell-text">Cornell University</span></p>
+                        <h1 class="main-title">Andre Boufama</h1>
+                        <p class="subtitle">Portfolio</p>
                     </div>
                     <div class="contact-info">
                         <a href="mailto:andre.boufama@gmail.com" class="contact-link" aria-label="Send email to Andre Boufama">
@@ -71,7 +72,7 @@
     <main class="container">
         <!-- Hardware Section -->
         <section class="project-section">
-            <h2 class="section-title">Hardware Projects <span class="section-subtitle">— All images and renders used are solely designed and manufactured by me</span></h2>
+            <h2 class="section-title">Hardware Projects <span class="section-subtitle">- [Designed Made and Tested by Me]</span></h2>
             <div class="projects-grid">
                 <!-- Modular Hydroponics System -->
                 <a href="projects/hydroponics.html" class="project-card-link" aria-label="View Modular Hydroponics System project details" tabindex="0">
@@ -178,7 +179,7 @@
 
         <!-- Design Section -->
         <section class="project-section">
-            <h2 class="section-title">Design Projects <span class="section-subtitle">— All designs are made solely by me</span></h2>
+            <h2 class="section-title">Design Projects <span class="section-subtitle">- [Designed and Rendered by Me]</span></h2>
             <div class="projects-grid">
                 <!-- Drone Swarm -->
                 <a href="projects/drone.html" class="project-card-link" aria-label="View General Purpose Outdoor Quadcopter project details" tabindex="0">
@@ -259,19 +260,15 @@
         </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about-section" aria-label="About Andre Boufama">
+    <!-- Bio Section -->
+    <section class="bio-section">
         <div class="container">
-            <h2 class="section-title">About</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>I'm a passionate mechanical engineering student at <span class="cornell-text">Cornell University</span> with a deep interest in sustainable technology and innovative hardware solutions. My work focuses on creating practical engineering solutions that address real-world challenges, from autonomous systems to sustainable agriculture.</p>
-                    <p>Currently seeking internship opportunities in mechanical engineering, robotics, or sustainable technology where I can contribute to innovative projects and continue growing as an engineer.</p>
+            <div class="bio-content">
+                <div class="bio-image">
+                    <img src="images/Headshot.png" alt="Andre Boufama professional headshot" class="bio-headshot" loading="lazy" width="200" height="200">
                 </div>
-                <div class="about-sidebar">
-                    <div class="headshot-container">
-                        <img src="images/Headshot.png" alt="Andre Boufama professional headshot" class="about-headshot" loading="lazy" width="240" height="240">
-                    </div>
+                <div class="bio-text">
+                    <p>I'm a MechE student at <span class="cornell-text">Cornell University</span>. When I'm not working on my projects, I'm probably skiing, golfing, watching movies, or eating a lot of food :)</p>
                 </div>
             </div>
         </div>
@@ -286,6 +283,43 @@
     </footer>
 
     <script>
+        // Mouse-following glow effect for main title
+        document.addEventListener('DOMContentLoaded', function() {
+            const mainTitle = document.querySelector('.main-title');
+            if (mainTitle) {
+                // Create glow element
+                const glowElement = document.createElement('div');
+                glowElement.style.position = 'absolute';
+                glowElement.style.width = '300px';
+                glowElement.style.height = '300px';
+                glowElement.style.background = 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.2) 30%, transparent 70%)';
+                glowElement.style.borderRadius = '50%';
+                glowElement.style.pointerEvents = 'none';
+                glowElement.style.zIndex = '1';
+                glowElement.style.transition = 'opacity 0.2s ease-out';
+                glowElement.style.opacity = '0';
+                glowElement.style.transform = 'translate(-50%, -50%)';
+                
+                mainTitle.style.position = 'relative';
+                mainTitle.style.zIndex = '2';
+                mainTitle.appendChild(glowElement);
+                
+                // Mouse move handler
+                mainTitle.addEventListener('mousemove', function(e) {
+                    const rect = mainTitle.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    glowElement.style.left = x + 'px';
+                    glowElement.style.top = y + 'px';
+                    glowElement.style.opacity = '1';
+                });
+                
+                mainTitle.addEventListener('mouseleave', function() {
+                    glowElement.style.opacity = '0';
+                });
+            }
+        });
 
         // Project card expansion system - COMPLETE REWRITE
         let activeProject = null;
@@ -653,7 +687,7 @@
             });
             
             backButton.addEventListener('mouseenter', () => {
-                backButton.style.color = 'var(--accent-blue)';
+                backButton.style.color = 'var(--text-primary)';
                 backButton.style.backgroundColor = 'var(--darker-bg)';
                 backButton.style.transform = 'scale(1.05)';
             });
@@ -675,27 +709,27 @@
             const projectDetails = {
                 '3dprinter': `
                     <h2 style="font-size: 1.5rem; font-weight: 400; color: var(--text-primary); margin-bottom: 1rem;">Large-Scale CoreXY 3D Printer</h2>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Custom-designed large-scale CoreXY FDM 3D printer programmed in Python and donated to Berwick Academy's makerspace for educational use. Features precision motion control and expanded build volume.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Custom-designed large-scale CoreXY FDM 3D printer running Klipper firmware which I donated to my high school makerspace.</p>
                     
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Technical Specifications</h3>
                     <ul style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; padding-left: 1.5rem;">
                         <li>CoreXY motion system for improved print quality and reduced moving mass</li>
-                        <li>Large format build volume (300x300x400mm) for oversized prints</li>
+                        <li>Large format build volume (500x500x500mm) for oversized prints</li>
                         <li>Python-based control system with custom firmware modifications</li>
                         <li>Dual gear extruder with direct drive for precise filament control</li>
                         <li>Heated bed with PEI print surface for excellent adhesion</li>
-                        <li>Linear rails and precision ball screws for smooth motion</li>
-                        <li>Enclosed design with temperature control for ABS printing</li>
+                        <li>Linear rails and precision lead screws for smooth motion</li>
+                        <li>Enclosed design with temperature control and filtration for more demanding materials</li>
                     </ul>
                     
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Design Process</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The printer was designed from the ground up using Autodesk Fusion 360, with careful consideration of frame rigidity, thermal management, and user accessibility. The CoreXY configuration was chosen for its superior print quality and reduced moving mass compared to traditional Cartesian systems.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">This printer was designed based on the V-Core 3 3D printer. Using Autodesk Fusion 360, manny modifications were applied to the original design. I swapped out extrusions with carbon fiber tubes to decrease weight, changed the linear rails used on all axes, and swapped the extruder wires for a custom USB can bus toolboard pcb. The extruder assembly was rebuilt from the ground up. Using a metal 3D printing service, I remodeled all extruder parts in titanium to save weight and boost rigidity, while also providing temperature resistance.</p>
                     
-                    <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Implementation Challenges</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Key challenges included designing a rigid frame capable of supporting the large build volume, implementing proper thermal management for consistent printing, and developing custom Python scripts for advanced print preparation and monitoring.</p>
+                    <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Electrical Systems</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Mains wiring can be very dangerous so I was very careful to ground the frame and ensure every operation I did was correct with an electrician friend of mine. Using DIN rails to divide high voltage and low voltage sections, I created a fully enclosed electronics bay with large cooling fans and filters to prevent kids from reaching into the wiring.</p>
                     
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Outcomes & Impact</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6;">Successfully donated to Berwick Academy makerspace, providing students with access to large-format 3D printing capabilities. The printer has been used for various educational projects including architectural models, engineering prototypes, and art installations. It has significantly expanded the school's prototyping capabilities and inspired students to pursue engineering careers.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6;">Successfully donated to Berwick Academy makerspace and trained the people working there, providing students with access to large-format 3D printing capabilities. The printer has been used for various educational projects including architectural models, engineering prototypes, and art installations. It has significantly expanded the school's prototyping capabilities by allowing students to print objects as large as they want.</p>
                 `,
                 'hydroponics': `
                     <h2 style="font-size: 1.5rem; font-weight: 400; color: var(--text-primary); margin-bottom: 1rem;">Modular Hydroponics System</h2>
@@ -733,27 +767,21 @@
                 `,
                 'vex': `
                     <h2 style="font-size: 1.5rem; font-weight: 400; color: var(--text-primary); margin-bottom: 1rem;">World Qualifying VEX Robot</h2>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Competition robot designed for VEX Robotics World Championship. Features advanced odometry, autonomous navigation, and precision manipulation systems programmed in C++.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Competition robot designed for VEX Change Up competition. Features advanced odometry, autonomous navigation, and precision manipulation systems programmed in C++.</p>
                     
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Mechanical Design</h3>
                     <ul style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; padding-left: 1.5rem;">
-                        <li>Advanced odometry system using encoders and gyroscope for precise positioning</li>
-                        <li>Autonomous navigation algorithms with path planning and obstacle avoidance</li>
-                        <li>Dual-motor drive system with differential drive for precise movement</li>
-                        <li>Precision manipulator with multiple degrees of freedom</li>
-                        <li>Modular design allowing for quick component changes between matches</li>
-                        <li>Lightweight aluminum frame with optimized weight distribution</li>
+                        <li>Advanced odometry system using two encoders and gyroscope for precise positioning</li>
+                        <li>X drive configuration allows for movement in any direction along the xy plane and rotation at the same time</li>
+                        <li>Fine tuned ball intake with ratchets allowing for two motors to create two separate ball paths without a loss of processing speed</li>
                         <li>Custom gear ratios for optimal speed and torque balance</li>
                     </ul>
                     
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Software Architecture</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The robot's software is built on a modular C++ architecture with separate modules for navigation, manipulation, and competition strategy. Advanced PID control loops ensure precise movement, while machine learning algorithms optimize performance based on match data and opponent analysis.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The robot's software is built on C++ architecture. The controls for the remote controlled portion of the competition are relatively simple, but the autonomous section enables more complex code. Using two encoders with omni wheels positioned at a right angle from each other combined with a gyroscopic sensor, we could approximate every motion of the robot as a combination of arcs. By adding these tiny arcs in relation to the global xy plane, we can always know the physical position and rotation of the robot on the 2D arena. In conjunction with PID controls, we can maximize our robot speed while always being able to course correct.</p>
                     
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Competition Performance</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The robot consistently achieved top 10% rankings in autonomous skills challenges, with perfect scores in precision tasks. The modular design allowed for rapid adaptation to different game elements and opponent strategies throughout the competition season.</p>
-                    
-                    <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Outcomes & Impact</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6;">Qualified for VEX Robotics World Championship. Achieved top 10% ranking in autonomous skills challenge. Robot design and code have been shared with other teams for educational purposes, contributing to the robotics community and inspiring future engineers.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The competition was moved online this year due to covid, but our robot placed number 1 in my home state, allowing us to qualify for the world championship, which also took place online.</p>
                 `,
                 'drone': `
                     <h2 style="font-size: 1.5rem; font-weight: 400; color: var(--text-primary); margin-bottom: 1rem;">General Purpose Outdoor Quadcopter</h2>
@@ -781,62 +809,53 @@
                 `,
                 'rover': `
                     <h2 style="font-size: 1.5rem; font-weight: 400; color: var(--text-primary); margin-bottom: 1rem;">Autonomous Heavy Lift Rover</h2>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Advanced autonomous rover designed for heavy payload transportation and manipulation in challenging terrain. Features sophisticated navigation systems, robust mechanical design, and intelligent decision-making algorithms.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Advanced autonomous rover designed for heavy payload transportation and manipulation in challenging terrain. Features robust mechanical design and environment resistant construction.</p>
                     
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Mechanical Systems</h3>
                     <ul style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; padding-left: 1.5rem;">
                         <li>Six-wheel drive system with independent suspension for terrain adaptability</li>
                         <li>Heavy-duty chassis capable of carrying payloads up to 50kg</li>
-                        <li>Robotic arm with 6 degrees of freedom for manipulation tasks</li>
-                        <li>Advanced traction control system for various surface conditions</li>
-                        <li>Modular design allowing for easy component replacement and upgrades</li>
-                        <li>Weather-resistant electronics with IP67 protection rating</li>
-                        <li>Custom gear reduction system for optimal torque and speed</li>
+                        <li>Custom PETG flexible wheels allow for tireless operations without risk of puncture</li>
+                        <li>Custom gear herringbone gear reduction system for optimal torque and speed</li>
                     </ul>
                     
-                    <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Autonomous Navigation</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The rover employs advanced SLAM (Simultaneous Localization and Mapping) algorithms for autonomous navigation. It uses a combination of LiDAR, cameras, and IMU sensors to create detailed maps of its environment and navigate complex terrain while avoiding obstacles.</p>
+                    <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Mechanical Design</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The design is a modified rocker bogie system inspired by the Curiosity Mars rover. Instead of having all six wheels be based on the same pivot, I implemented an offset four bar linkage (non parallel bars) allowing for an arc movement path of the front two wheels on each side. The back wheel on each side is connected by a central rocker perpendicular to the rockers in the front. This completely independent portion of the rover allows for the same contact principles as the rocker bogie system without a need for linkage between the two sides of the rover, further simplifying and making the design more robust.</p>
                     
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Control Systems</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The rover's control system is built on ROS (Robot Operating System) with custom nodes for navigation, manipulation, and communication. Advanced path planning algorithms ensure efficient route optimization while considering payload constraints and terrain difficulty.</p>
-                    
-                    <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Outcomes & Impact</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6;">Successfully completed extensive field testing in various terrain conditions. The rover has demonstrated superior performance in autonomous navigation and payload handling compared to existing solutions. The project has contributed to the development of autonomous vehicle technologies and has been featured in robotics conferences.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6;">The rover's control system is built on a raspberry pi 3B+ running python with custom nodes for navigation, manipulation, and communication. This pi, connected to an array of sensors and six motor controllers each independently controlling a wheel, allows for navigation of any terrain at high speeds.</p>
                 `,
                 'vtol': `
                     <h2 style="font-size: 1.5rem; font-weight: 400; color: var(--text-primary); margin-bottom: 1rem;">VTOL UAV Development</h2>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Vertical Takeoff and Landing (VTOL) unmanned aerial vehicle designed for versatile operations combining the efficiency of fixed-wing flight with the maneuverability of rotary-wing aircraft. Features advanced flight control systems and autonomous operation capabilities.</p>
-                    
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.2rem;">Vertical Takeoff and Landing (VTOL) unmanned aerial vehicle designed for versatile operations combining the efficiency of fixed-wing flight with the ease of a quadcopter.</p>
+
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Aerospace Design</h3>
-                    <ul style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                    <ul style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.2rem; padding-left: 1.5rem;">
                         <li>Hybrid design combining fixed-wing and rotary-wing configurations</li>
-                        <li>Advanced aerodynamics optimization for efficient cruise flight</li>
-                        <li>Sophisticated flight control systems for seamless transition between modes</li>
-                        <li>Lightweight composite construction for optimal performance</li>
-                        <li>Redundant control systems for enhanced safety and reliability</li>
-                        <li>Advanced propulsion system with variable pitch propellers</li>
+                        <li>Lightweight composite core with 3D printed and foam framing</li>
+                        <li>Advanced propulsion system precise servo driven PID controlled motor pods</li>
                         <li>Integrated payload bay for various mission-specific equipment</li>
                     </ul>
-                    
+
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Flight Control Systems</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The VTOL features a custom flight controller with advanced algorithms for mode transition, stability control, and autonomous navigation. The system includes GPS guidance, obstacle avoidance, and emergency landing capabilities with real-time telemetry and mission planning software.</p>
-                    
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.2rem;">The VTOL features a custom flight controller. The system includes GPS guidance, radio control systems, and control surfaces along the wing and tail. The bicopter design in hover mode requires rapid PID loops to maintain stability. A bicopter is fundamentally more unstable than a quadcopter because it's underactuated, since two rotors must control three rotational axes (pitch, roll, yaw) by tilting, which causes cross-coupled effects where adjusting one axis unintentionally affects the others. This makes PID tuning very difficult.</p>
+
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Mission Capabilities</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Designed for various missions including surveillance, cargo delivery, search and rescue, and environmental monitoring. The VTOL can operate in confined spaces for takeoff and landing while maintaining efficient long-range flight capabilities with a range of 100km and endurance of 2 hours.</p>
-                    
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.2rem;">Designed mostly for cargo delivery, VTOL fundamentally allows there to be no tradeoff between ease of takeoff/landing and flight efficiency.</p>
+
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Outcomes & Impact</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6;">Successfully completed flight testing and validation of all flight modes. The VTOL has demonstrated superior performance in both hover and cruise flight modes. The project has contributed to the advancement of VTOL technology and has been recognized in aerospace engineering competitions.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6;">Completed flight testing and validation of both VTOL and normal flight mode. Presented at the Berwick Academy Innovation Celebration in 2020. Before final validation could occur, the craft suffered a devastating crash snapping both propellors.</p>
                 `,
                 'overpass': `
                     <h2 style="font-size: 1.5rem; font-weight: 400; color: var(--text-primary); margin-bottom: 1rem;">Overpass Oasis: Bridging Nature With Innovation</h2>
                     <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.2rem;">A cable‑stayed pedestrian bridge concept spanning the Cochecho River in Dover, NH, designed to pair practical urban connectivity with sustainability. It shortens a 2,500‑ft pedestrian detour to roughly 200 ft while integrating walkable solar deck tiles, subtle handrail lighting, and planted green ramps that bring vegetation up through the walkway — a concept recognized with <a href="https://www.instructables.com/contest/makeitbridge2023/" target="_blank" rel="noopener noreferrer" style="background: rgba(38, 161, 105, 0.2); padding: 0.1rem 0.3rem; border-radius: 3px; color: var(--success-color); font-weight: 500; text-decoration: none;">First Prize in the Autodesk Instructables Make It Bridge Challenge</a>.</p>
 
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Author & Context</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.2rem;">Author: Andre ("andre_125"). Entry for the Instructables “Make It Bridge” challenge; concept‑to‑render workflow using Fusion 360 + Blender.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.2rem;">Author: Andre ("andre_125"). Entry for the Instructables "Make It Bridge" challenge; concept‑to‑render workflow using Fusion 360 + Blender.</p>
 
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Purpose & Site</h3>
                     <ul style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.2rem; padding-left: 1.5rem;">
-                        <li><strong>Location</strong>: Cochecho River, Dover, NH — near public pool, Great Bay Community Rowing, and the Children’s Museum.</li>
+                        <li><strong>Location</strong>: Cochecho River, Dover, NH — near public pool, Great Bay Community Rowing, and the Children's Museum.</li>
                         <li><strong>Problem Solved</strong>: Shortens a ~2,500‑ft pedestrian detour to ~200 ft, stitching together two rapidly developing riverbanks.</li>
                     </ul>
 
@@ -851,7 +870,7 @@
                     <ul style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.2rem; padding-left: 1.5rem;">
                         <li><strong>Solar Deck</strong>: Walkable PV surface (~2.2 m × 63 m ≈ 138.6 m²); ~20% efficiency, peak ≈ 27 kW.</li>
                         <li><strong>Loads</strong>: Deck LEDs (~48 × 5 W ≈ 240 W) + floodlights (4 × 400 W ≈ 1.6 kW) ⇒ ~1.84 kW at night.</li>
-                        <li><strong>Energy Balance</strong>: Even with conservative winter daylight (~3.5 “full sun” hrs), daily PV output exceeds nightly demand; surplus can feed the grid.</li>
+                        <li><strong>Energy Balance</strong>: Even with conservative winter daylight (~3.5 "full sun" hrs), daily PV output exceeds nightly demand; surplus can feed the grid.</li>
                         <li><strong>Materials</strong>: Preference for recycled steel (EAF‑sourced where possible) and aluminum; concrete mixes enhanced with SCMs (fly ash, slag).</li>
                     </ul>
 
@@ -907,6 +926,21 @@
                     
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Outcomes & Impact</h3>
                     <p style="color: var(--text-secondary); line-height: 1.6;">Successfully deployed in production environment with measurable improvements in efficiency and customer satisfaction. The system has been recognized for its innovative approach to AI-powered inventory management and has inspired similar implementations across the industry.</p>
+                `,
+                'chickencoop': `
+                    <h2 style="font-size: 1.5rem; font-weight: 400; color: var(--text-primary); margin-bottom: 1rem;">Project Overview</h2>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">My goal for this project was to make a fully enclosed and marketable product which could automatically close a chicken coop door based on the lighting and time of day.</p>
+                    
+                    <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Key Details</h3>
+                    <ul style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; padding-left: 1.5rem;">
+                        <li>Rigid delrin frame to prevent predators getting in or weather affecting the coop</li>
+                        <li>Fully enclosed box with motors, arduino, and wiring sealed and interactable with pliable plastic buttons</li>
+                        <li>Arduino wifi capabilities allows for control from a distance or wireless operation based on lighting and time of day</li>
+                        <li>Constant force springs concealed along the door to reduce the weight the motor has to pull along the rack</li>
+                    </ul>
+                    
+                    <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Outcomes</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6;">Smooth operating door which could run in a dusty environment without clogging or failure of gear contacts. I personally used the door for my flock of six chickens and it hasn't yet failed.</p>
                 `
             };
             

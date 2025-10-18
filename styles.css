@@ -6,22 +6,22 @@
 }
 
 :root {
-    --primary-color: #1a202c;
-    --secondary-color: #2d3748;
-    --accent-color: #4a5568;
-    --dark-bg: #f7fafc;
-    --darker-bg: #edf2f7;
-    --card-bg: #ffffff;
-    --text-primary: #1a202c;
-    --text-secondary: #4a5568;
-    --text-muted: #718096;
-    --border-color: #e2e8f0;
-    --border-accent: #cbd5e1;
+    --primary-color: #ffffff;
+    --secondary-color: #d1d5db;
+    --accent-color: #a3a3a3;
+    --dark-bg: #000000; /* page background */
+    --darker-bg: #0f0f10; /* subtle dark surfaces */
+    --card-bg: #000000; /* cards/sections use black */
+    --text-primary: #ffffff; /* primary text is white */
+    --text-secondary: #d1d5db; /* secondary text light gray */
+    --text-muted: #9ca3af; /* muted text */
+    --border-color: #ffffff; /* white borders */
+    --border-accent: #ffffff;
     --success-color: #38a169;
     --warning-color: #d69e2e;
-    --cornell-red: #c53030;
-    --accent-blue: #3182ce;
-    --accent-purple: #805ad5;
+    --cornell-red: #ef4444;
+    --accent-blue: #60a5fa;
+    --accent-purple: #a78bfa;
 }
 
 body {
@@ -63,13 +63,6 @@ html {
     flex-wrap: wrap;
 }
 
-.headshot {
-    width: 150px;
-    height: 150px;
-    border-radius: 0;
-    object-fit: cover;
-    border: 2px solid var(--border-color);
-}
 
 .hero-text {
     flex: 1;
@@ -128,6 +121,58 @@ html {
     flex-shrink: 0;
     width: 16px;
     height: 16px;
+}
+
+/* Bio Section */
+.bio-section {
+    background-color: var(--card-bg);
+    padding: 2rem 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.bio-content {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.bio-image {
+    flex-shrink: 0;
+}
+
+.bio-headshot {
+    width: 96px;
+    height: 96px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid var(--border-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.bio-text {
+    flex: 1;
+}
+
+.bio-text p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Cornell text styling */
+.cornell-text {
+    color: var(--cornell-red);
+    font-weight: 500;
+}
+
+/* Main title with mouse-following glow */
+.main-title {
+    position: relative;
+    cursor: none;
+    overflow: visible;
 }
 
 /* Skills Section */
@@ -205,17 +250,19 @@ main {
 .section-title {
     font-size: 1.6rem;
     font-weight: 300;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.3rem;
     margin-top: 1rem;
     color: var(--text-primary);
 }
 
 .section-subtitle {
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     font-weight: 400;
-    font-style: italic;
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 1px;
     color: var(--text-primary);
-    opacity: 0.7;
+    opacity: 1;
+    margin-left: 0.2rem;
 }
 
 .projects-grid {
@@ -265,10 +312,32 @@ main {
     opacity: 1;
 }
 
+/* Reduced hover glow for cards */
 .project-card:hover {
     border-color: var(--text-primary);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 24px rgba(255, 255, 255, 0.35), 0 0 10px rgba(255, 255, 255, 0.25);
     z-index: 10;
+}
+
+/* Softer white glow for common hoverable elements */
+.back-link:hover,
+.project-banner-link:hover,
+.contact-link:hover {
+    color: var(--text-primary);
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.45), 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+/* Remove interactivity from skills section */
+.skill-category { transition: none; }
+.skill-category:hover {
+    transform: none;
+    border-left-color: var(--border-color);
+    box-shadow: none;
+}
+
+/* Back button in gallery */
+.back-button:hover {
+    box-shadow: 0 0 24px rgba(255, 255, 255, 0.5) !important;
 }
 
 .project-card.active {
@@ -366,63 +435,6 @@ main {
     font-style: italic;
 }
 
-/* About Section */
-.about-section {
-    background-color: var(--card-bg);
-    padding: 2rem 2rem;
-    border-top: 1px solid var(--border-color);
-}
-
-.about-content {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 3rem;
-    align-items: center;
-}
-
-.about-sidebar {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.headshot-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 0;
-}
-
-.about-headshot {
-    width: 240px;
-    height: 240px;
-    border-radius: 12px;
-    object-fit: cover;
-    border: 2px solid var(--border-color);
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.about-text p {
-    color: var(--text-secondary);
-    line-height: 1.7;
-    margin-bottom: 1.5rem;
-    font-size: 1rem;
-}
-
-.about-text p:last-child {
-    margin-bottom: 0;
-}
-
-.cornell-text {
-    color: var(--cornell-red);
-    font-weight: 500;
-    transition: color 0.2s ease;
-}
-
-.cornell-text:hover {
-    color: var(--accent-blue);
-}
 
 /* Animations */
 @keyframes fadeInUp {
@@ -444,14 +456,10 @@ main {
     animation: fadeInUp 0.6s ease-out 0.1s both;
 }
 
-.about-section {
-    animation: fadeInUp 0.6s ease-out 0.2s both;
-}
 
 /* Footer */
 footer {
     background-color: var(--dark-bg);
-    border-top: 1px solid var(--border-color);
     padding: 1.5rem 2rem;
     text-align: center;
 }
@@ -522,6 +530,17 @@ footer p {
         border-top: none;
         padding-top: 0;
     }
+
+    .bio-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .bio-headshot {
+        width: 84px;
+        height: 84px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -534,10 +553,6 @@ footer p {
         font-weight: 400;
     }
 
-    .headshot {
-        width: 120px;
-        height: 120px;
-    }
 
     .contact-info {
         flex-direction: column;
@@ -548,24 +563,6 @@ footer p {
         font-size: 1.1rem;
     }
 
-    .about-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .about-sidebar {
-        order: -1;
-        align-items: center;
-    }
-
-    .about-headshot {
-        width: 200px;
-        height: 200px;
-    }
-
-    .about-text p {
-        font-size: 0.95rem;
-    }
 
 
     .project-header-content {
@@ -896,3 +893,4 @@ html {
         transform: translateY(-2px);
     }
 }
+
