@@ -785,27 +785,23 @@
                 `,
                 'drone': `
                     <h2 style="font-size: 1.5rem; font-weight: 400; color: var(--text-primary); margin-bottom: 1rem;">General Purpose Outdoor Quadcopter</h2>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Professional-grade quadcopter designed for outdoor operations with advanced flight control systems, payload capacity, and weather resistance. Features finite element analysis for structural optimization and custom flight controller programming.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Professional-grade quadcopter designed for outdoor operations with advanced flight control systems, payload capacity, and autonomy</p>
                     
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Design & Engineering</h3>
                     <ul style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; padding-left: 1.5rem;">
                         <li>Finite element analysis for structural optimization and weight reduction</li>
-                        <li>Carbon fiber frame with aluminum mounting points for durability</li>
-                        <li>Custom flight controller with advanced stabilization algorithms</li>
-                        <li>High-efficiency brushless motors with custom propellers</li>
-                        <li>Weather-resistant electronics enclosure with IP65 rating</li>
-                        <li>Modular payload system for various applications</li>
+                        <li>Carbon fiber frame with titanium mounting points for durability</li>
+                        <li>Flight controller connects to raspberry pi for ROS 2</li>
                         <li>Advanced battery management system for extended flight time</li>
+                        <li>Extremely lightweight novel frame allowing for arm mounting hardware to also add rigidity to the baseplate</li>
                     </ul>
                     
-                    <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Flight Control Systems</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The drone features a custom flight controller programmed in C++ with advanced PID tuning, GPS navigation, and autonomous flight capabilities. The system includes fail-safe mechanisms, return-to-home functionality, and real-time telemetry data transmission.</p>
+                    <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Design</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The drone was designed over five iterations in fusion and is still in development. The drone pictured has not been manufactured but the testbed for the electronics has been made and is running with the same motors and battery.</p>
                     
-                    <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Applications & Performance</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Designed for various outdoor applications including aerial photography, surveying, search and rescue operations, and environmental monitoring. The drone can carry payloads up to 2kg and maintain stable flight in winds up to 25 mph with a flight time of 25 minutes.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The core design is built upon a single 4mm carbon fiber sheet cut to size connected by clamps which secure the arms and also add rigidity to the frame. This allows for the frame not including motors to be under 200g, enabling flight times of well over one hour.</p>
                     
-                    <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Outcomes & Impact</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6;">Successfully completed extensive flight testing and validation. The drone has been used for various research projects and has demonstrated superior performance compared to commercial alternatives. The design has been shared with the open-source community and has inspired similar projects.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Although this specific design isn't compact, we want to make the next iteration foldable for easier deployment and transportation. This specific quadcopter has the goal of being a testbed for our autonomous systems while we make more and more of the drone in house and move away from off the shelf parts. The drone render shown is not completely done in house but it's a stepping stone between the pictured test bed and the final product.</p>
                 `,
                 'rover': `
                     <h2 style="font-size: 1.5rem; font-weight: 400; color: var(--text-primary); margin-bottom: 1rem;">Autonomous Heavy Lift Rover</h2>
@@ -905,27 +901,25 @@
                 `,
                 'genie': `
                     <h2 style="font-size: 1.5rem; font-weight: 400; color: var(--text-primary); margin-bottom: 1rem;">RAG LLM for Inventory Management</h2>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Advanced Retrieval-Augmented Generation (RAG) Large Language Model system designed for intelligent inventory management and customer service. Features fine-tuned models, real-time data integration, and natural language processing capabilities.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The goal was to design a Retrieval-Augmented Generation (RAG) Large Language Model system for intelligent inventory management and customer service. Natural language input would be converted to the correct SQL query to search for an item in the database based on the context of this question. This SQL query had to be correct, and also accompanied by an explanation of the results.</p>
                     
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Technical Architecture</h3>
                     <ul style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; padding-left: 1.5rem;">
-                        <li>Fine-tuned LLM models optimized for inventory management tasks</li>
+                        <li>Fine-tuned LLM models from Databricks optimized for inventory management tasks</li>
                         <li>Real-time data integration with existing inventory systems</li>
-                        <li>Advanced vector database for efficient information retrieval</li>
                         <li>Natural language processing for customer query understanding</li>
-                        <li>Automated response generation with context awareness</li>
                         <li>Scalable cloud infrastructure for high availability</li>
                         <li>Advanced analytics and reporting capabilities</li>
+                        <li>Chart generation with interactive visuals built in</li>
                     </ul>
                     
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">AI & Machine Learning</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The system employs advanced machine learning techniques including transformer architectures, reinforcement learning for optimization, and continuous learning from user interactions. The RAG approach ensures accurate and up-to-date information retrieval while maintaining conversational capabilities.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The RAG approach ensures accurate and up-to-date information retrieval while maintaining conversational capabilities. By using RAG model, as long as the queries are correct, there is no risk for hallucination, as all data generated by the model will already be available on the company data storage system.</p>
                     
-                    <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Business Impact</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The system has significantly improved inventory management efficiency, reduced response times for customer inquiries, and provided valuable insights into inventory patterns and customer behavior. It has automated routine tasks and enabled more strategic decision-making.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The harvest part of fine tuning was ensuring that SQL queries were correct. To do this, we generated 50 queries and example responses, and used these as benchmarks. At the same time, we picked a few to use for few shot training, giving the model a few base examples in the instruction code to further the success rate. Once the model could answer all fifty examples correctly, it was ready for deployment.</p>
                     
                     <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Outcomes & Impact</h3>
-                    <p style="color: var(--text-secondary); line-height: 1.6;">Successfully deployed in production environment with measurable improvements in efficiency and customer satisfaction. The system has been recognized for its innovative approach to AI-powered inventory management and has inspired similar implementations across the industry.</p>
+                    <p style="color: var(--text-secondary); line-height: 1.6;">Successfully deployed limited beta environment. Leadership of the company presented at a conference with an ipad demo for investors. Application works through testflight and will be deployed for public use shortly.</p>
                 `,
                 'chickencoop': `
                     <h2 style="font-size: 1.5rem; font-weight: 400; color: var(--text-primary); margin-bottom: 1rem;">Project Overview</h2>
@@ -968,6 +962,12 @@
                 Image1: 'CoreXY mechanism assembly showing the belt configuration and motor mounting system',
                 Image2: 'Custom extruder design with dual gear drive for improved filament control',
                 Image3: 'Completed printer build with heated bed and print surface ready for operation'
+            },
+            'project-galleries/ExtraImages_Drone/': {
+                Image1: 'CAD view of the V2 drone',
+                Image2: 'Wireframe view of V2 drone',
+                Image3: 'Novel arm mounting system to cut weight',
+                Image4: 'Test bed for electronics running ROS2 communicating through MAVLink'
             },
             'project-galleries/ExtraImages_Hydroponics/': {
                 Image1: 'Schematics for the final design allowing for offset layers of branches',
@@ -1098,6 +1098,77 @@
                 
                 // Load captions from text files - PRIMARY SOURCE
                 await loadImageCaptions(images, 'project-galleries/ExtraImages_3DPrinter/');
+                
+                images.forEach(imageData => {
+                    const imageCard = document.createElement('div');
+                    imageCard.className = 'project-card gallery-card';
+                    imageCard.style.width = '100%';
+                    imageCard.style.height = 'auto';
+                    imageCard.style.backgroundColor = 'var(--card-bg)';
+                    imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x
+                    imageCard.style.borderRadius = '8px';
+                    imageCard.style.overflow = 'hidden';
+                    imageCard.style.cursor = 'default';
+                    imageCard.style.pointerEvents = 'none'; // Disable all interactions
+                    imageCard.style.transform = 'none'; // Override hover transform
+                    imageCard.style.transition = 'none'; // Override hover transition
+                    
+                    const imageContainer = document.createElement('div');
+                    imageContainer.style.height = '200px';
+                    imageContainer.style.backgroundColor = 'var(--darker-bg)';
+                    imageContainer.style.borderBottom = '2px solid var(--border-color)';
+                    imageContainer.style.display = 'flex';
+                    imageContainer.style.alignItems = 'center';
+                    imageContainer.style.justifyContent = 'center';
+                    imageContainer.style.overflow = 'hidden';
+                    
+                    const img = document.createElement('img');
+                    img.src = imageData.src;
+                    img.alt = imageData.description;
+                    img.loading = 'lazy';
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'cover';
+                    img.style.objectPosition = 'center';
+                    
+                    const description = document.createElement('div');
+                    description.style.padding = '1rem';
+                    description.style.backgroundColor = 'var(--card-bg)';
+                    description.style.fontSize = '0.9rem';
+                    description.style.color = 'var(--text-secondary)';
+                    description.style.lineHeight = '1.4';
+                    description.textContent = imageData.description;
+                    
+                    imageContainer.appendChild(img);
+                    imageCard.appendChild(imageContainer);
+                    imageCard.appendChild(description);
+                    container.appendChild(imageCard);
+                });
+            }
+            
+            // Drone project images
+            if (projectName === 'drone') {
+                const images = [
+                    {
+                        src: 'project-galleries/ExtraImages_Drone/Image1.png',
+                        description: '' // Will be loaded from text file
+                    },
+                    {
+                        src: 'project-galleries/ExtraImages_Drone/Image2.png',
+                        description: '' // Will be loaded from text file
+                    },
+                    {
+                        src: 'project-galleries/ExtraImages_Drone/Image3.png',
+                        description: '' // Will be loaded from text file
+                    },
+                    {
+                        src: 'project-galleries/ExtraImages_Drone/Image4.png',
+                        description: '' // Will be loaded from text file
+                    }
+                ];
+                
+                // Load captions from text files - PRIMARY SOURCE
+                await loadImageCaptions(images, 'project-galleries/ExtraImages_Drone/');
                 
                 images.forEach(imageData => {
                     const imageCard = document.createElement('div');
