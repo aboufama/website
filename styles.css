@@ -287,7 +287,7 @@ main {
     cursor: pointer;
     position: relative;
     z-index: 1;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -312,8 +312,9 @@ main {
     opacity: 1;
 }
 
-/* Reduced hover glow for cards */
+/* Project card hover effects */
 .project-card:hover {
+    transform: scale(0.95);
     border-color: var(--text-primary);
     box-shadow: 0 0 24px rgba(255, 255, 255, 0.35), 0 0 10px rgba(255, 255, 255, 0.25);
     z-index: 10;
