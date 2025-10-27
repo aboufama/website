@@ -455,20 +455,17 @@
                 
                 if (isMobile) {
                     // Mobile: Simple fullscreen view with no animations
-                    document.body.style.overflow = 'hidden';
+                    // Make overlay solid on mobile to prevent any content showing through
+                    overlay.style.backgroundColor = 'var(--bg-color)';
                     overlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
                     
-                    // Hide everything immediately including the clicked card
-                    document.querySelectorAll('.project-card-link').forEach(otherLink => {
-                        otherLink.style.display = 'none';
-                    });
-                    document.querySelector('.hero').style.display = 'none';
-                    document.querySelectorAll('.section').forEach(section => {
-                        section.style.display = 'none';
-                    });
+                    // Hide everything immediately including the clicked card - no display, use visibility for instant hide
+                    const hero = document.querySelector('.hero');
+                    const container = document.querySelector('.container');
                     
-                    // Explicitly hide the card
-                    card.style.display = 'none';
+                    if (hero) hero.style.visibility = 'hidden';
+                    if (container) container.style.visibility = 'hidden';
                     
                     // Create mobile view immediately
                     createMobileProjectView(link, card);
@@ -612,20 +609,14 @@
                 }
                 
                 // Restore everything
-                document.querySelectorAll('.project-card-link').forEach(otherLink => {
-                    otherLink.style.display = '';
-                });
-                document.querySelector('.hero').style.display = '';
-                document.querySelectorAll('.section').forEach(section => {
-                    section.style.display = '';
-                });
+                const hero = document.querySelector('.hero');
+                const container = document.querySelector('.container');
                 
-                // Restore the card display
-                if (activeProject.card) {
-                    activeProject.card.style.display = '';
-                }
+                if (hero) hero.style.visibility = '';
+                if (container) container.style.visibility = '';
                 
                 overlay.classList.remove('active');
+                overlay.style.backgroundColor = '';
                 document.body.style.overflow = '';
                 activeProject = null;
             } else {
@@ -705,12 +696,20 @@
             mobileContainer.style.left = '0';
             mobileContainer.style.width = '100%';
             mobileContainer.style.height = '100vh';
+            mobileContainer.style.minHeight = '100vh';
             mobileContainer.style.overflowY = 'auto';
             mobileContainer.style.overflowX = 'hidden';
             mobileContainer.style.backgroundColor = 'var(--bg-color)';
             mobileContainer.style.zIndex = '1002';
             mobileContainer.style.padding = '0';
             mobileContainer.style.webkitOverflowScrolling = 'touch'; // Smooth scrolling on iOS
+            
+            // Create inner wrapper to ensure content doesn't extend beyond what's needed
+            const contentWrapper = document.createElement('div');
+            contentWrapper.style.minHeight = '100vh';
+            contentWrapper.style.backgroundColor = 'var(--bg-color)';
+            contentWrapper.style.display = 'flex';
+            contentWrapper.style.flexDirection = 'column';
             
             // Create back button - small and at top left
             const backButton = document.createElement('button');
@@ -739,6 +738,7 @@
             gallerySection.style.paddingBottom = '20px';
             gallerySection.style.whiteSpace = 'nowrap';
             gallerySection.style.webkitOverflowScrolling = 'touch'; // Smooth scrolling on iOS
+            gallerySection.style.backgroundColor = 'var(--bg-color)'; // Ensure solid background
             
             const galleryContent = document.createElement('div');
             galleryContent.style.display = 'inline-flex';
@@ -749,7 +749,7 @@
             await loadMobileProjectImages(projectName, galleryContent);
             
             gallerySection.appendChild(galleryContent);
-            mobileContainer.appendChild(gallerySection);
+            contentWrapper.appendChild(gallerySection);
             
             // Add project details text below gallery
             const projectDetails = document.createElement('div');
@@ -757,9 +757,11 @@
             projectDetails.style.paddingBottom = '2rem'; // Reasonable bottom padding
             projectDetails.style.color = 'var(--text-primary)';
             projectDetails.style.whiteSpace = 'normal';
+            projectDetails.style.backgroundColor = 'var(--bg-color)'; // Ensure solid background
             projectDetails.innerHTML = getProjectDetails(projectName);
-            mobileContainer.appendChild(projectDetails);
+            contentWrapper.appendChild(projectDetails);
             
+            mobileContainer.appendChild(contentWrapper);
             document.body.appendChild(mobileContainer);
             
             // Store references
