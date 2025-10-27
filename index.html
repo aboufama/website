@@ -458,7 +458,7 @@
                     document.body.style.overflow = 'hidden';
                     overlay.classList.add('active');
                     
-                    // Hide everything immediately
+                    // Hide everything immediately including the clicked card
                     document.querySelectorAll('.project-card-link').forEach(otherLink => {
                         otherLink.style.display = 'none';
                     });
@@ -466,6 +466,9 @@
                     document.querySelectorAll('.section').forEach(section => {
                         section.style.display = 'none';
                     });
+                    
+                    // Explicitly hide the card
+                    card.style.display = 'none';
                     
                     // Create mobile view immediately
                     createMobileProjectView(link, card);
@@ -617,6 +620,11 @@
                     section.style.display = '';
                 });
                 
+                // Restore the card display
+                if (activeProject.card) {
+                    activeProject.card.style.display = '';
+                }
+                
                 overlay.classList.remove('active');
                 document.body.style.overflow = '';
                 activeProject = null;
@@ -702,6 +710,7 @@
             mobileContainer.style.backgroundColor = 'var(--bg-color)';
             mobileContainer.style.zIndex = '1002';
             mobileContainer.style.padding = '0';
+            mobileContainer.style.webkitOverflowScrolling = 'touch'; // Smooth scrolling on iOS
             
             // Create back button - small and at top left
             const backButton = document.createElement('button');
@@ -721,12 +730,13 @@
             backButton.addEventListener('click', closeProject);
             document.body.appendChild(backButton);
             
-            // Create horizontal scrolling gallery
+            // Create horizontal scrolling gallery - at the very top
             const gallerySection = document.createElement('div');
             gallerySection.style.width = '100%';
             gallerySection.style.overflowX = 'auto';
             gallerySection.style.overflowY = 'hidden';
-            gallerySection.style.padding = '50px 0 20px 0'; // Top padding for back button
+            gallerySection.style.paddingTop = '10px'; // Minimal top padding
+            gallerySection.style.paddingBottom = '20px';
             gallerySection.style.whiteSpace = 'nowrap';
             gallerySection.style.webkitOverflowScrolling = 'touch'; // Smooth scrolling on iOS
             
@@ -744,6 +754,7 @@
             // Add project details text below gallery
             const projectDetails = document.createElement('div');
             projectDetails.style.padding = '1.5rem';
+            projectDetails.style.paddingBottom = '2rem'; // Reasonable bottom padding
             projectDetails.style.color = 'var(--text-primary)';
             projectDetails.style.whiteSpace = 'normal';
             projectDetails.innerHTML = getProjectDetails(projectName);
