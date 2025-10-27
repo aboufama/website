@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Project Details - Andre Boufama</title>
+    <link rel="icon" type="image/png" href="images/Headshot.png">
+    
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-muted: #808080;
+            --card-bg: #1a1a1a;
+            --border-color: #2a2a2a;
+            --success-color: #26a169;
+            --wip-yellow: #FFD700;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            padding: 8px 16px;
+            font-size: 14px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            cursor: pointer;
+            z-index: 1000;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 500;
+        }
+        
+        .back-button:active {
+            opacity: 0.7;
+        }
+        
+        .gallery-container {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 50px 0 20px 0;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        
+        .gallery-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .gallery-scroll {
+            display: inline-flex;
+            gap: 1rem;
+            padding: 0 1rem;
+        }
+        
+        .gallery-item {
+            flex-shrink: 0;
+            width: 85vw;
+            max-width: 400px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .gallery-caption {
+            padding: 0.75rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+            padding-bottom: 3rem;
+        }
+        
+        .project-content h3 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--text-primary);
+            margin-bottom: 0.8rem;
+        }
+        
+        .project-content h3:nth-of-type(2) {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+        
+        .project-content p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .project-content a {
+            background: rgba(38, 161, 105, 0.2);
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            color: var(--success-color);
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        .wip-banner {
+            background: rgba(255, 215, 0, 0.2);
+            border: 2px solid var(--wip-yellow);
+            border-radius: 4px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--wip-yellow);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">← Back</a>
+    
+    <div class="gallery-container" id="gallery">
+        <div class="gallery-scroll" id="gallery-scroll">
+            <!-- Gallery items will be inserted here -->
+        </div>
+    </div>
+    
+    <div class="project-content" id="content">
+        <!-- Project content will be inserted here -->
+    </div>
+    
+    <script>
+        // Get project name from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectName = urlParams.get('project');
+        
+        if (!projectName) {
+            window.location.href = 'index.html';
+        }
+        
+        // Project details data (same as in index.html)
+        const projectDetails = {
+            '3dprinter': `
+                <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Summary</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">I've been very interested in 3D printers ever since my school makerspace let me use the machines. After printing out some of my past projects, I looked more into the printers themselves and tried to look for ways to improve them. This led me into the rabbit hole of FDM printer design. I researched countless open source 3D printers and looked for ways to make them cheaper and more suited to my needs.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">I ended up making a modified open source printer (the V-Core 3) and scaling it up to have a 500x500x500mm print bed. A very important part of printer design is making sure the frame, and especially the gantry, is square. This was extremely hard to do in a garage without any precision surfaces for aluminum extrusions spanning more than 700mm each. After assembling and disassembling the frame nearly ten times, I was finally fine with the squareness. By this time, I was already late in my senior year of high school, and was thinking about the future of machines. I knew my parents wouldn't really have any use for it, so I donated it to my school makerspace after making sure to cover all the mains wiring with a 3D printed fan cooled case.</p>
+                
+                <h3 style="font-size: 1.1rem; font-weight: 400; color: var(--text-muted); margin-bottom: 0.8rem;">Details</h3>
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Custom-designed large-scale CoreXY FDM 3D printer running Klipper firmware. Technical specifications include a CoreXY motion system for improved print quality and reduced moving mass, large format build volume (500x500x500mm) for oversized prints, Python-based control system with custom firmware modifications, dual gear extruder with direct drive for precise filament control, heated bed with PEI print surface for excellent adhesion, linear rails and precision lead screws for smooth motion, and enclosed design with temperature control and filtration for more demanding materials.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">This printer was designed based on the V-Core 3 3D printer. Using Autodesk Fusion 360, many modifications were applied to the original design. I swapped out extrusions with carbon fiber tubes to decrease weight, changed the linear rails used on all axes, and swapped the extruder wires for a custom USB can bus toolboard pcb. The extruder assembly was rebuilt from the ground up. Using a metal 3D printing service, I remodeled all extruder parts in titanium to save weight and boost rigidity, while also providing temperature resistance.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Mains wiring can be very dangerous so I was very careful to ground the frame and ensure every operation I did was correct with an electrician friend of mine. Using DIN rails to divide high voltage and low voltage sections, I created a fully enclosed electronics bay with large cooling fans and filters to prevent kids from reaching into the wiring. Successfully donated to Berwick Academy makerspace and trained the people working there, providing students with access to large-format 3D printing capabilities. The printer has been used for various educational projects including architectural models, engineering prototypes, and art installations. It has significantly expanded the school's prototyping capabilities by allowing students to print objects as large as they want.</p>
+            `,
+            'hydroponics': `
+                <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Summary</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">My goal for this project was to make an innovative hydroponics system. I prioritized modularity because I wanted my system to be used as a tool for educators to teach about the technology. There could be many branches mounted on a central trunk, you could have two branches when you're teaching students about the system, and then put on ten more when you want to grow a larger volume of plants.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">My favorite part of the project was working on the quick disconnect branch joints. The requirements for this joint was to support a few plant pots, be easy and intuitive to connect and disconnect, and most importantly, connect water flow to the central water line when attached and cut off water flow when detached. I achieved this by mounting a quick disconnect pipe component to a 3d printed mounting plate, which was epoxied to a PVC pipe.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Since there was a pump pushing water up the central stalk into the branches, we wanted to see how well nutrients could be distributed in our system. We did an experiment where by dropping food dye into the bottom basin, we waited until the water turned a uniform shade.</p>
+                
+                <h3 style="font-size: 1.1rem; font-weight: 400; color: var(--text-muted); margin-bottom: 0.8rem;">Details</h3>
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">This award-winning modular hydroponics system was designed for sustainable food production and educational use. <a href="https://www.instructables.com/Top-Instructables-of-2024/" target="_blank" rel="noopener noreferrer" style="background: rgba(38, 161, 105, 0.2); padding: 0.1rem 0.3rem; border-radius: 3px; color: var(--success-color); font-weight: 500; text-decoration: none;">Featured in top Instructables designs for 2024</a> and <a href="https://www.instructables.com/contest/greenfuture/" target="_blank" rel="noopener noreferrer" style="background: rgba(38, 161, 105, 0.2); padding: 0.1rem 0.3rem; border-radius: 3px; color: var(--success-color); font-weight: 500; text-decoration: none;">First Prize Winner in the Green Future Design Contest</a>. Built as part of my "Engineering for the Future" class, the system features a tree-like structure with removable branch modules for easy maintenance and expansion.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">The tree-inspired architecture uses a 4" central PVC trunk with 3" branch modules connected via quick-disconnect joints that enable easy cleaning and maintenance. The modular design allows for scalable expansion and customization, with 3D-printed components using PETG filament for watertight seals. A fountain-style water circulation system provides both functionality and aesthetic appeal.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Technical features include an Arduino-based monitoring system with temperature sensors, custom-designed plant holders with Rockwool growing medium, water circulation pump with emergency drainage system, and precision-drilled holes sealed with marine sealant for leak prevention. The compact 2x2x2' footprint makes it suitable for educational environments.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Hydroponics systems use up to 95% less water than traditional agriculture while enabling year-round growing seasons. This system reduces food travel distances and provides fresh produce in urban environments, making it ideal for schools and educational facilities. Inspired by a local aquaponics farm visit, I designed this system using Fusion 360 and conducted extensive testing to ensure watertight seals. The project involved multiple prototyping iterations and rigorous leak testing, resulting in a fully functional educational hydroponics system.</p>
+            `,
+            'vex': `
+                <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Summary</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Robotic competitions are something I've been involved in since elementary school. I started with FIRST robotics, then progressed to VEX IQ in middle school, and VEX EDR in high school. No matter what age or medium these competitions were in, I loved designing and watching my robot perform out on the playing field.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">This robot design is the one though all the years I am most proud of. I was on a duo team during the Covid-19 epidemic with my good friend Kelly. She focused more on the software side and I was in charge of designing and building the robot. This is actually the only project on this list where I didn't use fusion to CAD the robot beforehand. I prefer working with sketches and my hands for these types of builds, since the parts we use are not custom, and can be taken apart and put back together in different ways like legos.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">I had a lot of fun working with ratcheting systems and having two motors create four output possibilities depending on their rotation direction. We were able to qualify for the world finals that year, and we placed number one in our state.</p>
+                
+                <h3 style="font-size: 1.1rem; font-weight: 400; color: var(--text-muted); margin-bottom: 0.8rem;">Details</h3>
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Competition robot designed for VEX Change Up competition. Features advanced odometry, autonomous navigation, and precision manipulation systems programmed in C++. The mechanical design includes an advanced odometry system using two encoders and gyroscope for precise positioning. The X drive configuration allows for movement in any direction along the xy plane and rotation at the same time. A fine tuned ball intake with ratchets allows for two motors to create two separate ball paths without a loss of processing speed, with custom gear ratios for optimal speed and torque balance.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">The robot's software is built on C++ architecture. The controls for the remote controlled portion of the competition are relatively simple, but the autonomous section enables more complex code. Using two encoders with omni wheels positioned at a right angle from each other combined with a gyroscopic sensor, we could approximate every motion of the robot as a combination of arcs. By adding these tiny arcs in relation to the global xy plane, we can always know the physical position and rotation of the robot on the 2D arena. In conjunction with PID controls, we can maximize our robot speed while always being able to course correct.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">The competition was moved online this year due to covid, but our robot placed number 1 in my home state, allowing us to qualify for the world championship, which also took place online.</p>
+            `,
+            'drone': `
+                <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Summary</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">As you can probably tell from my other projects, I'm very interested in drone design. After starting the Cornell Physical Intelligence club, I wanted to pivot our hardware to have a focus on autonomous flying vehicles. This first design (Cicada) was made for surveillance and search and rescue. It's a simple 550mm wheelbase quadcopter with sleek covers for all the components. We've since moved on from this concept, but I still thought the design looked slick.</p>
+                
+                <h3 style="font-size: 1.1rem; font-weight: 400; color: var(--text-muted); margin-bottom: 0.8rem;">Details</h3>
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Professional-grade Intelligence, Surveillance, and Reconnaissance (ISR) quadcopter designed for outdoor operations with advanced flight control systems, payload capacity, and autonomy. Features include finite element analysis for structural optimization and weight reduction, carbon fiber frame with titanium mounting points for durability, flight controller that connects to raspberry pi for ROS 2, advanced battery management system for extended flight time, and extremely lightweight novel frame allowing for arm mounting hardware to also add rigidity to the baseplate.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">The drone was designed over five iterations in fusion and is still in development. The drone pictured has not been manufactured but the testbed for the electronics has been made and is running with the same motors and battery. The core design is built upon a single 4mm carbon fiber sheet cut to size connected by clamps which secure the arms and also add rigidity to the frame. This allows for the frame not including motors to be under 200g, enabling flight times of well over one hour.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Although this specific design isn't compact, we want to make the next iteration foldable for easier deployment and transportation. This specific quadcopter has the goal of being a testbed for our autonomous systems while we make more and more of the drone in house and move away from off the shelf parts. The drone render shown is not completely done in house but it's a stepping stone between the pictured test bed and the final product.</p>
+            `,
+            'rover': `
+                <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Summary</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">I was browsing youtube one day and stumbled upon the URC (University Rover Challenge). I saw some absolutely amazing designs for rovers, and wanted to make one myself as a general purpose data collection rover platform. After researching different powertrains and suspension methods, I ended up designing a novel independent front/back rocker system, which removed the need for a linkage bar between the sides of the rover.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">My favorite part of this design was creating the four bar linkage systems for the two sets of front wheels. Using a set of thrust and axial bearings, I overengineered the front wheel mounts, to be able to handle hundreds of points of shear load. Although I never tested them to that limit, I did accidentally perform a stress test while presenting my project at an MIT conference. I was holding the 40-pound rover when I tripped and fell forward, dropping it onto the ground right on its wheels. Nothing broke, so I'd say it's pretty robust.</p>
+                
+                <h3 style="font-size: 1.1rem; font-weight: 400; color: var(--text-muted); margin-bottom: 0.8rem;">Details</h3>
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Advanced autonomous rover designed for heavy payload transportation and manipulation in challenging terrain. Features robust mechanical design and environment resistant construction. The six-wheel drive system uses independent suspension for terrain adaptability, with a heavy-duty chassis capable of carrying payloads up to 50kg. Custom PETG flexible wheels allow for tireless operations without risk of puncture, with a custom gear herringbone gear reduction system for optimal torque and speed.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">The design is a modified rocker bogie system inspired by the Curiosity Mars rover. Instead of having all six wheels be based on the same pivot, I implemented an offset four bar linkage (non parallel bars) allowing for an arc movement path of the front two wheels on each side. The back wheel on each side is connected by a central rocker perpendicular to the rockers in the front. This completely independent portion of the rover allows for the same contact principles as the rocker bogie system without a need for linkage between the two sides of the rover, further simplifying and making the design more robust.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">The rover's control system is built on a raspberry pi 3B+ running python with custom nodes for navigation, manipulation, and communication. This pi, connected to an array of sensors and six motor controllers each independently controlling a wheel, allows for navigation of any terrain at high speeds.</p>
+            `,
+            'vtol': `
+                <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Summary</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">I'm very interested in planes and especially drones, so after watching quite a few of VTOL build youtube videos, I couldn't resist giving it a try myself. I was heavily inspired by the Boeing V-22 Osprey, an aircraft which I still think is one of the coolest things to have ever flown.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">When scaling the plane down, there's quite a lot that changes compared to the actual V-22. The main difference is that instead of relying on the gyroscopic forces of the large propellers for stabilization, a smaller RC TOL version must use the actuation servos of the motor pods to control yaw and pitch. This essentially creates a bicopter configuration when the plane is in hover mode. Bicopters are inherently very hard to stabilize, as rotating the motor pods to, for example, change the craft's yaw also alters its pitch and roll due to the shifting thrust direction.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Although my plane crashed almost instantly after takeoff, it was able to hover for a few seconds, so I still deem this project a success. :)</p>
+                
+                <h3 style="font-size: 1.1rem; font-weight: 400; color: var(--text-muted); margin-bottom: 0.8rem;">Details</h3>
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Vertical Takeoff and Landing (VTOL) unmanned aerial vehicle designed for versatile operations combining the efficiency of fixed-wing flight with the ease of a quadcopter. The hybrid design combines fixed-wing and rotary-wing configurations, with a lightweight composite core featuring 3D printed and foam framing. The advanced propulsion system uses precise servo-driven PID controlled motor pods, with an integrated payload bay for various mission-specific equipment.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">The VTOL features a custom flight controller. The system includes GPS guidance, radio control systems, and control surfaces along the wing and tail. The bicopter design in hover mode requires rapid PID loops to maintain stability. A bicopter is fundamentally more unstable than a quadcopter because it's underactuated, since two rotors must control three rotational axes (pitch, roll, yaw) by tilting, which causes cross-coupled effects where adjusting one axis unintentionally affects the others. This makes PID tuning very difficult.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Designed mostly for cargo delivery, VTOL fundamentally allows there to be no tradeoff between ease of takeoff/landing and flight efficiency. Completed flight testing and validation of both VTOL and normal flight mode. Presented at the Berwick Academy Innovation Celebration in 2020. Before final validation could occur, the craft suffered a devastating crash snapping both propellors.</p>
+            `,
+            'overpass': `
+                <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Summary</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Although most of the projects here are robotics related, I'm also interested in civil engineering. Bridge designs fascinate me, especially ones that are truly alien looking and seem like they defy the laws of physics. Of course, none of these crazy bridges defy physics, on the contrary, they usually are hyper considerate of all the physical constraints of holding up a thin walkway hundreds of feet long.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">I made this bridge before taking any civil engineering classes so I'm honestly not very confident in the structural stability of it. I attempted to overdesign the supports, so from the rudimentary simulations I ran in fusion, it shouldn't collapse under its own weight. I instead put more time in the aesthetic design focus. I go into much more detail on the linked instructables blog, but I wanted to create a gold and white themed walkway with lush greenery under and around it.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">I learned a lot about the limits of Fusion 360 with this project. Sometimes, especially with larger assemblies with hundreds of subcomponents, weird things happen in CAD. Fortunately, I was able to work past these issues and get some nice looking renders in Blender.</p>
+                
+                <h3 style="font-size: 1.1rem; font-weight: 400; color: var(--text-muted); margin-bottom: 0.8rem;">Details</h3>
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">A cable‑stayed pedestrian bridge concept spanning the Cochecho River in Dover, NH, designed to pair practical urban connectivity with sustainability. It shortens a 2,500‑ft pedestrian detour to roughly 200 ft while integrating walkable solar deck tiles, subtle handrail lighting, and planted green ramps that bring vegetation up through the walkway — a concept recognized with <a href="https://www.instructables.com/contest/makeitbridge2023/" target="_blank" rel="noopener noreferrer" style="background: rgba(38, 161, 105, 0.2); padding: 0.1rem 0.3rem; border-radius: 3px; color: var(--success-color); font-weight: 500; text-decoration: none;">First Prize in the Autodesk Instructables Make It Bridge Challenge</a>. Author: Andre ("andre_125"). Entry for the Instructables "Make It Bridge" challenge; concept‑to‑render workflow using Fusion 360 + Blender.</p>
+
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Located at Cochecho River, Dover, NH — near public pool, Great Bay Community Rowing, and the Children's Museum. Shortens a ~2,500‑ft pedestrian detour to ~200 ft, stitching together two rapidly developing riverbanks.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Purpose & Site:</strong> Pedestrian cable‑stayed span with back‑leaning concrete/steel pylons; cables support a steel‑I‑beam deck. ~200 ft deck using five W21 beams with W16 cross‑ties; aluminum walking plates spaced for thermal expansion. Sharp, tilted pylons; continuous handrails; ADA‑compliant green ramp with planted grates.</p>
+
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Sustainability & Self‑Power:</strong> Walkable PV surface (~2.2 m × 63 m ≈ 138.6 m²); ~20% efficiency, peak ≈ 27 kW. Deck LEDs (~48 × 5 W ≈ 240 W) + floodlights (4 × 400 W ≈ 1.6 kW) ⇒ ~1.84 kW at night. Even with conservative winter daylight (~3.5 "full sun" hrs), daily PV output exceeds nightly demand; surplus can feed the grid. Preference for recycled steel (EAF‑sourced where possible) and aluminum; concrete mixes enhanced with SCMs (fly ash, slag).</p>
+
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Sensors & Lighting:</strong> Temperature sensors (in‑concrete + ambient), vibrating‑wire strain gauges, and people counters at both ends. Low‑profile deck LEDs + pylon floodlights; top beacons for aircraft; occupancy‑aware dimming.</p>
+
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Safety & Detailing:</strong> 45‑in code‑compliant guard (OSHA ≥ 42 in), water‑jet/plasma‑cut aluminum or stainless supports, looped modular handrails. Pylon plates with universal‑joint‑style anchors; simpler clamp mounts at deck level for easy service.</p>
+
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Constructability Notes:</strong> Slip‑formed, post‑tensionable concrete built on site; back‑leaning geometry provides counter‑thrust to cable tension (no back‑stays needed for pedestrian loads). Recycled steel I‑beams; welded or bolted cross‑ties to accommodate expansion; bolt‑on walkable PV tiles. Steel shell over a soil bed; shade‑tolerant groundcover (e.g., Japanese spurge) and climbers (e.g., English ivy) emerging through Voronoi‑pattern grates.</p>
+
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Process & Tools:</strong> Fusion 360 for parametric modeling; generative design explored in an early small‑bridge concept. Blender import (via 3MF add‑on), BlenderKit materials, environment/terrain/water setup, particle‑based grass, added foliage. Initial 3D‑printed footbridge concept was abandoned due to cost/scale and limited community impact; focus shifted to the river‑spanning solution.</p>
+
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;"><strong>Outcome:</strong> A community‑linking pedestrian bridge that is energy‑positive, sensor‑aware, and nature‑integrated — pairing practical connectivity with durable detailing and a lighter footprint.</p>
+            `,
+            'geniechatbot': `
+                <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Summary</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">For a summer internship with Taylor Fresh Farms, I worked closely with the data engineering team to integrate AI into the company's internal processes to boost efficiency. Along with some other document processing projects, my final intern capstone was to both train and design a user interface for an internal tablet application to document inventory.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">I initially used Swift for this project, but pivoted to ReactJS for a more simplistic design. I had a really great time working on the chat interface and trying to figure out all the closed beta api references.</p>
+                
+                <h3 style="font-size: 1.1rem; font-weight: 400; color: var(--text-muted); margin-bottom: 0.8rem;">Details</h3>
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">The goal was to design a Retrieval-Augmented Generation (RAG) Large Language Model system for intelligent inventory management and customer service. Natural language input would be converted to the correct SQL query to search for an item in the database based on the context of this question. This SQL query had to be correct, and also accompanied by an explanation of the results.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Technical architecture includes fine-tuned LLM models from Databricks optimized for inventory management tasks, real-time data integration with existing inventory systems, natural language processing for customer query understanding, scalable cloud infrastructure for high availability, advanced analytics and reporting capabilities, and chart generation with interactive visuals built in.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">The RAG approach ensures accurate and up-to-date information retrieval while maintaining conversational capabilities. By using RAG model, as long as the queries are correct, there is no risk for hallucination, as all data generated by the model will already be available on the company data storage system. The harvest part of fine tuning was ensuring that SQL queries were correct. To do this, we generated 50 queries and example responses, and used these as benchmarks. At the same time, we picked a few to use for few shot training, giving the model a few base examples in the instruction code to further the success rate. Once the model could answer all fifty examples correctly, it was ready for deployment.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Successfully deployed limited beta environment. Leadership of the company presented at a conference with an ipad demo for investors. Application works through testflight and will be deployed for public use shortly.</p>
+            `,
+            'chickencoop': `
+                <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Summary</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">My family and I have been raising chickens in my backyard since my freshman year in high school. As anyone who is lazy and has outdoor chickens knows, you have to close the door of the chicken coop every night to keep the birds safe inside the coop. In the winter months of New Hampshire, those nights can be freezing cold with two feet of snow, so I wanted to make a door which could close by itself.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">My goals for the project were to make a door which could close based on the time of day, or through a wifi connection. The door also needed to be safe and not close on top of a chicken if one was entering at the same time as the closing. Using a series of light sensors, current monitors, and springs, I designed a system which could close after nightfall and also be extremely sensitive in its motion path. The whole system was wrapped in a black 3D printed case with manual override buttons.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Although this is one of my most professional/finished projects, I've lost many photos of it and I'm in the process of recovering them from my old school email account.</p>
+                
+                <h3 style="font-size: 1.1rem; font-weight: 400; color: var(--text-muted); margin-bottom: 0.8rem;">Details</h3>
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Fully enclosed and marketable product which could automatically close a chicken coop door based on the lighting and time of day. The design features a rigid delrin frame to prevent predators getting in or weather affecting the coop. A fully enclosed box contains motors, arduino, and wiring sealed and interactable with pliable plastic buttons. Arduino wifi capabilities allows for control from a distance or wireless operation based on lighting and time of day. Constant force springs concealed along the door reduce the weight the motor has to pull along the rack.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Smooth operating door which could run in a dusty environment without clogging or failure of gear contacts. I personally used the door for my flock of six chickens and it hasn't yet failed.</p>
+            `,
+            'grasshopper': `
+                <div style="background: rgba(255, 215, 0, 0.2); border: 2px solid var(--wip-yellow); border-radius: 4px; padding: 0.75rem 1rem; margin-bottom: 1.5rem; font-size: 0.9rem; color: var(--wip-yellow); display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="font-size: 1.2rem;">⚠️</span>
+                    <span><strong>Work in Progress:</strong> This project is currently under active development. Stay tuned for updates!</span>
+                </div>
+                
+                <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Summary</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">Yet another drone design which is currently in progress for the Cornell Physical Intelligence club is what I've dubbed the "grasshopper". This is a continuation of the "Cicada" quadcopter with a complete overhaul of both the electronics and hardware.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">The goal of this design wasn't as clear cut as the previous "Cicada" drone. I made this craft with an AI first approach and it's optimized for ease of programming and modularity. Although it looks less professional than the last iteration, it performs better in every metric. It's lighter, stiffer, and has more room to mount sensors.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">My favorite part of this design was the landing legs. These are an optional attachment which should be used when mounting a larger payload on the belly of the drone. These legs, which fold out of the way after takeoff and weigh less than 50 grams in total, are essential to allowing more modularity without compromising flight time or obscuring sensors.</p>
+                
+                <h3 style="font-size: 1.1rem; font-weight: 400; color: var(--text-muted); margin-bottom: 0.8rem;">Details</h3>
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">AI-powered autonomous systems testbed designed for development and testing of machine learning algorithms, computer vision, and intelligent control systems. Platform development for autonomous systems research with integrated AI capabilities. More details coming soon as the project progresses.</p>
+            `,
+            'greenhouse': `
+                <h3 style="font-size: 1.2rem; font-weight: 400; color: var(--text-primary); margin-bottom: 0.8rem;">Summary</h3>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">My school was interested in remodeling their biggest field, called Fogg Field to be more environmentally sustainable. Working with a group of friends, we brainstormed requirements for our field design. We collected temperature data, soil data, looked at wind, sun and rain statistics for the area, and decided to build a greenhouse spanning half the field with outdoor planters.</p>
+                
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">I was tasked with building the design in CAD and rendering it for our final presentation. I spent more time in Blender, as opposed to my other projects which mostly utilize Fusion 360. Through this project, I learned how environmental data can directly inform architectural design decisions, and how complicated architectural/structural design can really be.</p>
+                
+                <h3 style="font-size: 1.1rem; font-weight: 400; color: var(--text-muted); margin-bottom: 0.8rem;">Details</h3>
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Comprehensive greenhouse and recreation facility design for Fogg Field, emphasizing sustainable food production, community engagement, and energy efficiency. Collaborated with Cam (Food & Agriculture) and Jamie (Materials & Layout) on this multidisciplinary project.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Our approach followed a systematic design methodology: brainstorming focused on client goals, sketching initial concepts on paper, transferring designs into Fusion 360 for detailed 3D modeling, and rendering the final model in Blender for presentation-quality visuals.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Through systematic evaluation of pine wood, cedar wood, aluminum, and PVC using decision matrices, we selected aluminum for the greenhouse framework and cedar for outdoor garden beds. Double-walled polycarbonate siding provides superior thermal insulation while maximizing light transmission.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Facility specifications include 6,375 sq ft total greenhouse space with 5,089 sq ft of planting area, 500 sq ft storage shed for equipment and battery system, 64 hanging gardens adding 194 additional square feet of growing space, strategic path layout maximizing accessibility while preserving growing area, and estimated production capacity of ~1,200 lbs from greenhouse plus ~1,000 lbs from outdoor beds.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">Solar-powered facility featuring 29 south-facing panels generating 3,640 watts to power pumps, sensors, and nighttime path lighting. Battery storage system located in the shed enables 24/7 operation. The design emphasizes passive heating through water barrels (exploiting water's high specific heat capacity) and thermal insulation via double-walled polycarbonate, eliminating the need for active heating systems.</p>
+                
+                <p style="color: var(--text-muted); line-height: 1.6; margin-bottom: 1rem; font-size: 0.9rem;">This design combines food production, community recreation, and education in a carbon-neutral facility. The year-round growing capability, solar power integration, and passive thermal management systems demonstrate engineering solutions that prioritize environmental responsibility while meeting community needs.</p>
+            `
+        };
+        
+        // Map project names to their folder names
+        const projectFolderMap = {
+            'drone': 'ExtraImages_Drone',
+            'grasshopper': 'ExtraImages_Grasshopper',
+            'hydroponics': 'ExtraImages_Hydroponics',
+            'vtol': 'ExtraImages_VTOL',
+            'vex': 'ExtraImages_VEX',
+            'rover': 'ExtraImages_Rover',
+            '3dprinter': 'ExtraImages_3DPrinter',
+            'chickencoop': 'ExtraImages_ChickenCoop',
+            'overpass': 'ExtraImages_Overpass',
+            'geniechatbot': 'ExtraImages_GenieChatbot',
+            'greenhouse': 'ExtraImages_Greenhouse'
+        };
+        
+        // Captions manifest
+        const LOCAL_CAPTIONS = {
+            'project-galleries/ExtraImages_3DPrinter/': {
+                Image1: 'CoreXY mechanism assembly showing the belt configuration and motor mounting system',
+                Image2: 'Klipper firmware interface showing real-time temperature monitoring and print progress',
+                Image3: 'Fully enclosed electronics bay with DIN rail mounted components and safety features'
+            },
+            'project-galleries/ExtraImages_Hydroponics/': {
+                Image1: 'Fully assembled modular hydroponics system with water circulation and plant holders',
+                Image2: 'Quick-disconnect branch joint showing the custom 3D printed mounting system',
+                Image3: 'Arduino monitoring system with temperature sensors and pump control'
+            },
+            'project-galleries/ExtraImages_Overpass/': {
+                Image1: 'Full bridge render showing the cable-stayed design spanning the Cochecho River',
+                Image2: 'Detail view of pylon structure with cable connections and lighting system',
+                Image3: 'Green ramp approach with planted grates and solar panel walkway surface'
+            },
+            'project-galleries/ExtraImages_GenieChatbot/': {
+                Image1: 'React-based chat interface for inventory management queries',
+                Image2: 'SQL query generation and results visualization with interactive charts',
+                Image3: 'iPad application mockup for warehouse floor deployment'
+            },
+            'project-galleries/ExtraImages_Drone/': {
+                Image1: 'Carbon fiber frame assembly showing arm mounting and baseplate design',
+                Image2: 'Flight controller integration with Raspberry Pi for ROS 2 connectivity',
+                Image3: 'Complete drone render showing sleek covers and component layout'
+            },
+            'project-galleries/ExtraImages_Grasshopper/': {
+                Image1: 'Lightweight frame design optimized for AI sensor mounting and modularity'
+            },
+            'project-galleries/ExtraImages_Greenhouse/': {
+                Image1: 'Full greenhouse render showing double-walled polycarbonate siding and aluminum framework',
+                Image2: 'Interior view of planting beds with hanging gardens and central walkway',
+                Image3: 'Solar panel array and water barrel system for passive thermal management'
+            }
+        };
+        
+        // Load project images
+        async function loadImages() {
+            const folderName = projectFolderMap[projectName];
+            if (!folderName) return;
+            
+            const galleryScroll = document.getElementById('gallery-scroll');
+            const folderPath = `project-galleries/${folderName}/`;
+            const captions = LOCAL_CAPTIONS[folderPath] || {};
+            
+            // Try to load up to 10 images
+            for (let i = 1; i <= 10; i++) {
+                const imagePath = `${folderPath}Image${i}.png`;
+                
+                try {
+                    // Check if image exists
+                    const img = new Image();
+                    await new Promise((resolve, reject) => {
+                        img.onload = resolve;
+                        img.onerror = reject;
+                        img.src = imagePath;
+                    });
+                    
+                    // Create gallery item
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    
+                    const imageEl = document.createElement('img');
+                    imageEl.src = imagePath;
+                    imageEl.alt = `Project image ${i}`;
+                    item.appendChild(imageEl);
+                    
+                    // Try to load caption
+                    const captionKey = `Image${i}`;
+                    if (captions[captionKey]) {
+                        const captionEl = document.createElement('div');
+                        captionEl.className = 'gallery-caption';
+                        captionEl.textContent = captions[captionKey];
+                        item.appendChild(captionEl);
+                    }
+                    
+                    galleryScroll.appendChild(item);
+                } catch (e) {
+                    // Image doesn't exist, stop trying
+                    break;
+                }
+            }
+        }
+        
+        // Load project content
+        function loadContent() {
+            const contentDiv = document.getElementById('content');
+            contentDiv.innerHTML = projectDetails[projectName] || '<p>Project details not available.</p>';
+        }
+        
+        // Initialize page
+        loadImages();
+        loadContent();
+    </script>
+</body>
+</html>
+
