@@ -72,32 +72,27 @@
             display: inline-flex;
             gap: 1rem;
             padding: 0 1rem;
+            height: 300px;
+            align-items: center;
         }
         
         .gallery-item {
             flex-shrink: 0;
+            height: 100%;
             background-color: var(--card-bg);
             border-radius: 12px;
             border: 1px solid var(--border-color);
             overflow: hidden;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         
         .gallery-item img {
-            height: 250px;
+            height: 100%;
             width: auto;
             display: block;
-            object-fit: cover;
-        }
-        
-        .gallery-caption {
-            padding: 0.75rem;
-            font-size: 0.85rem;
-            line-height: 1.3;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-            max-width: 300px;
+            object-fit: contain;
         }
         
         .project-content {
@@ -361,43 +356,6 @@
             'greenhouse': 'ExtraImages_Greenhouse'
         };
         
-        // Captions manifest
-        const LOCAL_CAPTIONS = {
-            'project-galleries/ExtraImages_3DPrinter/': {
-                Image1: 'CoreXY mechanism assembly showing the belt configuration and motor mounting system',
-                Image2: 'Klipper firmware interface showing real-time temperature monitoring and print progress',
-                Image3: 'Fully enclosed electronics bay with DIN rail mounted components and safety features'
-            },
-            'project-galleries/ExtraImages_Hydroponics/': {
-                Image1: 'Fully assembled modular hydroponics system with water circulation and plant holders',
-                Image2: 'Quick-disconnect branch joint showing the custom 3D printed mounting system',
-                Image3: 'Arduino monitoring system with temperature sensors and pump control'
-            },
-            'project-galleries/ExtraImages_Overpass/': {
-                Image1: 'Full bridge render showing the cable-stayed design spanning the Cochecho River',
-                Image2: 'Detail view of pylon structure with cable connections and lighting system',
-                Image3: 'Green ramp approach with planted grates and solar panel walkway surface'
-            },
-            'project-galleries/ExtraImages_GenieChatbot/': {
-                Image1: 'React-based chat interface for inventory management queries',
-                Image2: 'SQL query generation and results visualization with interactive charts',
-                Image3: 'iPad application mockup for warehouse floor deployment'
-            },
-            'project-galleries/ExtraImages_Drone/': {
-                Image1: 'Carbon fiber frame assembly showing arm mounting and baseplate design',
-                Image2: 'Flight controller integration with Raspberry Pi for ROS 2 connectivity',
-                Image3: 'Complete drone render showing sleek covers and component layout'
-            },
-            'project-galleries/ExtraImages_Grasshopper/': {
-                Image1: 'Lightweight frame design optimized for AI sensor mounting and modularity'
-            },
-            'project-galleries/ExtraImages_Greenhouse/': {
-                Image1: 'Full greenhouse render showing double-walled polycarbonate siding and aluminum framework',
-                Image2: 'Interior view of planting beds with hanging gardens and central walkway',
-                Image3: 'Solar panel array and water barrel system for passive thermal management'
-            }
-        };
-        
         // Load project images
         async function loadImages() {
             const folderName = projectFolderMap[projectName];
@@ -405,7 +363,6 @@
             
             const galleryScroll = document.getElementById('gallery-scroll');
             const folderPath = `project-galleries/${folderName}/`;
-            const captions = LOCAL_CAPTIONS[folderPath] || {};
             
             // Try to load up to 10 images
             for (let i = 1; i <= 10; i++) {
@@ -413,7 +370,7 @@
                 let foundImage = false;
                 
                 // Try both .png and .jpg extensions
-                for (const ext of ['.png', '.jpg']) {
+                for (const ext of ['.png', '.jpg', '.jpeg']) {
                     const testPath = `${folderPath}Image${i}${ext}`;
                     
                     try {
@@ -439,23 +396,14 @@
                     break;
                 }
                 
-                // Create gallery item
+                // Create gallery item (no captions, just image)
                 const item = document.createElement('div');
                 item.className = 'gallery-item';
                 
                 const imageEl = document.createElement('img');
                 imageEl.src = imagePath;
-                imageEl.alt = `Project image ${i}`;
+                imageEl.alt = `${projectName} project image ${i}`;
                 item.appendChild(imageEl);
-                
-                // Try to load caption
-                const captionKey = `Image${i}`;
-                if (captions[captionKey]) {
-                    const captionEl = document.createElement('div');
-                    captionEl.className = 'gallery-caption';
-                    captionEl.textContent = captions[captionKey];
-                    item.appendChild(captionEl);
-                }
                 
                 galleryScroll.appendChild(item);
             }
