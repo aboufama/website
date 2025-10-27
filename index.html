@@ -461,10 +461,18 @@
                 
                 // Freeze page (prevent layout shift by compensating scrollbar width)
                 const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+                const isMobile = window.innerWidth <= 768;
+                
+                if (!isMobile) {
+                    // Only freeze scrolling on desktop
                 if (scrollbarWidth > 0) {
                     document.body.style.paddingRight = scrollbarWidth + 'px';
                 }
                 document.body.style.overflow = 'hidden';
+                } else {
+                    // On mobile, allow scrolling and add class for styling
+                    document.body.classList.add('project-active');
+                }
                 overlay.classList.add('active');
                 
                 // Keep card visible and make non-interactable
@@ -619,6 +627,7 @@
                     overlay.style.backgroundColor = '';
                     document.body.style.overflow = '';
                     document.body.style.paddingRight = '';
+                    document.body.classList.remove('project-active');
                     activeProject = null;
                 };
                 overlay.addEventListener('transitionend', onOverlayFade);
@@ -634,6 +643,9 @@
             const projectPath = link.getAttribute('href');
             const projectName = projectPath.split('/').pop().replace('.html', '');
             
+            // Detect mobile
+            const isMobile = window.innerWidth <= 768;
+            
             // Create gallery container
             const gallery = document.createElement('div');
             gallery.className = 'project-gallery';
@@ -646,10 +658,23 @@
             gallery.style.overflowX = 'hidden';
             gallery.style.zIndex = '1000';
             gallery.style.backgroundColor = 'transparent';
-            gallery.style.paddingTop = (topLeftY + rect.height * 1.15 + 20) + 'px'; // Start below main card
+            
             // Account for scaling offset - card's visual left edge after scaling
             const cardVisualLeft = topLeftX - (rect.width * 0.15) / 2; // Subtract half the width increase from scaling
+            
+            if (isMobile) {
+                // Mobile: gallery starts below card, use absolute positioning for scrolling
+                gallery.style.position = 'absolute';
+                gallery.style.paddingTop = (topLeftY + rect.height * 1.15 + 20) + 'px';
+                gallery.style.paddingLeft = '20px';
+                gallery.style.paddingRight = '20px';
+                gallery.style.height = 'auto'; // Auto height on mobile
+            } else {
+                // Desktop: gallery starts below card
+                gallery.style.paddingTop = (topLeftY + rect.height * 1.15 + 20) + 'px';
             gallery.style.paddingLeft = cardVisualLeft + 'px';
+            }
+            
             gallery.style.display = 'block';
             gallery.style.transition = 'height 0.4s ease-out'; // Smooth height animation
             
@@ -668,14 +693,29 @@
             // Create gallery content (images only)
             const galleryContent = document.createElement('div');
             galleryContent.style.display = 'flex';
+            
+            if (isMobile) {
+                // Mobile: horizontal scrolling gallery
+                galleryContent.style.flexDirection = 'row';
+                galleryContent.style.gap = '1rem';
+                galleryContent.style.overflowX = 'auto';
+                galleryContent.style.overflowY = 'hidden';
+                galleryContent.style.width = '100%';
+                galleryContent.style.paddingBottom = '1rem';
+                // Enable horizontal scrolling on mobile
+                galleryContent.style.scrollbarWidth = 'thin';
+                galleryContent.style.scrollSnapType = 'x mandatory';
+            } else {
+                // Desktop: vertical layout
             galleryContent.style.flexDirection = 'column';
             galleryContent.style.gap = '2rem';
             galleryContent.style.width = (rect.width * 1.15) + 'px';
+            }
             
             // Don't add the main card - it's already positioned above
             
             // Load additional images for this project
-            await loadProjectImages(projectName, galleryContent);
+            await loadProjectImages(projectName, galleryContent, isMobile);
             
             gallery.appendChild(galleryContent);
             document.body.appendChild(gallery);
@@ -684,23 +724,37 @@
             const projectDetails = document.createElement('div');
             projectDetails.className = 'project-details';
             projectDetails.style.position = 'fixed';
-            // Calculate position to align project details text with card's top border
+            projectDetails.style.zIndex = '1001';
+            projectDetails.style.backgroundColor = 'transparent';
+            
+            if (isMobile) {
+                // Mobile: position below gallery - use absolute positioning for scrolling
+                projectDetails.style.position = 'absolute';
+                projectDetails.style.top = (topLeftY + rect.height * 1.15 + 280) + 'px'; // Space for horizontal gallery
+                projectDetails.style.left = '20px';
+                projectDetails.style.right = '20px';
+                projectDetails.style.maxHeight = 'none'; // Allow full height on mobile
+                projectDetails.style.overflowY = 'visible';
+                projectDetails.style.padding = '1rem';
+                projectDetails.style.paddingBottom = '3rem';
+                projectDetails.style.minHeight = '100vh'; // Ensure enough content to scroll
+            } else {
+                // Desktop: position to the right of card
             const projectDetailsPadding = 32; // 2rem = 32px
             const scaledHeight = rect.height * 1.15;
             const heightIncrease = scaledHeight - rect.height;
             const visualTopY = topLeftY - (heightIncrease / 2);
-            // Position container so text content aligns with card's top border
             projectDetails.style.top = '20px';
             projectDetails.style.left = (cardVisualLeft + rect.width * 1.15 + 30) + 'px'; // To the right of card
             projectDetails.style.right = '0'; // Stretch to right edge of screen
             projectDetails.style.maxHeight = '90vh';
             projectDetails.style.overflowY = 'auto';
+                projectDetails.style.padding = '1.5rem';
+            }
+            
             projectDetails.style.scrollbarWidth = 'none'; // Firefox
             projectDetails.style.msOverflowStyle = 'none'; // IE/Edge
             projectDetails.style.webkitScrollbar = 'none'; // Webkit
-            projectDetails.style.zIndex = '1001';
-            projectDetails.style.padding = '1.5rem';
-            projectDetails.style.backgroundColor = 'transparent';
             
             // Add project details content based on project
             let projectContent = getProjectDetails(projectName);
@@ -1124,7 +1178,7 @@
         }
 
         // Load project images function
-        async function loadProjectImages(projectName, container) {
+        async function loadProjectImages(projectName, container, isMobile = false) {
             // Map project names to their folder names
             const projectFolderMap = {
                 '3dprinter': 'ExtraImages_3DPrinter',
@@ -1167,7 +1221,9 @@
                 images.forEach(imageData => {
                     const imageCard = document.createElement('div');
                     imageCard.className = 'project-card gallery-card';
-                    imageCard.style.width = '100%';
+                    imageCard.style.width = isMobile ? '85vw' : '100%';
+                    imageCard.style.flexShrink = isMobile ? '0' : 'initial';
+                    imageCard.style.scrollSnapAlign = isMobile ? 'start' : 'initial';
                     imageCard.style.height = 'auto';
                     imageCard.style.backgroundColor = 'var(--card-bg)';
                     imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x
@@ -1238,7 +1294,9 @@
                 images.forEach(imageData => {
                     const imageCard = document.createElement('div');
                     imageCard.className = 'project-card gallery-card';
-                    imageCard.style.width = '100%';
+                    imageCard.style.width = isMobile ? '85vw' : '100%';
+                    imageCard.style.flexShrink = isMobile ? '0' : 'initial';
+                    imageCard.style.scrollSnapAlign = isMobile ? 'start' : 'initial';
                     imageCard.style.height = 'auto';
                     imageCard.style.backgroundColor = 'var(--card-bg)';
                     imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x
@@ -1305,7 +1363,9 @@
                 images.forEach(imageData => {
                     const imageCard = document.createElement('div');
                     imageCard.className = 'project-card gallery-card';
-                    imageCard.style.width = '100%';
+                    imageCard.style.width = isMobile ? '85vw' : '100%';
+                    imageCard.style.flexShrink = isMobile ? '0' : 'initial';
+                    imageCard.style.scrollSnapAlign = isMobile ? 'start' : 'initial';
                     imageCard.style.height = 'auto';
                     imageCard.style.backgroundColor = 'var(--card-bg)';
                     imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x
@@ -1368,7 +1428,9 @@
                 images.forEach(imageData => {
                     const imageCard = document.createElement('div');
                     imageCard.className = 'project-card gallery-card';
-                    imageCard.style.width = '100%';
+                    imageCard.style.width = isMobile ? '85vw' : '100%';
+                    imageCard.style.flexShrink = isMobile ? '0' : 'initial';
+                    imageCard.style.scrollSnapAlign = isMobile ? 'start' : 'initial';
                     imageCard.style.height = 'auto';
                     imageCard.style.backgroundColor = 'var(--card-bg)';
                     imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x
@@ -1439,7 +1501,9 @@
                 images.forEach(imageData => {
                     const imageCard = document.createElement('div');
                     imageCard.className = 'project-card gallery-card';
-                    imageCard.style.width = '100%';
+                    imageCard.style.width = isMobile ? '85vw' : '100%';
+                    imageCard.style.flexShrink = isMobile ? '0' : 'initial';
+                    imageCard.style.scrollSnapAlign = isMobile ? 'start' : 'initial';
                     imageCard.style.height = 'auto';
                     imageCard.style.backgroundColor = 'var(--card-bg)';
                     imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x

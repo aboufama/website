@@ -930,3 +930,79 @@ html {
     }
 }
 
+/* Mobile Project Detail View Optimization */
+@media (max-width: 768px) {
+    /* Enable body scrolling on mobile for project details */
+    body.project-active {
+        overflow-y: auto !important;
+        overflow-x: hidden;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    /* Overlay should allow scrolling on mobile */
+    .project-overlay.active {
+        height: auto;
+        min-height: 200vh; /* Extend to allow scrolling */
+        overflow-y: visible;
+    }
+    
+    /* Gallery horizontal scrolling on mobile */
+    .project-gallery {
+        position: absolute !important;
+        overflow-x: hidden !important;
+        overflow-y: visible !important;
+        height: auto !important;
+        min-height: auto !important;
+    }
+    
+    /* Horizontal scroll container for gallery images */
+    .project-gallery > div {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x mandatory;
+        gap: 1rem !important;
+        padding-bottom: 1rem;
+    }
+    
+    /* Make gallery cards flex items on mobile */
+    .project-gallery .gallery-card {
+        flex: 0 0 85vw !important;
+        width: 85vw !important;
+        max-width: 85vw !important;
+        scroll-snap-align: start;
+    }
+    
+    /* Project details below gallery on mobile */
+    .project-details {
+        position: absolute !important;
+        max-height: none !important;
+        overflow-y: visible !important;
+        width: calc(100% - 40px) !important;
+        margin-bottom: 2rem;
+    }
+    
+    /* Scale down card slightly less on mobile */
+    .project-card.active {
+        transform: scale(1.05) !important;
+    }
+    
+    /* Reduce card scale on very small screens */
+    @media (max-width: 480px) {
+        .project-card.active {
+            transform: scale(1.02) !important;
+        }
+    }
+    
+    /* Back button positioning on mobile */
+    .back-button {
+        position: fixed !important;
+        top: 10px !important;
+        left: 10px !important;
+        z-index: 1003 !important;
+    }
+}
+
