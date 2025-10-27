@@ -19,6 +19,7 @@
     --border-accent: #ffffff;
     --success-color: #38a169;
     --warning-color: #d69e2e;
+    --wip-yellow: #ffd700;
     --cornell-red: #ef4444;
     --accent-blue: #60a5fa;
     --accent-purple: #a78bfa;
@@ -314,7 +315,6 @@ main {
 
 /* Project card hover effects */
 .project-card:hover {
-    transform: scale(0.95);
     border-color: var(--text-primary);
     box-shadow: 0 0 24px rgba(255, 255, 255, 0.35), 0 0 10px rgba(255, 255, 255, 0.25);
     z-index: 10;
@@ -416,6 +416,41 @@ main {
     border-color: var(--warning-color);
     border-width: 1px;
     font-weight: 500;
+}
+
+.wip-tag {
+    background-color: rgba(255, 215, 0, 0.2);
+    color: var(--wip-yellow);
+    border-color: var(--wip-yellow);
+    border-width: 2px;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.wip-tag::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 215, 0, 0.3),
+        transparent
+    );
+    animation: wip-tape 2s linear infinite;
+}
+
+@keyframes wip-tape {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
 }
 
 
