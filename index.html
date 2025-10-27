@@ -450,6 +450,37 @@
                 const card = link.querySelector('.project-card');
                 const rect = card.getBoundingClientRect();
                 
+                // Detect mobile
+                const isMobile = window.innerWidth <= 768;
+                
+                if (isMobile) {
+                    // Mobile: Simple fullscreen view with no animations
+                    document.body.style.overflow = 'hidden';
+                    overlay.classList.add('active');
+                    
+                    // Hide everything immediately
+                    document.querySelectorAll('.project-card-link').forEach(otherLink => {
+                        otherLink.style.display = 'none';
+                    });
+                    document.querySelector('.hero').style.display = 'none';
+                    document.querySelectorAll('.section').forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    
+                    // Create mobile view immediately
+                    createMobileProjectView(link, card);
+                    
+                    activeProject = { 
+                        card, 
+                        link,
+                        isMobile: true,
+                        gallery: null,
+                        backButton: null,
+                        projectDetails: null,
+                        mobileContainer: null
+                    };
+                } else {
+                    // Desktop: Original animation behavior
                 // Store original position for reverse animation
                 const originalTransform = card.style.transform;
                 const originalPosition = {
@@ -461,18 +492,10 @@
                 
                 // Freeze page (prevent layout shift by compensating scrollbar width)
                 const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-                const isMobile = window.innerWidth <= 768;
-                
-                if (!isMobile) {
-                    // Only freeze scrolling on desktop
                 if (scrollbarWidth > 0) {
                     document.body.style.paddingRight = scrollbarWidth + 'px';
                 }
                 document.body.style.overflow = 'hidden';
-                } else {
-                    // On mobile, allow scrolling and add class for styling
-                    document.body.classList.add('project-active');
-                }
                 overlay.classList.add('active');
                 
                 // Keep card visible and make non-interactable
@@ -532,9 +555,11 @@
                         backButton: null,
                         projectDetails: null,
                         originalTransform,
-                        originalPosition 
+                            originalPosition,
+                            isMobile: false
                     };
                 }, 100);
+                }
             };
             
             // Add both click and keyboard event listeners
@@ -574,6 +599,29 @@
         function closeProject() {
             if (!activeProject) return;
             
+            if (activeProject.isMobile) {
+                // Mobile: Simple cleanup
+                if (activeProject.mobileContainer) {
+                    activeProject.mobileContainer.remove();
+                }
+                if (activeProject.backButton) {
+                    activeProject.backButton.remove();
+                }
+                
+                // Restore everything
+                document.querySelectorAll('.project-card-link').forEach(otherLink => {
+                    otherLink.style.display = '';
+                });
+                document.querySelector('.hero').style.display = '';
+                document.querySelectorAll('.section').forEach(section => {
+                    section.style.display = '';
+                });
+                
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+                activeProject = null;
+            } else {
+                // Desktop: Original animation behavior
             // Remove gallery, back button, and project details immediately
             if (activeProject.gallery) {
                 activeProject.gallery.remove();
@@ -627,7 +675,6 @@
                     overlay.style.backgroundColor = '';
                     document.body.style.overflow = '';
                     document.body.style.paddingRight = '';
-                    document.body.classList.remove('project-active');
                     activeProject = null;
                 };
                 overlay.addEventListener('transitionend', onOverlayFade);
@@ -635,6 +682,157 @@
             
             // Attach listener to ensure we mirror the forward animation timing
             activeProject.card.addEventListener('transitionend', onTransitionEnd);
+            }
+        }
+        
+        // Mobile project view creation function
+        async function createMobileProjectView(link, card) {
+            const projectPath = link.getAttribute('href');
+            const projectName = projectPath.split('/').pop().replace('.html', '');
+            
+            // Create mobile container that scrolls
+            const mobileContainer = document.createElement('div');
+            mobileContainer.style.position = 'fixed';
+            mobileContainer.style.top = '0';
+            mobileContainer.style.left = '0';
+            mobileContainer.style.width = '100%';
+            mobileContainer.style.height = '100vh';
+            mobileContainer.style.overflowY = 'auto';
+            mobileContainer.style.overflowX = 'hidden';
+            mobileContainer.style.backgroundColor = 'var(--bg-color)';
+            mobileContainer.style.zIndex = '1002';
+            mobileContainer.style.padding = '0';
+            
+            // Create back button - small and at top left
+            const backButton = document.createElement('button');
+            backButton.innerHTML = '← Back';
+            backButton.style.position = 'fixed';
+            backButton.style.top = '10px';
+            backButton.style.left = '10px';
+            backButton.style.padding = '6px 12px';
+            backButton.style.fontSize = '14px';
+            backButton.style.backgroundColor = 'var(--card-bg)';
+            backButton.style.border = '1px solid var(--border-color)';
+            backButton.style.borderRadius = '6px';
+            backButton.style.color = 'var(--text-primary)';
+            backButton.style.cursor = 'pointer';
+            backButton.style.zIndex = '1003';
+            backButton.style.fontFamily = 'Inter, sans-serif';
+            backButton.addEventListener('click', closeProject);
+            document.body.appendChild(backButton);
+            
+            // Create horizontal scrolling gallery
+            const gallerySection = document.createElement('div');
+            gallerySection.style.width = '100%';
+            gallerySection.style.overflowX = 'auto';
+            gallerySection.style.overflowY = 'hidden';
+            gallerySection.style.padding = '50px 0 20px 0'; // Top padding for back button
+            gallerySection.style.whiteSpace = 'nowrap';
+            gallerySection.style.webkitOverflowScrolling = 'touch'; // Smooth scrolling on iOS
+            
+            const galleryContent = document.createElement('div');
+            galleryContent.style.display = 'inline-flex';
+            galleryContent.style.gap = '1rem';
+            galleryContent.style.padding = '0 1rem';
+            
+            // Load project images horizontally
+            await loadMobileProjectImages(projectName, galleryContent);
+            
+            gallerySection.appendChild(galleryContent);
+            mobileContainer.appendChild(gallerySection);
+            
+            // Add project details text below gallery
+            const projectDetails = document.createElement('div');
+            projectDetails.style.padding = '1.5rem';
+            projectDetails.style.color = 'var(--text-primary)';
+            projectDetails.style.whiteSpace = 'normal';
+            projectDetails.innerHTML = getProjectDetails(projectName);
+            mobileContainer.appendChild(projectDetails);
+            
+            document.body.appendChild(mobileContainer);
+            
+            // Store references
+            activeProject.mobileContainer = mobileContainer;
+            activeProject.backButton = backButton;
+        }
+        
+        // Load images for mobile (horizontal layout)
+        async function loadMobileProjectImages(projectName, container) {
+            // Map project names to their folder names
+            const projectFolderMap = {
+                'drone': 'ExtraImages_Drone',
+                'grasshopper': 'ExtraImages_Grasshopper',
+                'hydroponics': 'ExtraImages_Hydroponics',
+                'vtol': 'ExtraImages_VTOL',
+                'vex': 'ExtraImages_VEX',
+                'rover': 'ExtraImages_Rover',
+                '3dprinter': 'ExtraImages_3DPrinter',
+                'chickencoop': 'ExtraImages_ChickenCoop',
+                'overpass': 'ExtraImages_Overpass',
+                'geniechatbot': 'ExtraImages_GenieChatbot',
+                'greenhouse': 'ExtraImages_Greenhouse'
+            };
+            
+            const folderName = projectFolderMap[projectName];
+            if (!folderName) return;
+            
+            // Try to load up to 10 images
+            for (let i = 1; i <= 10; i++) {
+                const imagePath = `project-galleries/${folderName}/Image${i}.png`;
+                
+                try {
+                    // Check if image exists
+                    const img = new Image();
+                    await new Promise((resolve, reject) => {
+                        img.onload = resolve;
+                        img.onerror = reject;
+                        img.src = imagePath;
+                    });
+                    
+                    // Create image card
+                    const imageCard = document.createElement('div');
+                    imageCard.style.display = 'inline-block';
+                    imageCard.style.width = '85vw';
+                    imageCard.style.maxWidth = '400px';
+                    imageCard.style.flexShrink = '0';
+                    imageCard.style.backgroundColor = 'var(--card-bg)';
+                    imageCard.style.borderRadius = '12px';
+                    imageCard.style.border = '1px solid var(--border-color)';
+                    imageCard.style.overflow = 'hidden';
+                    imageCard.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+                    
+                    const imageEl = document.createElement('img');
+                    imageEl.src = imagePath;
+                    imageEl.style.width = '100%';
+                    imageEl.style.height = 'auto';
+                    imageEl.style.display = 'block';
+                    
+                    imageCard.appendChild(imageEl);
+                    
+                    // Try to load caption
+                    try {
+                        const captionPath = `project-galleries/${folderName}/Image${i}.txt`;
+                        const response = await fetch(captionPath);
+                        if (response.ok) {
+                            const caption = await response.text();
+                            const captionEl = document.createElement('div');
+                            captionEl.textContent = caption.trim();
+                            captionEl.style.padding = '0.75rem';
+                            captionEl.style.fontSize = '0.9rem';
+                            captionEl.style.color = 'var(--text-muted)';
+                            captionEl.style.borderTop = '1px solid var(--border-color)';
+                            imageCard.appendChild(captionEl);
+                        }
+                    } catch (e) {
+                        // No caption, that's fine
+                    }
+                    
+                    container.appendChild(imageCard);
+                } catch (e) {
+                    // Image doesn't exist, stop trying
+                    break;
+                }
+            }
         }
         
         // Gallery creation function
@@ -642,9 +840,6 @@
             // Get project name from link href
             const projectPath = link.getAttribute('href');
             const projectName = projectPath.split('/').pop().replace('.html', '');
-            
-            // Detect mobile
-            const isMobile = window.innerWidth <= 768;
             
             // Create gallery container
             const gallery = document.createElement('div');
@@ -658,23 +853,10 @@
             gallery.style.overflowX = 'hidden';
             gallery.style.zIndex = '1000';
             gallery.style.backgroundColor = 'transparent';
-            
+            gallery.style.paddingTop = (topLeftY + rect.height * 1.15 + 20) + 'px'; // Start below main card
             // Account for scaling offset - card's visual left edge after scaling
             const cardVisualLeft = topLeftX - (rect.width * 0.15) / 2; // Subtract half the width increase from scaling
-            
-            if (isMobile) {
-                // Mobile: gallery starts below card, use absolute positioning for scrolling
-                gallery.style.position = 'absolute';
-                gallery.style.paddingTop = (topLeftY + rect.height * 1.15 + 20) + 'px';
-                gallery.style.paddingLeft = '20px';
-                gallery.style.paddingRight = '20px';
-                gallery.style.height = 'auto'; // Auto height on mobile
-            } else {
-                // Desktop: gallery starts below card
-                gallery.style.paddingTop = (topLeftY + rect.height * 1.15 + 20) + 'px';
             gallery.style.paddingLeft = cardVisualLeft + 'px';
-            }
-            
             gallery.style.display = 'block';
             gallery.style.transition = 'height 0.4s ease-out'; // Smooth height animation
             
@@ -693,29 +875,14 @@
             // Create gallery content (images only)
             const galleryContent = document.createElement('div');
             galleryContent.style.display = 'flex';
-            
-            if (isMobile) {
-                // Mobile: horizontal scrolling gallery
-                galleryContent.style.flexDirection = 'row';
-                galleryContent.style.gap = '1rem';
-                galleryContent.style.overflowX = 'auto';
-                galleryContent.style.overflowY = 'hidden';
-                galleryContent.style.width = '100%';
-                galleryContent.style.paddingBottom = '1rem';
-                // Enable horizontal scrolling on mobile
-                galleryContent.style.scrollbarWidth = 'thin';
-                galleryContent.style.scrollSnapType = 'x mandatory';
-            } else {
-                // Desktop: vertical layout
             galleryContent.style.flexDirection = 'column';
             galleryContent.style.gap = '2rem';
             galleryContent.style.width = (rect.width * 1.15) + 'px';
-            }
             
             // Don't add the main card - it's already positioned above
             
             // Load additional images for this project
-            await loadProjectImages(projectName, galleryContent, isMobile);
+            await loadProjectImages(projectName, galleryContent);
             
             gallery.appendChild(galleryContent);
             document.body.appendChild(gallery);
@@ -724,37 +891,23 @@
             const projectDetails = document.createElement('div');
             projectDetails.className = 'project-details';
             projectDetails.style.position = 'fixed';
-            projectDetails.style.zIndex = '1001';
-            projectDetails.style.backgroundColor = 'transparent';
-            
-            if (isMobile) {
-                // Mobile: position below gallery - use absolute positioning for scrolling
-                projectDetails.style.position = 'absolute';
-                projectDetails.style.top = (topLeftY + rect.height * 1.15 + 280) + 'px'; // Space for horizontal gallery
-                projectDetails.style.left = '20px';
-                projectDetails.style.right = '20px';
-                projectDetails.style.maxHeight = 'none'; // Allow full height on mobile
-                projectDetails.style.overflowY = 'visible';
-                projectDetails.style.padding = '1rem';
-                projectDetails.style.paddingBottom = '3rem';
-                projectDetails.style.minHeight = '100vh'; // Ensure enough content to scroll
-            } else {
-                // Desktop: position to the right of card
+            // Calculate position to align project details text with card's top border
             const projectDetailsPadding = 32; // 2rem = 32px
             const scaledHeight = rect.height * 1.15;
             const heightIncrease = scaledHeight - rect.height;
             const visualTopY = topLeftY - (heightIncrease / 2);
+            // Position container so text content aligns with card's top border
             projectDetails.style.top = '20px';
             projectDetails.style.left = (cardVisualLeft + rect.width * 1.15 + 30) + 'px'; // To the right of card
             projectDetails.style.right = '0'; // Stretch to right edge of screen
             projectDetails.style.maxHeight = '90vh';
             projectDetails.style.overflowY = 'auto';
-                projectDetails.style.padding = '1.5rem';
-            }
-            
             projectDetails.style.scrollbarWidth = 'none'; // Firefox
             projectDetails.style.msOverflowStyle = 'none'; // IE/Edge
             projectDetails.style.webkitScrollbar = 'none'; // Webkit
+            projectDetails.style.zIndex = '1001';
+            projectDetails.style.padding = '1.5rem';
+            projectDetails.style.backgroundColor = 'transparent';
             
             // Add project details content based on project
             let projectContent = getProjectDetails(projectName);
@@ -1178,7 +1331,7 @@
         }
 
         // Load project images function
-        async function loadProjectImages(projectName, container, isMobile = false) {
+        async function loadProjectImages(projectName, container) {
             // Map project names to their folder names
             const projectFolderMap = {
                 '3dprinter': 'ExtraImages_3DPrinter',
@@ -1221,9 +1374,7 @@
                 images.forEach(imageData => {
                     const imageCard = document.createElement('div');
                     imageCard.className = 'project-card gallery-card';
-                    imageCard.style.width = isMobile ? '85vw' : '100%';
-                    imageCard.style.flexShrink = isMobile ? '0' : 'initial';
-                    imageCard.style.scrollSnapAlign = isMobile ? 'start' : 'initial';
+                    imageCard.style.width = '100%';
                     imageCard.style.height = 'auto';
                     imageCard.style.backgroundColor = 'var(--card-bg)';
                     imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x
@@ -1294,9 +1445,7 @@
                 images.forEach(imageData => {
                     const imageCard = document.createElement('div');
                     imageCard.className = 'project-card gallery-card';
-                    imageCard.style.width = isMobile ? '85vw' : '100%';
-                    imageCard.style.flexShrink = isMobile ? '0' : 'initial';
-                    imageCard.style.scrollSnapAlign = isMobile ? 'start' : 'initial';
+                    imageCard.style.width = '100%';
                     imageCard.style.height = 'auto';
                     imageCard.style.backgroundColor = 'var(--card-bg)';
                     imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x
@@ -1363,9 +1512,7 @@
                 images.forEach(imageData => {
                     const imageCard = document.createElement('div');
                     imageCard.className = 'project-card gallery-card';
-                    imageCard.style.width = isMobile ? '85vw' : '100%';
-                    imageCard.style.flexShrink = isMobile ? '0' : 'initial';
-                    imageCard.style.scrollSnapAlign = isMobile ? 'start' : 'initial';
+                    imageCard.style.width = '100%';
                     imageCard.style.height = 'auto';
                     imageCard.style.backgroundColor = 'var(--card-bg)';
                     imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x
@@ -1428,9 +1575,7 @@
                 images.forEach(imageData => {
                     const imageCard = document.createElement('div');
                     imageCard.className = 'project-card gallery-card';
-                    imageCard.style.width = isMobile ? '85vw' : '100%';
-                    imageCard.style.flexShrink = isMobile ? '0' : 'initial';
-                    imageCard.style.scrollSnapAlign = isMobile ? 'start' : 'initial';
+                    imageCard.style.width = '100%';
                     imageCard.style.height = 'auto';
                     imageCard.style.backgroundColor = 'var(--card-bg)';
                     imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x
@@ -1501,9 +1646,7 @@
                 images.forEach(imageData => {
                     const imageCard = document.createElement('div');
                     imageCard.className = 'project-card gallery-card';
-                    imageCard.style.width = isMobile ? '85vw' : '100%';
-                    imageCard.style.flexShrink = isMobile ? '0' : 'initial';
-                    imageCard.style.scrollSnapAlign = isMobile ? 'start' : 'initial';
+                    imageCard.style.width = '100%';
                     imageCard.style.height = 'auto';
                     imageCard.style.backgroundColor = 'var(--card-bg)';
                     imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x
