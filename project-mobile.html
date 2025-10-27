@@ -406,40 +406,55 @@
             
             // Try to load up to 10 images
             for (let i = 1; i <= 10; i++) {
-                const imagePath = `${folderPath}Image${i}.png`;
+                let imagePath = null;
+                let foundImage = false;
                 
-                try {
-                    // Check if image exists
-                    const img = new Image();
-                    await new Promise((resolve, reject) => {
-                        img.onload = resolve;
-                        img.onerror = reject;
-                        img.src = imagePath;
-                    });
+                // Try both .png and .jpg extensions
+                for (const ext of ['.png', '.jpg']) {
+                    const testPath = `${folderPath}Image${i}${ext}`;
                     
-                    // Create gallery item
-                    const item = document.createElement('div');
-                    item.className = 'gallery-item';
-                    
-                    const imageEl = document.createElement('img');
-                    imageEl.src = imagePath;
-                    imageEl.alt = `Project image ${i}`;
-                    item.appendChild(imageEl);
-                    
-                    // Try to load caption
-                    const captionKey = `Image${i}`;
-                    if (captions[captionKey]) {
-                        const captionEl = document.createElement('div');
-                        captionEl.className = 'gallery-caption';
-                        captionEl.textContent = captions[captionKey];
-                        item.appendChild(captionEl);
+                    try {
+                        // Check if image exists
+                        const img = new Image();
+                        await new Promise((resolve, reject) => {
+                            img.onload = resolve;
+                            img.onerror = reject;
+                            img.src = testPath;
+                        });
+                        
+                        imagePath = testPath;
+                        foundImage = true;
+                        break;
+                    } catch (e) {
+                        // Try next extension
+                        continue;
                     }
-                    
-                    galleryScroll.appendChild(item);
-                } catch (e) {
-                    // Image doesn't exist, stop trying
+                }
+                
+                if (!foundImage) {
+                    // No more images found, stop trying
                     break;
                 }
+                
+                // Create gallery item
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                
+                const imageEl = document.createElement('img');
+                imageEl.src = imagePath;
+                imageEl.alt = `Project image ${i}`;
+                item.appendChild(imageEl);
+                
+                // Try to load caption
+                const captionKey = `Image${i}`;
+                if (captions[captionKey]) {
+                    const captionEl = document.createElement('div');
+                    captionEl.className = 'gallery-caption';
+                    captionEl.textContent = captions[captionKey];
+                    item.appendChild(captionEl);
+                }
+                
+                galleryScroll.appendChild(item);
             }
         }
         
