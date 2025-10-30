@@ -215,32 +215,8 @@
                         </div>
                     </div>
                 </a>
-            </div>
-        </section>
 
-        <!-- Design Section -->
-        <section class="project-section">
-            <h2 class="section-title">Design Projects <span class="section-subtitle">- [Designed and Rendered by Me]</span></h2>
-            <div class="projects-grid">
-                <!-- Overpass Oasis -->
-                <a href="projects/overpass.html" class="project-card-link" aria-label="View Suspension Bridge Pedestrian Walkway project details" tabindex="0">
-                    <div class="project-card">
-                        <div class="project-image-container">
-                            <img src="images/OverpassOasis.png" alt="Suspension Bridge Pedestrian Walkway - Innovative bridge design with structural analysis" class="project-image" loading="lazy" width="300" height="200">
-                        </div>
-                        <div class="project-info">
-                            <h3>Suspension Bridge Pedestrian Walkway</h3>
-                            <p class="project-tags">
-                                <span class="tag award-tag">Award Winner</span>
-                                <span class="tag">Finite Element Analysis</span>
-                                <span class="tag">Fusion360</span>
-                                <span class="tag">Blender</span>
-                            </p>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- Genie RAG Agent -->
+                <!-- RAG LLM for Inventory -->
                 <a href="projects/genie.html" class="project-card-link" aria-label="View RAG LLM for Inventory Management project details" tabindex="0">
                     <div class="project-card">
                         <div class="project-image-container">
@@ -251,25 +227,49 @@
                             <p class="project-tags">
                                 <span class="tag">Databricks</span>
                                 <span class="tag">LLM Fine Tuning</span>
+                                <span class="tag">Automation</span>
                             </p>
                         </div>
                     </div>
                 </a>
+            </div>
+        </section>
 
-                <!-- Sustainable Greenhouse Design -->
-                <a href="projects/greenhouse.html" class="project-card-link" aria-label="View Sustainable Greenhouse Design project details" tabindex="0">
-                    <div class="project-card">
-                        <div class="project-image-container">
-                            <img src="images/greenhouse.png" alt="Sustainable Greenhouse Design - Fogg Field greenhouse and recreation facility" class="project-image" loading="lazy" width="300" height="200">
+        <!-- Design Section -->
+        <section class="design-showcase">
+            <div class="design-header">
+                <h2 class="section-title">Design Projects <span class="section-subtitle">- [Designed and Rendered by Me]</span></h2>
+            </div>
+            <div class="design-grid">
+                <a href="projects/overpass.html" class="project-card-link design-card-link" aria-label="View Suspension Bridge Pedestrian Walkway project details" tabindex="0">
+                    <div class="project-card design-card">
+                        <div class="project-image-container design-image-wrapper">
+                            <img src="images/OverpassOasis.png" alt="Suspension Bridge Pedestrian Walkway - Innovative bridge design with structural analysis" class="project-image" loading="lazy" width="640" height="400">
                         </div>
-                        <div class="project-info">
-                            <h3>Sustainable Greenhouse Design</h3>
-                            <p class="project-tags">
+                        <div class="design-label">
+                            <span class="design-title">Suspension Bridge Pedestrian Walkway</span>
+                            <div class="design-tags">
+                                <span class="tag award-tag">Award Winner</span>
+                                <span class="tag">Finite Element Analysis</span>
+                                <span class="tag">Fusion360</span>
+                                <span class="tag">Blender</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="projects/greenhouse.html" class="project-card-link design-card-link" aria-label="View Sustainable Greenhouse Design project details" tabindex="0">
+                    <div class="project-card design-card">
+                        <div class="project-image-container design-image-wrapper">
+                            <img src="images/greenhouse.png" alt="Sustainable Greenhouse Design - Fogg Field greenhouse and recreation facility" class="project-image" loading="lazy" width="640" height="400">
+                        </div>
+                        <div class="design-label">
+                            <span class="design-title">Sustainable Greenhouse Design</span>
+                            <div class="design-tags">
                                 <span class="tag">Systems Design</span>
                                 <span class="tag">Sustainability</span>
                                 <span class="tag">Fusion360</span>
                                 <span class="tag">Blender</span>
-                            </p>
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -392,42 +392,85 @@
             }
         });
 
-        // Mouse-following glow effect for main title
+        // Subtle glass-follow effect for main title
         document.addEventListener('DOMContentLoaded', function() {
             const mainTitle = document.querySelector('.main-title');
-            if (mainTitle) {
-                // Create glow element
-                const glowElement = document.createElement('div');
-                glowElement.style.position = 'absolute';
-                glowElement.style.width = '300px';
-                glowElement.style.height = '300px';
-                glowElement.style.background = 'radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.2) 30%, transparent 70%)';
-                glowElement.style.borderRadius = '50%';
-                glowElement.style.pointerEvents = 'none';
-                glowElement.style.zIndex = '1';
-                glowElement.style.transition = 'opacity 0.2s ease-out';
-                glowElement.style.opacity = '0';
-                glowElement.style.transform = 'translate(-50%, -50%)';
-                
-                mainTitle.style.position = 'relative';
-                mainTitle.style.zIndex = '2';
-                mainTitle.appendChild(glowElement);
-                
-                // Mouse move handler
-                mainTitle.addEventListener('mousemove', function(e) {
+            if (!mainTitle) return;
+
+            const setGlassFromRelative = (relativeX = 0.5, relativeY = 0.5) => {
+                const clampedX = Math.min(1, Math.max(0, relativeX));
+                const clampedY = Math.min(1, Math.max(0, relativeY));
+                const percentX = (clampedX * 100).toFixed(2) + '%';
+                const percentY = (clampedY * 100).toFixed(2) + '%';
+
+                mainTitle.style.setProperty('--glass-x', percentX);
+                mainTitle.style.setProperty('--glass-y', percentY);
+
+                const backgroundShift = (40 + clampedX * 20).toFixed(2) + '%';
+                mainTitle.style.setProperty('--glass-bg-pos', backgroundShift);
+            };
+
+            const activateGlass = (event) => {
+                if (event && event.clientX != null && event.clientY != null) {
                     const rect = mainTitle.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    glowElement.style.left = x + 'px';
-                    glowElement.style.top = y + 'px';
-                    glowElement.style.opacity = '1';
-                });
-                
-                mainTitle.addEventListener('mouseleave', function() {
-                    glowElement.style.opacity = '0';
-                });
-            }
+                    const relativeX = (event.clientX - rect.left) / rect.width;
+                    const relativeY = (event.clientY - rect.top) / rect.height;
+                    setGlassFromRelative(relativeX, relativeY);
+                } else {
+                    setGlassFromRelative();
+                }
+
+                mainTitle.style.setProperty('--glass-opacity', '0.62');
+                mainTitle.classList.add('glass-active');
+            };
+
+            const fadeGlass = () => {
+                mainTitle.style.setProperty('--glass-opacity', '0.32');
+                mainTitle.classList.remove('glass-active');
+            };
+
+            mainTitle.addEventListener('pointermove', activateGlass);
+            mainTitle.addEventListener('pointerenter', activateGlass);
+            mainTitle.addEventListener('pointerleave', fadeGlass);
+            mainTitle.addEventListener('focus', () => activateGlass());
+            mainTitle.addEventListener('blur', fadeGlass);
+
+            // Set initial subtle glass alignment
+            setGlassFromRelative();
+            mainTitle.style.setProperty('--glass-opacity', '0.32');
+        });
+
+        // Card glass shimmer tracking
+        document.addEventListener('DOMContentLoaded', function() {
+            const projectCards = document.querySelectorAll('.project-card');
+
+            projectCards.forEach(card => {
+                const primaryImage = card.querySelector('.project-image');
+                if (primaryImage) {
+                    const applyImageVariable = () => {
+                        const src = primaryImage.currentSrc || primaryImage.src;
+                        if (src) {
+                            const safeSrc = src.replace(/"/g, '\"');
+                            card.style.setProperty('--card-image', `url("${safeSrc}")`);
+                        }
+                    };
+
+                    if (primaryImage.complete && primaryImage.naturalWidth) {
+                        applyImageVariable();
+                    } else {
+                        primaryImage.addEventListener('load', applyImageVariable, { once: true });
+                    }
+                }
+
+                const setGlass = (relativeX = 0.5, relativeY = 0.45) => {
+                    const clampedX = Math.min(1, Math.max(0, relativeX));
+                    const clampedY = Math.min(1, Math.max(0, relativeY));
+                    card.style.setProperty('--card-glass-x', `${(clampedX * 100).toFixed(2)}%`);
+                    card.style.setProperty('--card-glass-y', `${(clampedY * 100).toFixed(2)}%`);
+                };
+
+                setGlass();
+            });
         });
 
         // Project card expansion system - COMPLETE REWRITE
@@ -509,31 +552,61 @@
                     card.style.position = 'relative';
                     card.style.zIndex = '1003';
                     card.style.willChange = 'transform';
-                    
+
+                    const isDesignCard = link.classList.contains('design-card-link');
                     const cardCenterX = rect.left + rect.width / 2;
                     const cardCenterY = rect.top + rect.height / 2;
                     const arrowWidth = 50;
                     const gap = 15;
-                    const topLeftX = 30 + arrowWidth + gap; // Position card to the right of arrow
+                    const topLeftX = isDesignCard ? 20 + arrowWidth + gap : 30 + arrowWidth + gap; // Position card to the right of arrow, slightly left for design
                     const topLeftY = 50; // Position card 50px from top edge
-                    const offsetX = topLeftX - rect.left;
-                    const offsetY = topLeftY - rect.top;
+
+                    let scaleFactor = 1.15;
+                    let offsetX, offsetY;
                     
-                    card.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(1.15)`;
+                    if (isDesignCard) {
+                        const targetWidth = 600;
+                        scaleFactor = Math.min(1.0, targetWidth / rect.width);
+                        card.style.transformOrigin = 'center top';
+                        // For center top origin, we need to adjust the offset
+                        // The left edge after scaling from center: rect.left + (rect.width - rect.width*scaleFactor)/2
+                        // We want the left edge at topLeftX, so:
+                        const scaledWidth = rect.width * scaleFactor;
+                        const centerX = rect.left + rect.width / 2;
+                        offsetX = topLeftX + scaledWidth / 2 - centerX;
+                        offsetY = topLeftY - rect.top;
+                    } else {
+                        card.style.transformOrigin = '';
+                        offsetX = topLeftX - rect.left;
+                        offsetY = topLeftY - rect.top;
+                    }
+
+                    card.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scaleFactor})`;
+
+                    // Hide design label for design cards
+                    if (isDesignCard) {
+                        const designLabel = card.querySelector('.design-label');
+                        if (designLabel) {
+                            designLabel.style.opacity = '0';
+                            designLabel.style.transition = 'opacity 0.3s ease';
+                        }
+                    }
 
                     // Create vertical gallery system - wait for card animation to complete
                     setTimeout(async () => {
-                        await createProjectGallery(link, card, topLeftX, topLeftY, rect);
+                        const adjustedRect = isDesignCard ? { width: rect.width * scaleFactor, height: rect.height * scaleFactor } : rect;
+                        const galleryScaleFactor = isDesignCard ? scaleFactor : 1;
+                        await createProjectGallery(link, card, topLeftX, topLeftY, adjustedRect, galleryScaleFactor);
                     }, 600); // Wait for card animation duration
 
-                    activeProject = { 
-                        card, 
-                        link, 
+                    activeProject = {
+                        card,
+                        link,
                         gallery: null,
                         backButton: null,
                         projectDetails: null,
                         originalTransform,
-                        originalPosition 
+                        originalPosition
                     };
                 }, 100);
             };
@@ -592,6 +665,16 @@
             activeProject.card.style.zIndex = '1003';
             activeProject.card.classList.remove('active');
             activeProject.card.style.transform = activeProject.originalTransform;
+            
+            // Restore design label if it's a design card
+            const isDesignCard = activeProject.link.classList.contains('design-card-link');
+            if (isDesignCard) {
+                const designLabel = activeProject.card.querySelector('.design-label');
+                if (designLabel) {
+                    designLabel.style.opacity = '1';
+                    designLabel.style.transition = '';
+                }
+            }
 
             const onTransitionEnd = (ev) => {
                 if (ev.propertyName !== 'transform') return;
@@ -638,10 +721,16 @@
         }
         
         // Gallery creation function
-        async function createProjectGallery(link, card, topLeftX, topLeftY, rect) {
+        async function createProjectGallery(link, card, topLeftX, topLeftY, rect, scaleFactor = 1) {
             // Get project name from link href
             const projectPath = link.getAttribute('href');
             const projectName = projectPath.split('/').pop().replace('.html', '');
+            
+            const isDesignProject = link.classList.contains('design-card-link');
+            // For standard cards (scaleFactor=1): rect is original size, card visually scales to 1.15
+            // For design cards (scaleFactor<1): rect is already pre-scaled in adjustedRect, use it directly
+            const scaledCardWidth = isDesignProject ? rect.width : (rect.width * 1.15);
+            const scaledCardHeight = isDesignProject ? rect.height : (rect.height * 1.15);
             
             // Create gallery container
             const gallery = document.createElement('div');
@@ -655,15 +744,16 @@
             gallery.style.overflowX = 'hidden';
             gallery.style.zIndex = '1000';
             gallery.style.backgroundColor = 'transparent';
-            gallery.style.paddingTop = (topLeftY + rect.height * 1.15 + 20) + 'px'; // Start below main card
-            // Account for scaling offset - card's visual left edge after scaling
-            const cardVisualLeft = topLeftX - (rect.width * 0.15) / 2; // Subtract half the width increase from scaling
+            gallery.style.paddingTop = (topLeftY + scaledCardHeight + 20) + 'px'; // Start below main card
+            // Gallery aligns with card's left edge
+            // For standard cards with 1.15 scale from center, left edge shifts; for design cards, it stays at topLeftX
+            const cardVisualLeft = isDesignProject ? topLeftX : (topLeftX - (rect.width * 0.15) / 2);
             gallery.style.paddingLeft = cardVisualLeft + 'px';
             gallery.style.display = 'block';
             gallery.style.transition = 'height 0.4s ease-out'; // Smooth height animation
             
             // Add fade effect near main card - start 30px below bottom edge of card
-            const cardBottomEdge = rect.height * 1.15; // Bottom edge of scaled card
+            const cardBottomEdge = scaledCardHeight; // Bottom edge of scaled card
             const fadeStart = cardBottomEdge + 30; // 30px below bottom edge
             const fadeDistance = 20; // pixels for fade
             const fadeEnd = fadeStart + fadeDistance;
@@ -679,7 +769,8 @@
             galleryContent.style.display = 'flex';
             galleryContent.style.flexDirection = 'column';
             galleryContent.style.gap = '2rem';
-            galleryContent.style.width = (rect.width * 1.15) + 'px';
+            // Gallery should match the card's visual width exactly
+            galleryContent.style.width = scaledCardWidth + 'px';
             
             // Don't add the main card - it's already positioned above
             
@@ -695,12 +786,14 @@
             projectDetails.style.position = 'fixed';
             // Calculate position to align project details text with card's top border
             const projectDetailsPadding = 32; // 2rem = 32px
-            const scaledHeight = rect.height * 1.15;
+            const scaledHeight = scaledCardHeight;
             const heightIncrease = scaledHeight - rect.height;
             const visualTopY = topLeftY - (heightIncrease / 2);
             // Position container so text content aligns with card's top border
             projectDetails.style.top = '20px';
-            projectDetails.style.left = (cardVisualLeft + rect.width * 1.15 + 30) + 'px'; // To the right of card
+            // Add more spacing for design projects to prevent overlap with larger cards
+            const textSpacing = isDesignProject ? 40 : 30;
+            projectDetails.style.left = (cardVisualLeft + scaledCardWidth + textSpacing) + 'px'; // To the right of card
             projectDetails.style.right = '0'; // Stretch to right edge of screen
             projectDetails.style.maxHeight = '90vh';
             projectDetails.style.overflowY = 'auto';
@@ -753,13 +846,14 @@
             backButton.className = 'back-button';
             backButton.innerHTML = '←';
             backButton.style.position = 'fixed';
-            backButton.style.top = (topLeftY - 19) + 'px';
-            backButton.style.left = '15px';
+            // Align back button with card top for design projects
+            backButton.style.top = isDesignProject ? (topLeftY + 10) + 'px' : (topLeftY - 19) + 'px';
+            backButton.style.left = isDesignProject ? '30px' : '15px';
             backButton.style.width = '40px';
             backButton.style.height = '40px';
-            backButton.style.backgroundColor = 'var(--card-bg)';
+            backButton.style.background = 'linear-gradient(160deg, rgba(250, 250, 250, 0.95), rgba(240, 240, 240, 0.9))';
             backButton.style.borderRadius = '50%';
-            backButton.style.border = '1px solid var(--border-color)';
+            backButton.style.border = '1px solid rgba(0, 0, 0, 0.15)';
             backButton.style.display = 'flex';
             backButton.style.alignItems = 'center';
             backButton.style.justifyContent = 'center';
@@ -769,8 +863,10 @@
             backButton.style.cursor = 'pointer';
             backButton.style.zIndex = '1002';
             backButton.style.opacity = '0';
-            backButton.style.transition = 'opacity 0.25s ease, color 0.15s ease, background-color 0.15s ease, transform 0.15s ease';
-            backButton.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.1)';
+            backButton.style.transition = 'opacity 0.25s ease, color 0.15s ease, transform 0.2s ease, filter 0.2s ease';
+            backButton.style.boxShadow = 'inset 0 0 0 1px rgba(0, 0, 0, 0.06), 0 14px 28px rgba(0, 0, 0, 0.15)';
+            backButton.style.backdropFilter = 'blur(12px)';
+            backButton.style.webkitBackdropFilter = 'blur(12px)';
             document.body.appendChild(backButton);
             
             // Fade in back button
@@ -779,6 +875,16 @@
             });
             
             backButton.addEventListener('click', () => {
+                // Restore design label if it's a design card
+                const isDesignCard = activeProject.link.classList.contains('design-card-link');
+                if (isDesignCard) {
+                    const designLabel = activeProject.card.querySelector('.design-label');
+                    if (designLabel) {
+                        designLabel.style.opacity = '1';
+                        designLabel.style.transition = 'opacity 0.3s ease';
+                    }
+                }
+                
                 // Fade out project details and back button first
                 if (activeProject.projectDetails) {
                     activeProject.projectDetails.style.transition = 'opacity 0.2s ease';
@@ -806,13 +912,15 @@
             
             backButton.addEventListener('mouseenter', () => {
                 backButton.style.color = 'var(--text-primary)';
-                backButton.style.backgroundColor = 'var(--darker-bg)';
+                backButton.style.background = 'linear-gradient(160deg, rgba(255, 255, 255, 0.98), rgba(245, 245, 245, 0.92))';
+                backButton.style.filter = 'brightness(1.05)';
                 backButton.style.transform = 'scale(1.05)';
             });
             
             backButton.addEventListener('mouseleave', () => {
                 backButton.style.color = 'var(--text-primary)';
-                backButton.style.backgroundColor = 'var(--card-bg)';
+                backButton.style.background = 'linear-gradient(160deg, rgba(250, 250, 250, 0.95), rgba(240, 240, 240, 0.9))';
+                backButton.style.filter = 'none';
                 backButton.style.transform = 'scale(1)';
             });
             
@@ -821,7 +929,7 @@
             activeProject.backButton = backButton;
             activeProject.projectDetails = projectDetails;
         }
-        
+
         // Get project details function
         function getProjectDetails(projectName) {
             const projectDetails = {
@@ -1045,7 +1153,7 @@
                 Image4: 'Greenery growing under walkways'
             },
             'project-galleries/ExtraImages_VTOL/': {
-                Image1: 'Early design using topgraphy optimization',
+                Image1: 'Orthographic CAD layout of the VTOL airframe with top, front, side, and isometric views',
                 Image2: 'Design layout without wing skin attatched',
                 Image3: 'Rotating side pods enableing VTOL function',
                 Image4: 'Full build'
@@ -1072,6 +1180,12 @@
             'project-galleries/ExtraImages_Grasshopper/': {
                 Image1: 'Drone with landing legs down',
                 Image2: 'Drone with landing legs up'
+            },
+            'project-galleries/ExtraImages_ChickenCoop/': {
+                Image1: 'Happy flock heading back to the coop',
+                Image2: 'Tension spring assembly that balances the door weight for the motor',
+                Image3: 'Control electronics wired on the backplate before closing the enclosure',
+                Image4: 'Finished AutoDoor assembly with manual override control box'
             }
         };
 
@@ -1178,9 +1292,6 @@
                     imageCard.className = 'project-card gallery-card';
                     imageCard.style.width = '100%';
                     imageCard.style.height = 'auto';
-                    imageCard.style.backgroundColor = 'var(--card-bg)';
-                    imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x
-                    imageCard.style.borderRadius = '8px';
                     imageCard.style.overflow = 'hidden';
                     imageCard.style.cursor = 'default';
                     imageCard.style.pointerEvents = 'none'; // Disable all interactions
@@ -1189,8 +1300,6 @@
                     
                     const imageContainer = document.createElement('div');
                     imageContainer.style.height = '200px';
-                    imageContainer.style.backgroundColor = 'var(--darker-bg)';
-                    imageContainer.style.borderBottom = '2px solid var(--border-color)';
                     imageContainer.style.display = 'flex';
                     imageContainer.style.alignItems = 'center';
                     imageContainer.style.justifyContent = 'center';
@@ -1198,6 +1307,8 @@
                     
                     const img = document.createElement('img');
                     img.src = imageData.src;
+                    const safeSrc = imageData.src.replace(/"/g, '\"');
+                    imageCard.style.setProperty('--card-image', `url("${safeSrc}")`);
                     img.alt = imageData.description;
                     img.loading = 'lazy';
                     img.style.width = '100%';
@@ -1207,7 +1318,6 @@
                     
                     const description = document.createElement('div');
                     description.style.padding = '1rem';
-                    description.style.backgroundColor = 'var(--card-bg)';
                     description.style.fontSize = '0.9rem';
                     description.style.color = 'var(--text-secondary)';
                     description.style.lineHeight = '1.4';
@@ -1249,9 +1359,6 @@
                     imageCard.className = 'project-card gallery-card';
                     imageCard.style.width = '100%';
                     imageCard.style.height = 'auto';
-                    imageCard.style.backgroundColor = 'var(--card-bg)';
-                    imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x
-                    imageCard.style.borderRadius = '8px';
                     imageCard.style.overflow = 'hidden';
                     imageCard.style.cursor = 'default';
                     imageCard.style.pointerEvents = 'none'; // Disable all interactions
@@ -1260,8 +1367,6 @@
                     
                     const imageContainer = document.createElement('div');
                     imageContainer.style.height = '200px';
-                    imageContainer.style.backgroundColor = 'var(--darker-bg)';
-                    imageContainer.style.borderBottom = '2px solid var(--border-color)';
                     imageContainer.style.display = 'flex';
                     imageContainer.style.alignItems = 'center';
                     imageContainer.style.justifyContent = 'center';
@@ -1269,6 +1374,8 @@
                     
                     const img = document.createElement('img');
                     img.src = imageData.src;
+                    const safeSrc = imageData.src.replace(/"/g, '\"');
+                    imageCard.style.setProperty('--card-image', `url("${safeSrc}")`);
                     img.alt = imageData.description;
                     img.loading = 'lazy';
                     img.style.width = '100%';
@@ -1278,7 +1385,6 @@
                     
                     const description = document.createElement('div');
                     description.style.padding = '1rem';
-                    description.style.backgroundColor = 'var(--card-bg)';
                     description.style.fontSize = '0.9rem';
                     description.style.color = 'var(--text-secondary)';
                     description.style.lineHeight = '1.4';
@@ -1316,9 +1422,6 @@
                     imageCard.className = 'project-card gallery-card';
                     imageCard.style.width = '100%';
                     imageCard.style.height = 'auto';
-                    imageCard.style.backgroundColor = 'var(--card-bg)';
-                    imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x
-                    imageCard.style.borderRadius = '8px';
                     imageCard.style.overflow = 'hidden';
                     imageCard.style.cursor = 'default';
                     imageCard.style.pointerEvents = 'none'; // Disable all interactions
@@ -1327,8 +1430,6 @@
                     
                     const imageContainer = document.createElement('div');
                     imageContainer.style.height = '200px';
-                    imageContainer.style.backgroundColor = 'var(--darker-bg)';
-                    imageContainer.style.borderBottom = '2px solid var(--border-color)';
                     imageContainer.style.display = 'flex';
                     imageContainer.style.alignItems = 'center';
                     imageContainer.style.justifyContent = 'center';
@@ -1336,6 +1437,8 @@
                     
                     const img = document.createElement('img');
                     img.src = imageData.src;
+                    const safeSrc = imageData.src.replace(/"/g, '\"');
+                    imageCard.style.setProperty('--card-image', `url("${safeSrc}")`);
                     img.alt = imageData.description;
                     img.loading = 'lazy';
                     img.style.width = '100%';
@@ -1345,7 +1448,6 @@
                     
                     const description = document.createElement('div');
                     description.style.padding = '1rem';
-                    description.style.backgroundColor = 'var(--card-bg)';
                     description.style.fontSize = '0.9rem';
                     description.style.color = 'var(--text-secondary)';
                     description.style.lineHeight = '1.4';
@@ -1358,6 +1460,72 @@
                 });
             }
             
+            // Chicken coop project images
+            if (projectName === 'chickencoop') {
+                const images = [
+                    {
+                        src: 'project-galleries/ExtraImages_ChickenCoop/Image1.png',
+                        description: '' // Will be loaded from text file
+                    },
+                    {
+                        src: 'project-galleries/ExtraImages_ChickenCoop/Image2.png',
+                        description: '' // Will be loaded from text file
+                    },
+                    {
+                        src: 'project-galleries/ExtraImages_ChickenCoop/Image3.png',
+                        description: '' // Will be loaded from text file
+                    },
+                    {
+                        src: 'project-galleries/ExtraImages_ChickenCoop/Image4.png',
+                        description: '' // Will be loaded from text file
+                    }
+                ];
+
+                await loadImageCaptions(images, 'project-galleries/ExtraImages_ChickenCoop/');
+
+                images.forEach(imageData => {
+                    const imageCard = document.createElement('div');
+                    imageCard.className = 'project-card gallery-card';
+                    imageCard.style.width = '100%';
+                    imageCard.style.height = 'auto';
+                    imageCard.style.overflow = 'hidden';
+                    imageCard.style.cursor = 'default';
+                    imageCard.style.pointerEvents = 'none';
+                    imageCard.style.transform = 'none';
+                    imageCard.style.transition = 'none';
+
+                    const imageContainer = document.createElement('div');
+                    imageContainer.style.height = '200px';
+                    imageContainer.style.display = 'flex';
+                    imageContainer.style.alignItems = 'center';
+                    imageContainer.style.justifyContent = 'center';
+                    imageContainer.style.overflow = 'hidden';
+
+                    const img = document.createElement('img');
+                    img.src = imageData.src;
+                    const safeSrc = imageData.src.replace(/"/g, '\\"');
+                    imageCard.style.setProperty('--card-image', `url("${safeSrc}")`);
+                    img.alt = imageData.description;
+                    img.loading = 'lazy';
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'cover';
+                    img.style.objectPosition = 'center';
+
+                    const description = document.createElement('div');
+                    description.style.padding = '1rem';
+                    description.style.fontSize = '0.9rem';
+                    description.style.color = 'var(--text-secondary)';
+                    description.style.lineHeight = '1.4';
+                    description.textContent = imageData.description;
+
+                    imageContainer.appendChild(img);
+                    imageCard.appendChild(imageContainer);
+                    imageCard.appendChild(description);
+                    container.appendChild(imageCard);
+                });
+            }
+
             // Grasshopper project images
             if (projectName === 'grasshopper') {
                 const images = [
@@ -1379,9 +1547,6 @@
                     imageCard.className = 'project-card gallery-card';
                     imageCard.style.width = '100%';
                     imageCard.style.height = 'auto';
-                    imageCard.style.backgroundColor = 'var(--card-bg)';
-                    imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x
-                    imageCard.style.borderRadius = '8px';
                     imageCard.style.overflow = 'hidden';
                     imageCard.style.cursor = 'default';
                     imageCard.style.pointerEvents = 'none'; // Disable all interactions
@@ -1390,8 +1555,6 @@
                     
                     const imageContainer = document.createElement('div');
                     imageContainer.style.height = '200px';
-                    imageContainer.style.backgroundColor = 'var(--darker-bg)';
-                    imageContainer.style.borderBottom = '2px solid var(--border-color)';
                     imageContainer.style.display = 'flex';
                     imageContainer.style.alignItems = 'center';
                     imageContainer.style.justifyContent = 'center';
@@ -1399,6 +1562,8 @@
                     
                     const img = document.createElement('img');
                     img.src = imageData.src;
+                    const safeSrc = imageData.src.replace(/"/g, '\"');
+                    imageCard.style.setProperty('--card-image', `url("${safeSrc}")`);
                     img.alt = imageData.description;
                     img.loading = 'lazy';
                     img.style.width = '100%';
@@ -1408,7 +1573,6 @@
                     
                     const description = document.createElement('div');
                     description.style.padding = '1rem';
-                    description.style.backgroundColor = 'var(--card-bg)';
                     description.style.fontSize = '0.9rem';
                     description.style.color = 'var(--text-secondary)';
                     description.style.lineHeight = '1.4';
@@ -1450,9 +1614,6 @@
                     imageCard.className = 'project-card gallery-card';
                     imageCard.style.width = '100%';
                     imageCard.style.height = 'auto';
-                    imageCard.style.backgroundColor = 'var(--card-bg)';
-                    imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)'; // Scale border 1.15x
-                    imageCard.style.borderRadius = '8px';
                     imageCard.style.overflow = 'hidden';
                     imageCard.style.cursor = 'default';
                     imageCard.style.pointerEvents = 'none'; // Disable all interactions
@@ -1461,8 +1622,6 @@
                     
                     const imageContainer = document.createElement('div');
                     imageContainer.style.height = '200px';
-                    imageContainer.style.backgroundColor = 'var(--darker-bg)';
-                    imageContainer.style.borderBottom = '2px solid var(--border-color)';
                     imageContainer.style.display = 'flex';
                     imageContainer.style.alignItems = 'center';
                     imageContainer.style.justifyContent = 'center';
@@ -1470,6 +1629,8 @@
                     
                     const img = document.createElement('img');
                     img.src = imageData.src;
+                    const safeSrc = imageData.src.replace(/"/g, '\"');
+                    imageCard.style.setProperty('--card-image', `url("${safeSrc}")`);
                     img.alt = imageData.description;
                     img.loading = 'lazy';
                     img.style.width = '100%';
@@ -1479,7 +1640,6 @@
                     
                     const description = document.createElement('div');
                     description.style.padding = '1rem';
-                    description.style.backgroundColor = 'var(--card-bg)';
                     description.style.fontSize = '0.9rem';
                     description.style.color = 'var(--text-secondary)';
                     description.style.lineHeight = '1.4';
@@ -1521,9 +1681,6 @@
                     imageCard.className = 'project-card gallery-card';
                     imageCard.style.width = '100%';
                     imageCard.style.height = 'auto';
-                    imageCard.style.backgroundColor = 'var(--card-bg)';
-                    imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)';
-                    imageCard.style.borderRadius = '8px';
                     imageCard.style.overflow = 'hidden';
                     imageCard.style.cursor = 'default';
                     imageCard.style.pointerEvents = 'none';
@@ -1532,8 +1689,6 @@
                     
                     const imageContainer = document.createElement('div');
                     imageContainer.style.height = '200px';
-                    imageContainer.style.backgroundColor = 'var(--darker-bg)';
-                    imageContainer.style.borderBottom = '2px solid var(--border-color)';
                     imageContainer.style.display = 'flex';
                     imageContainer.style.alignItems = 'center';
                     imageContainer.style.justifyContent = 'center';
@@ -1541,6 +1696,8 @@
                     
                     const img = document.createElement('img');
                     img.src = imageData.src;
+                    const safeSrc = imageData.src.replace(/"/g, '\"');
+                    imageCard.style.setProperty('--card-image', `url("${safeSrc}")`);
                     img.alt = imageData.description;
                     img.loading = 'lazy';
                     img.style.width = '100%';
@@ -1550,7 +1707,6 @@
                     
                     const description = document.createElement('div');
                     description.style.padding = '1rem';
-                    description.style.backgroundColor = 'var(--card-bg)';
                     description.style.fontSize = '0.9rem';
                     description.style.color = 'var(--text-secondary)';
                     description.style.lineHeight = '1.4';
@@ -1592,9 +1748,6 @@
                     imageCard.className = 'project-card gallery-card';
                     imageCard.style.width = '100%';
                     imageCard.style.height = 'auto';
-                    imageCard.style.backgroundColor = 'var(--card-bg)';
-                    imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)';
-                    imageCard.style.borderRadius = '8px';
                     imageCard.style.overflow = 'hidden';
                     imageCard.style.cursor = 'default';
                     imageCard.style.pointerEvents = 'none';
@@ -1603,8 +1756,6 @@
                     
                     const imageContainer = document.createElement('div');
                     imageContainer.style.height = '200px';
-                    imageContainer.style.backgroundColor = 'var(--darker-bg)';
-                    imageContainer.style.borderBottom = '2px solid var(--border-color)';
                     imageContainer.style.display = 'flex';
                     imageContainer.style.alignItems = 'center';
                     imageContainer.style.justifyContent = 'center';
@@ -1612,6 +1763,8 @@
                     
                     const img = document.createElement('img');
                     img.src = imageData.src;
+                    const safeSrc = imageData.src.replace(/"/g, '\"');
+                    imageCard.style.setProperty('--card-image', `url("${safeSrc}")`);
                     img.alt = imageData.description;
                     img.loading = 'lazy';
                     img.style.width = '100%';
@@ -1621,7 +1774,6 @@
                     
                     const description = document.createElement('div');
                     description.style.padding = '1rem';
-                    description.style.backgroundColor = 'var(--card-bg)';
                     description.style.fontSize = '0.9rem';
                     description.style.color = 'var(--text-secondary)';
                     description.style.lineHeight = '1.4';
@@ -1633,17 +1785,17 @@
                     container.appendChild(imageCard);
                 });
             }
-
-            // Genie Chatbot project images
+            
+            // Genie RAG project images
             if (projectName === 'genie') {
                 const images = [
                     {
                         src: 'project-galleries/ExtraImages_GenieChatbot/Image1.png',
-                        description: '' // Will be loaded from text file
+                        description: ''
                     },
                     {
                         src: 'project-galleries/ExtraImages_GenieChatbot/Image2.png',
-                        description: '' // Will be loaded from text file
+                        description: ''
                     }
                 ];
                 
@@ -1654,9 +1806,6 @@
                     imageCard.className = 'project-card gallery-card';
                     imageCard.style.width = '100%';
                     imageCard.style.height = 'auto';
-                    imageCard.style.backgroundColor = 'var(--card-bg)';
-                    imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)';
-                    imageCard.style.borderRadius = '8px';
                     imageCard.style.overflow = 'hidden';
                     imageCard.style.cursor = 'default';
                     imageCard.style.pointerEvents = 'none';
@@ -1665,8 +1814,6 @@
                     
                     const imageContainer = document.createElement('div');
                     imageContainer.style.height = '200px';
-                    imageContainer.style.backgroundColor = 'var(--darker-bg)';
-                    imageContainer.style.borderBottom = '2px solid var(--border-color)';
                     imageContainer.style.display = 'flex';
                     imageContainer.style.alignItems = 'center';
                     imageContainer.style.justifyContent = 'center';
@@ -1674,6 +1821,8 @@
                     
                     const img = document.createElement('img');
                     img.src = imageData.src;
+                    const safeSrc = imageData.src.replace(/"/g, '\"');
+                    imageCard.style.setProperty('--card-image', `url("${safeSrc}")`);
                     img.alt = imageData.description;
                     img.loading = 'lazy';
                     img.style.width = '100%';
@@ -1683,7 +1832,6 @@
                     
                     const description = document.createElement('div');
                     description.style.padding = '1rem';
-                    description.style.backgroundColor = 'var(--card-bg)';
                     description.style.fontSize = '0.9rem';
                     description.style.color = 'var(--text-secondary)';
                     description.style.lineHeight = '1.4';
@@ -1695,87 +1843,25 @@
                     container.appendChild(imageCard);
                 });
             }
-
-            // VEX Robot project images
-            if (projectName === 'vex') {
-                const images = [
-                    {
-                        src: 'project-galleries/ExtraImages_VEXRobot/Image1.png',
-                        description: '' // Will be loaded from text file
-                    },
-                    {
-                        src: 'project-galleries/ExtraImages_VEXRobot/Image2.png',
-                        description: '' // Will be loaded from text file
-                    }
-                ];
-                
-                await loadImageCaptions(images, 'project-galleries/ExtraImages_VEXRobot/');
-                
-                images.forEach(imageData => {
-                    const imageCard = document.createElement('div');
-                    imageCard.className = 'project-card gallery-card';
-                    imageCard.style.width = '100%';
-                    imageCard.style.height = 'auto';
-                    imageCard.style.backgroundColor = 'var(--card-bg)';
-                    imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)';
-                    imageCard.style.borderRadius = '8px';
-                    imageCard.style.overflow = 'hidden';
-                    imageCard.style.cursor = 'default';
-                    imageCard.style.pointerEvents = 'none';
-                    imageCard.style.transform = 'none';
-                    imageCard.style.transition = 'none';
-                    
-                    const imageContainer = document.createElement('div');
-                    imageContainer.style.height = '200px';
-                    imageContainer.style.backgroundColor = 'var(--darker-bg)';
-                    imageContainer.style.borderBottom = '2px solid var(--border-color)';
-                    imageContainer.style.display = 'flex';
-                    imageContainer.style.alignItems = 'center';
-                    imageContainer.style.justifyContent = 'center';
-                    imageContainer.style.overflow = 'hidden';
-                    
-                    const img = document.createElement('img');
-                    img.src = imageData.src;
-                    img.alt = imageData.description;
-                    img.loading = 'lazy';
-                    img.style.width = '100%';
-                    img.style.height = '100%';
-                    img.style.objectFit = 'cover';
-                    img.style.objectPosition = 'center';
-                    
-                    const description = document.createElement('div');
-                    description.style.padding = '1rem';
-                    description.style.backgroundColor = 'var(--card-bg)';
-                    description.style.fontSize = '0.9rem';
-                    description.style.color = 'var(--text-secondary)';
-                    description.style.lineHeight = '1.4';
-                    description.textContent = imageData.description;
-                    
-                    imageContainer.appendChild(img);
-                    imageCard.appendChild(imageContainer);
-                    imageCard.appendChild(description);
-                    container.appendChild(imageCard);
-                });
-            }
-
+            
             // Rover project images
             if (projectName === 'rover') {
                 const images = [
                     {
                         src: 'project-galleries/ExtraImages_Rover/Image1.png',
-                        description: '' // Will be loaded from text file
+                        description: ''
                     },
                     {
                         src: 'project-galleries/ExtraImages_Rover/Image2.png',
-                        description: '' // Will be loaded from text file
+                        description: ''
                     },
                     {
                         src: 'project-galleries/ExtraImages_Rover/Image3.png',
-                        description: '' // Will be loaded from text file
+                        description: ''
                     },
                     {
                         src: 'project-galleries/ExtraImages_Rover/Image4.png',
-                        description: '' // Will be loaded from text file
+                        description: ''
                     }
                 ];
                 
@@ -1786,9 +1872,6 @@
                     imageCard.className = 'project-card gallery-card';
                     imageCard.style.width = '100%';
                     imageCard.style.height = 'auto';
-                    imageCard.style.backgroundColor = 'var(--card-bg)';
-                    imageCard.style.border = (1 * 1.15) + 'px solid var(--border-color)';
-                    imageCard.style.borderRadius = '8px';
                     imageCard.style.overflow = 'hidden';
                     imageCard.style.cursor = 'default';
                     imageCard.style.pointerEvents = 'none';
@@ -1797,8 +1880,6 @@
                     
                     const imageContainer = document.createElement('div');
                     imageContainer.style.height = '200px';
-                    imageContainer.style.backgroundColor = 'var(--darker-bg)';
-                    imageContainer.style.borderBottom = '2px solid var(--border-color)';
                     imageContainer.style.display = 'flex';
                     imageContainer.style.alignItems = 'center';
                     imageContainer.style.justifyContent = 'center';
@@ -1806,6 +1887,8 @@
                     
                     const img = document.createElement('img');
                     img.src = imageData.src;
+                    const safeSrc = imageData.src.replace(/"/g, '\"');
+                    imageCard.style.setProperty('--card-image', `url("${safeSrc}")`);
                     img.alt = imageData.description;
                     img.loading = 'lazy';
                     img.style.width = '100%';
@@ -1815,7 +1898,64 @@
                     
                     const description = document.createElement('div');
                     description.style.padding = '1rem';
-                    description.style.backgroundColor = 'var(--card-bg)';
+                    description.style.fontSize = '0.9rem';
+                    description.style.color = 'var(--text-secondary)';
+                    description.style.lineHeight = '1.4';
+                    description.textContent = imageData.description;
+                    
+                    imageContainer.appendChild(img);
+                    imageCard.appendChild(imageContainer);
+                    imageCard.appendChild(description);
+                    container.appendChild(imageCard);
+                });
+            }
+            
+            // VEX Robot project images
+            if (projectName === 'vex') {
+                const images = [
+                    {
+                        src: 'project-galleries/ExtraImages_VEXRobot/Image1.png',
+                        description: ''
+                    },
+                    {
+                        src: 'project-galleries/ExtraImages_VEXRobot/Image2.png',
+                        description: ''
+                    }
+                ];
+                
+                await loadImageCaptions(images, 'project-galleries/ExtraImages_VEXRobot/');
+                
+                images.forEach(imageData => {
+                    const imageCard = document.createElement('div');
+                    imageCard.className = 'project-card gallery-card';
+                    imageCard.style.width = '100%';
+                    imageCard.style.height = 'auto';
+                    imageCard.style.overflow = 'hidden';
+                    imageCard.style.cursor = 'default';
+                    imageCard.style.pointerEvents = 'none';
+                    imageCard.style.transform = 'none';
+                    imageCard.style.transition = 'none';
+                    
+                    const imageContainer = document.createElement('div');
+                    imageContainer.style.height = '200px';
+                    imageContainer.style.display = 'flex';
+                    imageContainer.style.alignItems = 'center';
+                    imageContainer.style.justifyContent = 'center';
+                    imageContainer.style.overflow = 'hidden';
+                    
+                    const img = document.createElement('img');
+                    img.src = imageData.src;
+                    const safeSrc = imageData.src.replace(/"/g, '\"');
+                    imageCard.style.setProperty('--card-image', `url("${safeSrc}")`);
+                    img.alt = imageData.description;
+                    img.loading = 'lazy';
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'cover';
+                    img.style.objectPosition = 'center';
+                    
+                    const description = document.createElement('div');
+                    description.style.padding = '1rem';
                     description.style.fontSize = '0.9rem';
                     description.style.color = 'var(--text-secondary)';
                     description.style.lineHeight = '1.4';
@@ -1831,4 +1971,3 @@
     </script>
 </body>
 </html>
-
