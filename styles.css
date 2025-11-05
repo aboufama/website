@@ -779,16 +779,22 @@ footer p {
         align-items: center;
     }
 
+    .title-wrapper {
+        text-align: center;
+    }
+
     .contact-info {
         align-items: center;
     }
 
     .hero-text h1 {
         font-size: 2rem;
+        text-align: center;
     }
 
     .subtitle {
         font-size: 1rem;
+        text-align: center;
     }
 
     .projects-grid {
@@ -837,6 +843,98 @@ footer p {
     .bio-headshot {
         width: 84px;
         height: 84px;
+    }
+
+    /* Hide design project tags on mobile to give more room for the picture, but keep the title */
+    .design-label .design-tags {
+        display: none !important;
+    }
+
+    /* Make design projects stretch to edge on mobile - break out of card format */
+    .container {
+        overflow-x: visible !important;
+    }
+
+    .design-showcase {
+        padding: 0 !important;
+        margin: 5rem 0 4rem;
+        max-width: 100%;
+        overflow-x: visible !important;
+    }
+
+    .design-header {
+        padding: 0 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .design-grid {
+        gap: 3rem;
+    }
+
+    .design-card-link {
+        width: 100%;
+        margin: 0;
+    }
+
+    /* Override both project-card and design-card classes */
+    .design-card-link .project-card.design-card,
+    .project-card.design-card {
+        border-radius: 0 !important;
+        aspect-ratio: 16 / 9 !important;
+        width: 100vw !important;
+        margin-left: calc(50% - 50vw) !important;
+        margin-right: calc(50% - 50vw) !important;
+        background: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        padding: 0 !important;
+    }
+
+    .design-card-link .project-card.design-card::before,
+    .design-card-link .project-card.design-card::after,
+    .project-card.design-card::before,
+    .project-card.design-card::after {
+        display: none !important;
+    }
+
+    .design-image-wrapper,
+    .project-card.design-card .project-image-container.design-image-wrapper {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 0 !important;
+        overflow: visible !important;
+    }
+
+    .design-image-wrapper img,
+    .design-image-wrapper .project-image,
+    .project-image-container.design-image-wrapper .project-image {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        border-radius: 0 !important;
+    }
+
+    .design-label {
+        left: 1.5rem !important;
+        right: auto !important;
+        max-width: none !important;
+        width: fit-content !important;
+        position: absolute !important;
+        bottom: 1.5rem !important;
+        top: auto !important;
+        display: inline-flex !important;
+        flex-direction: column !important;
+        gap: 0.25rem !important;
+        padding: 0.5rem 0.75rem !important;
+        border-radius: 8px !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        backdrop-filter: blur(16px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+        box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.3), 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+        pointer-events: none !important;
     }
 }
 
