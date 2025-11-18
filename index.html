@@ -475,9 +475,39 @@
 
         // Project card expansion system - COMPLETE REWRITE
         let activeProject = null;
+        let scrollLockPosition = 0;
+
         const overlay = document.createElement('div');
         overlay.className = 'project-overlay';
         document.body.appendChild(overlay);
+
+        function lockPageScroll() {
+            if (document.body.classList.contains('scroll-locked')) return;
+            scrollLockPosition = window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+            const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+            if (scrollbarWidth > 0) {
+                document.body.style.paddingRight = scrollbarWidth + 'px';
+            }
+            document.body.classList.add('scroll-locked');
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollLockPosition}px`;
+            document.body.style.width = '100%';
+        }
+
+        function unlockPageScroll() {
+            if (!document.body.classList.contains('scroll-locked')) return;
+            document.body.classList.remove('scroll-locked');
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            document.body.style.paddingRight = '';
+            window.scrollTo(0, scrollLockPosition);
+            scrollLockPosition = 0;
+        }
 
         document.querySelectorAll('.project-card-link').forEach(link => {
             // Handle both click and keyboard events
@@ -511,12 +541,8 @@
                     height: rect.height
                 };
                 
-                // Freeze page (prevent layout shift by compensating scrollbar width)
-                const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-                if (scrollbarWidth > 0) {
-                    document.body.style.paddingRight = scrollbarWidth + 'px';
-                }
-                document.body.style.overflow = 'hidden';
+                // Freeze page so only the overlay is scrollable
+                lockPageScroll();
                 overlay.classList.add('active');
                 
                 // Keep card visible and make non-interactable
@@ -709,8 +735,7 @@
                     activeProject.card.style.willChange = '';
                     overlay.classList.remove('active');
                     overlay.style.backgroundColor = '';
-                    document.body.style.overflow = '';
-                    document.body.style.paddingRight = '';
+                    unlockPageScroll();
                     activeProject = null;
                 };
                 overlay.addEventListener('transitionend', onOverlayFade);

@@ -1283,6 +1283,7 @@ html {
 .project-gallery {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE/Edge */
+    overscroll-behavior: contain;
 }
 
 .project-gallery::-webkit-scrollbar {
@@ -1333,6 +1334,7 @@ html {
     -ms-overflow-style: none; /* IE/Edge */
     font-size: 0.95rem;
     line-height: 1.6;
+    overscroll-behavior: contain;
 }
 
 .project-details::-webkit-scrollbar {
@@ -1520,4 +1522,3 @@ html {
     margin: 0 auto;
     color: var(--text-secondary);
 }
-
