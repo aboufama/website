@@ -44,7 +44,7 @@ export default function App() {
                 </div>
               )}
               <img
-                src="/CutoutAndre.png"
+                src={`${import.meta.env.BASE_URL}CutoutAndre.png`}
                 alt="Andre Boufama"
                 className="hero-cutout"
               />
@@ -67,7 +67,7 @@ export default function App() {
                 <div className="hero-links">
                   <a href="https://linkedin.com/in/andreboufama" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                   <a href="https://github.com/aboufama" target="_blank" rel="noopener noreferrer">GitHub</a>
-                  <a href="/resume.pdf">Resume</a>
+                  <a href={`${import.meta.env.BASE_URL}resume.pdf`}>Resume</a>
                 </div>
               </div>
             </div>
