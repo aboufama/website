@@ -1,0 +1,199 @@
+.project-card {
+  display: grid;
+  grid-template-columns: 0.75fr 1.25fr;
+  gap: 0;
+  align-items: center;
+  width: 100%;
+}
+
+.project-card--flip {
+  direction: rtl;
+}
+
+.project-card--flip > * {
+  direction: ltr;
+}
+
+.project-card--with-gallery {
+  grid-template-columns: 0.8fr 1.3fr 0.8fr;
+  align-items: center;
+  overflow: visible;
+}
+
+/* Hydroponics: portrait gallery — give text more lateral room */
+.project-card--with-gallery:has(.media-gallery[data-layout="featured-bottom"]) {
+  grid-template-columns: 0.8fr 1.15fr 0.85fr;
+}
+
+/* Drone: two plain flanking images, no effects */
+.project-card--flanked {
+  grid-template-columns: 1.3fr 0.7fr 1.3fr;
+}
+
+.project-card--flanked .project-images {
+  max-width: none;
+  width: 100%;
+}
+
+.project-image-right {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.project-card--with-gallery .project-images {
+  max-width: 80%;
+}
+
+.project-card--image-large {
+  overflow: hidden;
+}
+
+.project-images--large {
+  max-width: none;
+  width: 100%;
+  transform: translateX(-22%);
+}
+
+.project-images--large .project-image {
+  width: 200%;
+  max-width: none;
+}
+
+/* Images side */
+.project-images {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 58%;
+  margin: 0 auto;
+}
+
+.project-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+.project-image-placeholder {
+  width: 100%;
+  aspect-ratio: 4/3;
+  background: #ebebed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* border-radius intentionally absent — G2 fillet via <Squircle> clip-path */
+}
+
+.project-image-placeholder span {
+  font-size: 80px;
+  font-weight: 600;
+  color: #d2d2d7;
+  letter-spacing: -0.04em;
+}
+
+/* Text side */
+.project-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 60px 64px;
+}
+
+.project-title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.project-title {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #1d1d1f;
+  line-height: 1.1;
+}
+
+.project-subtitle {
+  font-size: 13px;
+  font-weight: 400;
+  color: #6e6e73;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.project-desc {
+  font-size: 13.5px;
+  font-weight: 300;
+  color: #6e6e73;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  text-align: justify;
+  hyphens: auto;
+  text-align-last: left;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin-top: 4px;
+}
+
+.project-tag--link {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.project-tag--link:hover {
+  background: #e5e5ea;
+  color: #1d1d1f;
+}
+
+.project-tag {
+  font-size: 12px;
+  font-weight: 500;
+  color: #6e6e73;
+  background: #f5f5f7;
+  padding: 4px 12px;
+  border-radius: 100vw; /* pill/capsule — G2-degenerate exception */
+  letter-spacing: 0.01em;
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+  .project-card--with-gallery {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .project-card--with-gallery .media-gallery {
+    grid-column: 1 / -1;
+    aspect-ratio: 3 / 1;
+    padding: 0 22px 24px;
+  }
+}
+
+@media (max-width: 680px) {
+  .project-card,
+  .project-card--flip,
+  .project-card--with-gallery {
+    grid-template-columns: 1fr;
+    direction: ltr;
+    align-items: center;
+  }
+
+  .project-info {
+    padding: 32px 22px;
+  }
+
+  .project-card--with-gallery .media-gallery {
+    aspect-ratio: 3 / 1;
+    padding: 0 22px 24px;
+  }
+}

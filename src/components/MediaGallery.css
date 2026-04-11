@@ -1,0 +1,181 @@
+/* Fixed 3×2 grid — popped item redistributes tracks inside, nothing spills */
+.media-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 6px;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  padding: 0 12px 0 6px;
+  box-sizing: border-box;
+  transition:
+    grid-template-columns 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    grid-template-rows    0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── Column expansion ── */
+.media-gallery:has(> .gallery-item:nth-child(1):hover),
+.media-gallery:has(> .gallery-item:nth-child(4):hover) { grid-template-columns: 2fr 1fr 1fr; }
+
+.media-gallery:has(> .gallery-item:nth-child(2):hover),
+.media-gallery:has(> .gallery-item:nth-child(5):hover) { grid-template-columns: 1fr 2fr 1fr; }
+
+.media-gallery:has(> .gallery-item:nth-child(3):hover),
+.media-gallery:has(> .gallery-item:nth-child(6):hover) { grid-template-columns: 1fr 1fr 2fr; }
+
+/* ── Row expansion ── */
+.media-gallery:has(> .gallery-item:nth-child(-n+3):hover) { grid-template-rows: 2fr 1fr; }
+.media-gallery:has(> .gallery-item:nth-child(n+4):hover)  { grid-template-rows: 1fr 2fr; }
+
+/* ── featured-left: Image1 big square, Images 2-4 stacked right ── */
+.media-gallery[data-layout="featured-left"] {
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  aspect-ratio: 2.12;
+}
+
+.media-gallery[data-layout="featured-left"] > .gallery-item:first-child {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+}
+
+.media-gallery[data-layout="featured-left"] > .gallery-item:nth-child(n+2) {
+  grid-column: 2;
+}
+
+/* Reset default hover expansion for featured-left */
+.media-gallery[data-layout="featured-left"]:has(> .gallery-item:hover) {
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+/* ── featured-bottom: 3 small images top row, big image bottom row ── */
+/* aspect-ratio tuned so bottom cell = Image1's native 1600×1131 ratio (1.414:1) */
+/* cell_ratio = gallery_ratio / 0.6  →  gallery_ratio = 1.414 × 0.6 = 0.848       */
+.media-gallery[data-layout="featured-bottom"] {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 0.7fr 1.5fr;
+  aspect-ratio: 0.964;
+}
+
+/* Image1 (big) — bottom row, spans all 3 columns */
+.media-gallery[data-layout="featured-bottom"] > .gallery-item:first-child {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+/* Image2, Image3, Image4 — top row */
+.media-gallery[data-layout="featured-bottom"] > .gallery-item:nth-child(2) { grid-column: 1; grid-row: 1; }
+.media-gallery[data-layout="featured-bottom"] > .gallery-item:nth-child(3) { grid-column: 2; grid-row: 1; }
+.media-gallery[data-layout="featured-bottom"] > .gallery-item:nth-child(4) { grid-column: 3; grid-row: 1; }
+
+/* Hover expansion for top-row images (big image always spans all cols) */
+.media-gallery[data-layout="featured-bottom"]:has(> .gallery-item:nth-child(2):hover) { grid-template-columns: 2fr 1fr 1fr; }
+.media-gallery[data-layout="featured-bottom"]:has(> .gallery-item:nth-child(3):hover) { grid-template-columns: 1fr 2fr 1fr; }
+.media-gallery[data-layout="featured-bottom"]:has(> .gallery-item:nth-child(4):hover) { grid-template-columns: 1fr 1fr 2fr; }
+
+/* Lock rows during hover */
+.media-gallery[data-layout="featured-bottom"]:has(> .gallery-item:hover) {
+  grid-template-rows: 0.7fr 1.5fr;
+}
+
+/* ── grid-2x2: 4 equal cells ── */
+.media-gallery[data-layout="grid-2x2"] {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  aspect-ratio: 1;
+}
+
+/* grid-2x2 hover expansion */
+.media-gallery[data-layout="grid-2x2"]:has(> .gallery-item:nth-child(1):hover),
+.media-gallery[data-layout="grid-2x2"]:has(> .gallery-item:nth-child(3):hover) { grid-template-columns: 2fr 1fr; }
+
+.media-gallery[data-layout="grid-2x2"]:has(> .gallery-item:nth-child(2):hover),
+.media-gallery[data-layout="grid-2x2"]:has(> .gallery-item:nth-child(4):hover) { grid-template-columns: 1fr 2fr; }
+
+.media-gallery[data-layout="grid-2x2"]:has(> .gallery-item:nth-child(1):hover),
+.media-gallery[data-layout="grid-2x2"]:has(> .gallery-item:nth-child(2):hover) { grid-template-rows: 2fr 1fr; }
+
+.media-gallery[data-layout="grid-2x2"]:has(> .gallery-item:nth-child(3):hover),
+.media-gallery[data-layout="grid-2x2"]:has(> .gallery-item:nth-child(4):hover) { grid-template-rows: 1fr 2fr; }
+
+/* ── Items ── */
+.gallery-item {
+  overflow: hidden;
+  background: #ebebed;
+  border-radius: 14px !important; /* G1 exception: clip-path can't transition smoothly */
+}
+
+.gallery-item--transparent {
+  padding: 10px;
+}
+
+.gallery-item--transparent .gallery-media {
+  object-fit: contain;
+}
+
+.gallery-item--zoom .gallery-media {
+  transform: scale(1.6);
+}
+
+/* ── Video play badge ── */
+.gallery-item--video {
+  position: relative;
+  cursor: default;
+}
+
+.gallery-item--video::after {
+  content: '▶';
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  padding: 5px 9px;
+  font-size: 11px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.95);
+  background: rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 8px !important;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+
+.gallery-item--video:hover::after {
+  opacity: 0;
+}
+
+.gallery-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Open / Closed toggle ── */
+.gallery-item--toggle {
+  position: relative;
+}
+
+.gallery-toggle-a,
+.gallery-toggle-b {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.45s ease;
+}
+
+/* Only use contain when the toggle images have no background */
+.gallery-item--toggle.gallery-item--transparent .gallery-toggle-a,
+.gallery-item--toggle.gallery-item--transparent .gallery-toggle-b {
+  object-fit: contain;
+}
+
+.gallery-toggle-a { opacity: 1; }
+.gallery-toggle-b { opacity: 0; }
+
+.gallery-item--toggle:hover .gallery-toggle-a { opacity: 0; }
+.gallery-item--toggle:hover .gallery-toggle-b { opacity: 1; }

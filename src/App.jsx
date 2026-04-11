@@ -1,0 +1,85 @@
+import { useState, useEffect, useRef } from 'react'
+import ProjectCard from './components/ProjectCard'
+import projects from './data/projects'
+import './App.css'
+
+export default function App() {
+  const [showWelcome, setShowWelcome] = useState(true)
+  const heroRef = useRef(null)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowWelcome(false), 1800)
+    return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!heroRef.current) return
+      const scrollY = window.scrollY
+      const fade = Math.max(0, 1 - scrollY / (window.innerHeight * 0.6))
+      heroRef.current.style.opacity = fade
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+    <div className="app">
+      <div className="hero-fixed" ref={heroRef}>
+        <section className="hero">
+          <div className="hero-content">
+            <div className="hero-cutout-wrapper">
+              {showWelcome && (
+                <div className="speech-bubble">
+                  <span className="speech-text">welcome!</span>
+                  <svg className="speech-line" viewBox="0 0 80 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <linearGradient id="line-fade" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stopColor="#1d1d1f" stopOpacity="0" />
+                        <stop offset="40%" stopColor="#1d1d1f" stopOpacity="1" />
+                      </linearGradient>
+                    </defs>
+                    <path d="M 0,1.5 C 65,1.5 75,1.5 80,15" stroke="url(#line-fade)" strokeWidth="1" strokeLinecap="round" fill="none" />
+                  </svg>
+                </div>
+              )}
+              <img
+                src="/CutoutAndre.png"
+                alt="Andre Boufama"
+                className="hero-cutout"
+              />
+            </div>
+            <div className="hero-text">
+              <h1 className="hero-title">Andre's Projects</h1>
+              <p className="hero-tagline">Hover over the gallery images to enhance (or play video). These are my favorites, but there are quite a few more projects that I've had fun with :)</p>
+              <div className="hero-links-box">
+                <span className="hero-links-title">Software Projects</span>
+                <div className="hero-links">
+                  <a href="https://tm.cornellphysicalintelligence.com/" target="_blank" rel="noopener noreferrer">Team Manager</a>
+                  <a href="https://cornellphysicalintelligence.com/" target="_blank" rel="noopener noreferrer">Club Website</a>
+                  <a href="https://clash-game-ashen.vercel.app/" target="_blank" rel="noopener noreferrer">Clash of Clans</a>
+                  <a href="https://aboufama.github.io/Eyes/" target="_blank" rel="noopener noreferrer">Eye Art</a>
+                  <a href="https://aboufama.github.io/Tilted_Display_Test/" target="_blank" rel="noopener noreferrer">Old Display</a>
+                </div>
+              </div>
+              <div className="hero-links-box">
+                <span className="hero-links-title">Socials</span>
+                <div className="hero-links">
+                  <a href="https://linkedin.com/in/andreboufama" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                  <a href="https://github.com/aboufama" target="_blank" rel="noopener noreferrer">GitHub</a>
+                  <a href="/resume.pdf">Resume</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div className="hero-spacer"></div>
+      <section className="projects">
+        {projects.map((project) => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
+      </section>
+    </div>
+  )
+}
