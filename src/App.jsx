@@ -3,13 +3,34 @@ import ProjectCard from './components/ProjectCard'
 import projects from './data/projects'
 import './App.css'
 
+function preloadImages(urls) {
+  return Promise.all(
+    urls.map(
+      (url) =>
+        new Promise((resolve) => {
+          const img = new Image()
+          img.onload = resolve
+          img.onerror = resolve
+          img.src = url
+        })
+    )
+  )
+}
+
 export default function App() {
-  const [showWelcome, setShowWelcome] = useState(true)
+  const [loaded, setLoaded] = useState(false)
+  const [showWelcome, setShowWelcome] = useState(false)
   const heroRef = useRef(null)
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowWelcome(false), 1800)
-    return () => clearTimeout(timer)
+    const heroSrc = `${import.meta.env.BASE_URL}CutoutAndre.png`
+    const projectSrcs = projects.flatMap((p) => p.images || [])
+    preloadImages([heroSrc, ...projectSrcs]).then(() => {
+      setLoaded(true)
+      setShowWelcome(true)
+      const timer = setTimeout(() => setShowWelcome(false), 1800)
+      return () => clearTimeout(timer)
+    })
   }, [])
 
   useEffect(() => {
@@ -24,7 +45,7 @@ export default function App() {
   }, [])
 
   return (
-    <div className="app">
+    <div className={`app${loaded ? ' app--loaded' : ''}`}>
       <div className="hero-fixed" ref={heroRef}>
         <section className="hero">
           <div className="hero-content">
@@ -46,7 +67,7 @@ export default function App() {
               <img
                 src={`${import.meta.env.BASE_URL}CutoutAndre.png`}
                 alt="Andre Boufama"
-                className="hero-cutout"
+                className={`hero-cutout${loaded ? ' hero-cutout--animate' : ''}`}
               />
             </div>
             <div className="hero-text">
