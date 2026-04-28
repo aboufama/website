@@ -202,14 +202,17 @@
   }
 
   .project-card--image-large .project-images--large {
-    width: 100%;
-    max-width: 100%;
+    width: 70%;
+    max-width: 70%;
+    margin: 0 auto;
     transform: none;
-    padding: 0 22px;
+    padding: 0;
   }
 
   .project-card--image-large .project-images--large .project-image {
     width: 100%;
     max-width: 100%;
+    height: auto;
+    object-fit: contain;
   }
 }
