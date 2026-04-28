@@ -63,7 +63,7 @@ const projects = [
     links: [{ label: 'Instructables', href: 'https://www.instructables.com/contest/greenfuture/' }],
     images: [`${base}projects/modular-hydroponics/Hydroponics.png`],
     galleryTint: '#f0f5f1',
-    galleryLayout: 'featured-bottom',
+    galleryLayout: 'grid-2x2',
     gallery: [
       { src: `${base}projects/modular-hydroponics/Image1.jpg`, type: 'image', transparent: false },
       { src: `${base}projects/modular-hydroponics/Image2.png`, type: 'image', transparent: false },

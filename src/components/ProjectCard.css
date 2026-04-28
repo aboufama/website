@@ -49,13 +49,13 @@
   overflow: hidden;
 }
 
-.project-images--large {
+.project-card--image-large .project-images--large {
   max-width: none;
   width: 100%;
   transform: translateX(-22%);
 }
 
-.project-images--large .project-image {
+.project-card--image-large .project-images--large .project-image {
   width: 200%;
   max-width: none;
 }

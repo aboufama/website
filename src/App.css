@@ -170,3 +170,46 @@
   gap: 140px;
   padding-bottom: 140px;
 }
+
+/* Landscape required on small screens */
+.rotate-prompt {
+  display: none;
+}
+
+@media (orientation: portrait) and (max-width: 600px) {
+  .rotate-prompt {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: #ffffff;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 18px;
+    padding: 24px;
+  }
+
+  .rotate-prompt__icon {
+    width: 56px;
+    height: 56px;
+    animation: rotate-hint 2.4s ease-in-out infinite;
+  }
+
+  .rotate-prompt__text {
+    font-size: 14px;
+    font-weight: 400;
+    color: #6e6e73;
+    letter-spacing: 0.01em;
+  }
+
+  body {
+    overflow: hidden;
+  }
+}
+
+@keyframes rotate-hint {
+  0%, 35%   { transform: rotate(0deg); }
+  55%, 90%  { transform: rotate(-90deg); }
+  100%      { transform: rotate(0deg); }
+}

@@ -46,6 +46,13 @@ export default function App() {
 
   return (
     <div className={`app${loaded ? ' app--loaded' : ''}`}>
+      <div className="rotate-prompt" role="alert">
+        <svg className="rotate-prompt__icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="14" y="6" width="36" height="52" rx="6" ry="6" stroke="#1d1d1f" strokeWidth="2.5" fill="none" />
+          <line x1="26" y1="51" x2="38" y2="51" stroke="#1d1d1f" strokeWidth="2.5" strokeLinecap="round" />
+        </svg>
+        <p className="rotate-prompt__text">Please rotate to landscape</p>
+      </div>
       <div className="hero-fixed" ref={heroRef}>
         <section className="hero">
           <div className="hero-content">
