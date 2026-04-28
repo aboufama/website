@@ -200,4 +200,16 @@
   .project-card--image-large {
     overflow: visible;
   }
+
+  .project-card--image-large .project-images--large {
+    width: 100%;
+    max-width: 100%;
+    transform: none;
+    padding: 0 22px;
+  }
+
+  .project-card--image-large .project-images--large .project-image {
+    width: 100%;
+    max-width: 100%;
+  }
 }
