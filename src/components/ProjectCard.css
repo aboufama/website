@@ -196,4 +196,8 @@
     aspect-ratio: 3 / 1;
     padding: 0 22px 24px;
   }
+
+  .project-card--image-large {
+    overflow: visible;
+  }
 }

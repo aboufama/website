@@ -51,7 +51,7 @@ export default function App() {
           <rect x="14" y="6" width="36" height="52" rx="6" ry="6" stroke="#1d1d1f" strokeWidth="2.5" fill="none" />
           <line x1="26" y1="51" x2="38" y2="51" stroke="#1d1d1f" strokeWidth="2.5" strokeLinecap="round" />
         </svg>
-        <p className="rotate-prompt__text">Please rotate to landscape</p>
+        <p className="rotate-prompt__text">Please turn your screen sideways to view the portfolio</p>
       </div>
       <div className="hero-fixed" ref={heroRef}>
         <section className="hero">
