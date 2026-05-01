@@ -17,7 +17,7 @@ const projects = [
       { src: `${base}projects/hexapod/CoverTest.png`,    type: 'image', transparent: false },
       { src: `${base}projects/hexapod/WiredLayout.png`,  type: 'image', transparent: false },
     ],
-    flip: false,
+    flip: true,    // [gallery | text | image]
   },
   {
     id: 'plant-bot',
@@ -88,7 +88,7 @@ const projects = [
       { src: `${base}projects/modular-hydroponics/Image3.png`, type: 'image', transparent: false },
       { src: `${base}projects/modular-hydroponics/Image4.png`, type: 'image', transparent: false },
     ],
-    flip: false,   // [image | text | gallery]
+    flip: true,    // [gallery | text | image]
   },
   {
     id: 'autonomous-rover',
@@ -105,7 +105,7 @@ const projects = [
       { src: `${base}projects/autonomous-rover/Image3.png`, type: 'image', transparent: false },
       { src: `${base}projects/autonomous-rover/Image4.png`, type: 'image', transparent: false },
     ],
-    flip: true,    // [gallery | text | image]
+    flip: false,   // [image | text | gallery]
   },
 ]
 
