@@ -93,9 +93,9 @@ export default function App() {
               <div className="hero-links-box">
                 <span className="hero-links-title">Socials</span>
                 <div className="hero-links">
-                  <a href="https://linkedin.com/in/andreboufama" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                  <a href="https://www.linkedin.com/in/andre-boufama-7b2aa8240/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                   <a href="https://github.com/aboufama" target="_blank" rel="noopener noreferrer">GitHub</a>
-                  <a href={`${import.meta.env.BASE_URL}resume.pdf`}>Resume</a>
+                  <a href={`${import.meta.env.BASE_URL}AndreResumeApril.pdf`} target="_blank" rel="noopener noreferrer">Resume</a>
                 </div>
               </div>
             </div>

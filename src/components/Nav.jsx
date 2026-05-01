@@ -1,9 +1,9 @@
 import './Nav.css'
 
 const links = [
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/andreboufama' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/andre-boufama-7b2aa8240/' },
   { label: 'GitHub', href: 'https://github.com/aboufama' },
-  { label: 'Resume', href: '/resume.pdf' },
+  { label: 'Resume', href: `${import.meta.env.BASE_URL}AndreResumeApril.pdf` },
 ]
 
 export default function Nav() {
@@ -16,8 +16,8 @@ export default function Nav() {
             <a
               key={label}
               href={href}
-              target={href.startsWith('http') ? '_blank' : undefined}
-              rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              target="_blank"
+              rel="noopener noreferrer"
               className="nav-link"
             >
               {label}
