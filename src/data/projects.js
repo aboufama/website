@@ -2,6 +2,24 @@ const base = import.meta.env.BASE_URL
 
 const projects = [
   {
+    id: 'hexapod',
+    title: 'Hexapod',
+    subtitle: 'Cornell Physical Intelligence',
+    description: 'A new morphology design for Cornell Physical Intelligence. Each three degree of freedom leg is actuated from the base (femur) allowing for extreme agility and explosiveness. The motors are daisy chained in groups of three for modularity and simplicity of motor driver design. All PCBs are custom. My specific role involved the design of every single structural component. We plan to run advanced machine vision tasks on this hexapod and have it interface with a drone to act as a mechanical symbiote. Updates will come soon.',
+    tags: [],
+    images: [`${base}projects/hexapod/HexapodHero.png`],
+    imageZoom: 1.35,
+    galleryTint: '#eef0f3',
+    galleryLayout: 'grid-2x2',
+    gallery: [
+      { src: `${base}projects/hexapod/LegStructure.png`, type: 'image', transparent: true, zoom: true },
+      { src: `${base}projects/hexapod/Layout.png`,       type: 'image', transparent: false },
+      { src: `${base}projects/hexapod/CoverTest.png`,    type: 'image', transparent: false },
+      { src: `${base}projects/hexapod/WiredLayout.png`,  type: 'image', transparent: false },
+    ],
+    flip: false,
+  },
+  {
     id: 'plant-bot',
     title: 'Plant Bot',
     subtitle: 'Agentic Plant Care Walking Robot',
