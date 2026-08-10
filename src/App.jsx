@@ -85,7 +85,7 @@ export default function App() {
                 <div className="hero-links">
                   <a href="https://tm.cornellphysicalintelligence.com/" target="_blank" rel="noopener noreferrer">Team Manager</a>
                   <a href="https://cornellphysicalintelligence.com/" target="_blank" rel="noopener noreferrer">Club Website</a>
-                  <a href="https://clash-game-ashen.vercel.app/" target="_blank" rel="noopener noreferrer">Clash of Clans</a>
+                  <a href="https://serfs.io/" target="_blank" rel="noopener noreferrer">Clash of Clans</a>
                   <a href="https://aboufama.github.io/Eyes/" target="_blank" rel="noopener noreferrer">Eye Art <span style={{ color: '#f5c518', textDecoration: 'none', display: 'inline-block' }}>&#9733;</span></a>
                   <a href="https://aboufama.github.io/Tilted_Display_Test/" target="_blank" rel="noopener noreferrer">Old Display</a>
                 </div>
