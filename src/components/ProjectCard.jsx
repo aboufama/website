@@ -3,8 +3,45 @@ import MediaGallery from './MediaGallery'
 import './ProjectCard.css'
 
 export default function ProjectCard({ project }) {
-  const { title, subtitle, description, images, gallery, galleryTint, galleryLayout, imageLarge, imageRight, imageZoom, tags, links, flip } = project
+  const { title, subtitle, description, images, gallery, galleryTint, galleryLayout, imageLarge, imageRight, imageZoom, tags, links, flip, highlight, highlightSecondImage, highlightMechanism } = project
   const hasGallery = gallery?.length > 0
+
+  if (highlight) {
+    return (
+      <article className="project-card project-card--highlight">
+        <div className="project-info">
+          <span className="project-highlight-eyebrow">Design Studio Project</span>
+          <h2 className="project-title project-title--highlight">{title}</h2>
+          {description && description.split('\n\n').map((para, i) => (
+            <p key={i} className="project-desc">{para}</p>
+          ))}
+        </div>
+        {highlightMechanism && highlightMechanism.length > 0 && (
+          <div className="mechanism-slot">
+            <div className="mechanism-line" />
+            <div className="mechanism-stack">
+              {highlightMechanism.map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt={`mechanism frame ${i + 1}`}
+                  className={`mechanism-frame${i === 0 ? ' active' : ''}`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
+        <div className="project-images project-images--highlight">
+          <div className="highlight-image-stack">
+            <img src={images[0]} alt={title} className="highlight-image-base" />
+            {highlightSecondImage && (
+              <img src={highlightSecondImage} alt={`${title} alt`} className="highlight-image-overlay" />
+            )}
+          </div>
+        </div>
+      </article>
+    )
+  }
 
   return (
     <article className={[
