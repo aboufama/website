@@ -87,7 +87,7 @@ export default function App() {
                   <a href="https://cornellphysicalintelligence.com/" target="_blank" rel="noopener noreferrer">Club Website</a>
                   <a href="https://serfs.io/" target="_blank" rel="noopener noreferrer">Clash of Clans</a>
                   <a href="https://aboufama.github.io/eyes/" target="_blank" rel="noopener noreferrer">Eye Art <span style={{ color: '#f5c518', textDecoration: 'none', display: 'inline-block' }}>&#9733;</span></a>
-                  <a href="https://aboufama.github.io/Tilted_Display_Test/" target="_blank" rel="noopener noreferrer">Old Display</a>
+                  <a href="https://aboufama.github.io/tilted-display-test/" target="_blank" rel="noopener noreferrer">Old Display</a>
                 </div>
               </div>
               <div className="hero-links-box">
