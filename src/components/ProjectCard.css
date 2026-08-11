@@ -52,11 +52,11 @@
 .project-card--image-large .project-images--large {
   max-width: none;
   width: 100%;
-  transform: translateX(-22%);
+  transform: translateX(-20%);
 }
 
 .project-card--image-large .project-images--large .project-image {
-  width: 200%;
+  width: 120%;
   max-width: none;
 }
 
@@ -130,9 +130,7 @@
   color: #6e6e73;
   line-height: 1.7;
   letter-spacing: 0.01em;
-  text-align: justify;
-  hyphens: auto;
-  text-align-last: left;
+  text-align: left;
 }
 
 .project-tags {
@@ -164,6 +162,173 @@
   padding: 4px 12px;
   border-radius: 100vw; /* pill/capsule — G2-degenerate exception */
   letter-spacing: 0.01em;
+}
+
+/* Living Guide highlight: title + exploded view left, huge image bleeds off right */
+.project-card--highlight {
+  grid-template-columns: 0.7fr 0.235fr 1.065fr;
+  align-items: center;
+  overflow: hidden;
+}
+
+
+.project-highlight-eyebrow {
+  font-size: 12px;
+  font-weight: 500;
+  color: #86868b;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.project-title--highlight {
+  font-size: clamp(28px, 3.6vw, 60px);
+}
+
+.project-card--highlight .project-desc {
+  font-size: clamp(11px, 1vw, 14px);
+}
+
+.project-card--highlight .project-info {
+  padding: clamp(28px, 4vw, 60px) clamp(28px, 4vw, 64px);
+  gap: clamp(10px, 1.2vw, 18px);
+}
+
+.project-images--highlight {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  overflow: visible;
+}
+
+.highlight-image-stack {
+  position: relative;
+  width: 72%;
+  margin-left: auto;
+  transform: translateX(12%);
+  cursor: pointer;
+}
+
+.highlight-image-stack img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.highlight-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.highlight-image-stack.flap-active .highlight-image-overlay {
+  animation: flap-flip-on 1s step-end forwards;
+}
+
+.highlight-image-stack.flap-active .highlight-image-base {
+  animation: flap-flip-off 1s step-end forwards;
+}
+
+.highlight-image-stack.flap-active-twice .highlight-image-overlay {
+  animation: flap-flip-on-twice 1.6s step-end forwards;
+}
+
+.highlight-image-stack.flap-active-twice .highlight-image-base {
+  animation: flap-flip-off-twice 1.6s step-end forwards;
+}
+
+@keyframes flap-flip-on {
+  0%   { opacity: 0; }
+  33%  { opacity: 1; }
+  66%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes flap-flip-off {
+  0%   { opacity: 1; }
+  33%  { opacity: 0; }
+  66%  { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@keyframes flap-flip-on-twice {
+  0%    { opacity: 0; }
+  12.5% { opacity: 1; }
+  25%   { opacity: 0; }
+  37.5% { opacity: 1; }
+  50%   { opacity: 0; }
+  100%  { opacity: 0; }
+}
+
+@keyframes flap-flip-off-twice {
+  0%    { opacity: 1; }
+  12.5% { opacity: 0; }
+  25%   { opacity: 1; }
+  37.5% { opacity: 0; }
+  50%   { opacity: 1; }
+  100%  { opacity: 1; }
+}
+
+.mechanism-slot {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 935 / 2407;
+  align-self: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateX(150%);
+  transition: opacity 0.5s ease;
+}
+
+.mechanism-slot.mech-visible {
+  opacity: 1;
+}
+
+.mechanism-line {
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  height: 1px;
+  width: 50%;
+  background: rgba(29, 29, 31, 0.3);
+  transform: translateY(-50%) rotate(15deg);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+.mechanism-stack {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(100% * 2407 / 935);
+  height: auto;
+  transform: translate(-50%, -50%) rotate(-75deg) scale(1.25);
+  transform-origin: center;
+}
+
+.mechanism-stack .mechanism-frame {
+  width: 100%;
+  height: auto;
+  display: block;
+  opacity: 0;
+}
+
+.mechanism-stack .mechanism-frame:not(:first-child) {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.mechanism-stack .mechanism-frame.active {
+  opacity: 1;
+}
+
+@media (max-width: 680px) {
+  .mechanism-slot {
+    display: none;
+  }
 }
 
 /* Responsive */
@@ -214,5 +379,19 @@
     max-width: 100%;
     height: auto;
     object-fit: contain;
+  }
+
+  .project-card--highlight {
+    grid-template-columns: 1fr;
+  }
+
+  .project-card--highlight .project-info {
+    padding: 32px 22px 0;
+  }
+
+  .highlight-image-stack {
+    width: 115%;
+    transform: none;
+    margin-left: 0;
   }
 }

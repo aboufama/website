@@ -2,6 +2,21 @@ const base = import.meta.env.BASE_URL
 
 const projects = [
   {
+    id: 'living-guide',
+    title: 'Living Guide',
+    description: 'Living Guide is a wearable mask that turns other people\'s attention into tactile sensations and physical direction.\n\nThe wearer\'s vision is fully blocked, while five scale strips on the mask respond to how long people look from different directions. When one direction receives more gaze, the motors under that strip moves, and the wearer follows that tactile signal and walks toward the gazer.\n\nThe project reflects attention-seeking behavior in contemporary social & social media culture, where attention become invisible forces that shape how we move, perform, and define ourselves.',
+    images: [`${base}projects/face-mask/FaceMask.png`],
+    highlightSecondImage: `${base}projects/face-mask/FlapsClosed.png`,
+    highlightMechanism: [
+      `${base}projects/face-mask/1.png`,
+      `${base}projects/face-mask/2.png`,
+      `${base}projects/face-mask/3.png`,
+      `${base}projects/face-mask/4.png`,
+      `${base}projects/face-mask/5.png`,
+    ],
+    highlight: true,
+  },
+  {
     id: 'hexapod',
     title: 'Hexapod',
     subtitle: 'Cornell Physical Intelligence',

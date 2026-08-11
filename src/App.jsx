@@ -20,11 +20,19 @@ function preloadImages(urls) {
 export default function App() {
   const [loaded, setLoaded] = useState(false)
   const [showWelcome, setShowWelcome] = useState(false)
+  const [arrowVisible, setArrowVisible] = useState(false)
   const heroRef = useRef(null)
+  const releasedRef = useRef(false)
+  const lockedRef = useRef(false)
+  const lockYRef = useRef(0)
 
   useEffect(() => {
     const heroSrc = `${import.meta.env.BASE_URL}CutoutAndre.png`
-    const projectSrcs = projects.flatMap((p) => p.images || [])
+    const projectSrcs = projects.flatMap((p) => [
+      ...(p.images || []),
+      p.highlightSecondImage,
+      ...(p.highlightMechanism || []),
+    ].filter(Boolean))
     preloadImages([heroSrc, ...projectSrcs]).then(() => {
       setLoaded(true)
       setShowWelcome(true)
@@ -43,6 +51,195 @@ export default function App() {
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  useEffect(() => {
+    const stack = document.querySelector('.highlight-image-stack')
+    const base = document.querySelector('.highlight-image-base')
+    const slot = document.querySelector('.mechanism-slot')
+    if (!stack || !base) return
+
+    const playFlap = (cls) => {
+      stack.classList.remove('flap-active', 'flap-active-twice')
+      void stack.offsetWidth
+      stack.classList.add(cls)
+    }
+
+    let revealTimer = null
+    let playMechTimer = null
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+          playFlap('flap-active-twice')
+          if (slot) {
+            revealTimer = setTimeout(() => {
+              slot.classList.add('mech-visible')
+              playMechTimer = setTimeout(() => {
+                slot.dispatchEvent(new CustomEvent('play-mechanism'))
+              }, 400)
+            }, 1700)
+          }
+          observer.disconnect()
+        }
+      },
+      { threshold: [0.3] }
+    )
+    observer.observe(base)
+    const handleClick = () => playFlap('flap-active')
+    stack.addEventListener('click', handleClick)
+
+    return () => {
+      if (revealTimer) clearTimeout(revealTimer)
+      if (playMechTimer) clearTimeout(playMechTimer)
+      observer.disconnect()
+      stack.removeEventListener('click', handleClick)
+    }
+  }, [])
+
+  useEffect(() => {
+    const slot = document.querySelector('.mechanism-slot')
+    if (!slot) return
+    const frames = slot.querySelectorAll('.mechanism-frame')
+    if (frames.length === 0) return
+
+    const sequence = [0, 1, 2, 3, 4, 3, 2, 1]
+    const frameMs = 100
+    let timeoutIds = []
+
+    const playSequence = () => {
+      timeoutIds.forEach(clearTimeout)
+      timeoutIds = []
+      sequence.forEach((idx, i) => {
+        const id = setTimeout(() => {
+          frames.forEach((f) => f.classList.remove('active'))
+          frames[idx].classList.add('active')
+        }, i * frameMs)
+        timeoutIds.push(id)
+      })
+    }
+
+    slot.addEventListener('click', playSequence)
+    slot.addEventListener('play-mechanism', playSequence)
+
+    return () => {
+      slot.removeEventListener('click', playSequence)
+      slot.removeEventListener('play-mechanism', playSequence)
+      timeoutIds.forEach(clearTimeout)
+    }
+  }, [])
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY
+
+    const engageLock = (lockY) => {
+      lockedRef.current = true
+      lockYRef.current = lockY
+      const prevBehavior = document.documentElement.style.scrollBehavior
+      document.documentElement.style.scrollBehavior = 'auto'
+      window.scrollTo({ top: lockY })
+      document.documentElement.style.overflow = 'hidden'
+      document.documentElement.style.scrollBehavior = prevBehavior
+      lastScrollY = lockY
+      setArrowVisible(true)
+    }
+
+    const releasePermanently = () => {
+      if (releasedRef.current) return
+      releasedRef.current = true
+      if (lockedRef.current) {
+        document.documentElement.style.overflow = ''
+        lockedRef.current = false
+      }
+      setArrowVisible(false)
+    }
+
+    const handleScroll = () => {
+      if (releasedRef.current || lockedRef.current) {
+        lastScrollY = window.scrollY
+        return
+      }
+      const img = document.querySelector('.highlight-image-base')
+      if (!img) {
+        lastScrollY = window.scrollY
+        return
+      }
+      const rect = img.getBoundingClientRect()
+      const dy = window.scrollY - lastScrollY
+      lastScrollY = window.scrollY
+      if (dy > 0 && rect.bottom <= window.innerHeight && rect.bottom + dy >= window.innerHeight) {
+        engageLock(window.scrollY + rect.bottom - window.innerHeight)
+      }
+    }
+
+    const handleWheel = (e) => {
+      if (releasedRef.current) return
+      if (lockedRef.current) {
+        if (e.deltaY < 0) releasePermanently()
+        return
+      }
+      const img = document.querySelector('.highlight-image-base')
+      if (!img) return
+      const rect = img.getBoundingClientRect()
+      const distToLock = rect.bottom - window.innerHeight
+      if (e.deltaY > 0 && distToLock > 0 && e.deltaY >= distToLock) {
+        e.preventDefault()
+        engageLock(window.scrollY + distToLock)
+      }
+    }
+
+    const handleKeyDown = (e) => {
+      if (releasedRef.current || !lockedRef.current) return
+      if (['ArrowUp', 'PageUp', 'Home'].includes(e.key)) {
+        releasePermanently()
+      } else if (['ArrowDown', 'PageDown', ' ', 'End'].includes(e.key)) {
+        e.preventDefault()
+      }
+    }
+
+    let touchStartY = null
+    const handleTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY
+    }
+    const handleTouchMove = (e) => {
+      if (releasedRef.current || !lockedRef.current || touchStartY === null) return
+      const dy = touchStartY - e.touches[0].clientY
+      if (dy < -20) {
+        releasePermanently()
+      } else {
+        e.preventDefault()
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('wheel', handleWheel, { passive: false })
+    window.addEventListener('keydown', handleKeyDown)
+    window.addEventListener('touchstart', handleTouchStart, { passive: true })
+    window.addEventListener('touchmove', handleTouchMove, { passive: false })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('wheel', handleWheel)
+      window.removeEventListener('keydown', handleKeyDown)
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchmove', handleTouchMove)
+      if (lockedRef.current) {
+        document.documentElement.style.overflow = ''
+      }
+    }
+  }, [])
+
+  const handleRelease = () => {
+    if (lockedRef.current) {
+      document.documentElement.style.overflow = ''
+      lockedRef.current = false
+    }
+    releasedRef.current = true
+    setArrowVisible(false)
+    const cards = document.querySelectorAll('.project-card')
+    if (cards.length > 1) {
+      cards[1].scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
 
   return (
     <div className={`app${loaded ? ' app--loaded' : ''}`}>
@@ -108,6 +305,17 @@ export default function App() {
           <ProjectCard key={project.id} project={project} />
         ))}
       </section>
+      {arrowVisible && (
+        <button
+          className="scroll-unlock"
+          onClick={handleRelease}
+          aria-label="Continue scrolling"
+        >
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </button>
+      )}
     </div>
   )
 }
