@@ -110,6 +110,23 @@
   white-space: nowrap;
 }
 
+/* The organisation behind a project, as its logo beside the title */
+.project-org {
+  display: inline-flex;
+  align-self: center;
+  margin-top: 0.5em;
+  opacity: 0.9;
+  transition: opacity 0.15s ease;
+}
+
+.project-org:hover {
+  opacity: 1;
+}
+
+.project-org img {
+  display: block;
+}
+
 .project-desc {
   font-size: clamp(13.5px, 0.92vw, 16px); /* unchanged on a laptop, keeps its measure on a wide display */
   font-weight: 300;
@@ -118,6 +135,19 @@
   letter-spacing: 0.01em;
   text-align: left;
   text-wrap: pretty;
+}
+
+.project-desc a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(0, 0, 0, 0.25);
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.project-desc a:hover {
+  color: #0071e3;
+  text-decoration-color: #0071e3;
 }
 
 /* "What I did" switch: everything fades except the sentences about my own part */
