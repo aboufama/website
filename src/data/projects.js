@@ -27,12 +27,13 @@ const projects = [
       alt: 'The hexapod climbing over rocks',
     }),
     imageBleed: true,
-    // The three designs that came before the one above, oldest first.
+    // The three designs that came before the one above, oldest first, then the current one's version.
     lineage: [
-      { ...img(`${hex}LineageServo.webp`),    label: 'long servo legs',        alt: 'First design, a CAD drawing: a hexapod on very long servo driven legs' },
-      { ...img(`${hex}Prototype.webp`),       label: '3D printed',             alt: 'Second design: a 3D printed hexapod with a white frame and black legs' },
-      { ...img(`${hex}LineageLongLegs.webp`), label: 'this body, longer legs', alt: 'Third design: the aluminium body on longer legs' },
+      { ...img(`${hex}LineageServo.webp`),    version: 'V1',   label: 'long servo legs',        alt: 'V1, a CAD drawing: a hexapod on very long servo driven legs' },
+      { ...img(`${hex}Prototype.webp`),       version: 'V2',   label: '3D printed',             alt: 'V2: a 3D printed hexapod with a white frame and black legs' },
+      { ...img(`${hex}LineageLongLegs.webp`), version: 'V3.0', label: 'this body, longer legs', alt: 'V3.0: the aluminium body on longer legs' },
     ],
+    version: 'V3.1',
     galleryTint: '#eef0f3',
     galleryLayout: 'double-feature',
     gallery: [

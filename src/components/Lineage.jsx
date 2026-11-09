@@ -1,8 +1,9 @@
 import './Lineage.css'
 
-/* The earlier designs of a project, oldest first, each handing over to the next with a small
-   drawn arrow; the last one hands over to the current design shown above the row. */
-export default function Lineage({ items }) {
+/* The earlier designs of a project, oldest first, each named by its version and handing over
+   to the next with a small drawn arrow; the last one hands over to the current design shown
+   above the row, whose version sits at that arrow's head. */
+export default function Lineage({ items, current }) {
   return (
     <div className="lineage">
       <ol className="lineage-row">
@@ -23,7 +24,9 @@ export default function Lineage({ items }) {
                 </svg>
               )}
               {i === items.length - 1 && (
-                <svg className="lineage-now" viewBox="0 0 60 60" fill="none" aria-hidden="true">
+                <span className="lineage-now">
+                  {current && <span className="lineage-version lineage-now-version">{current}</span>}
+                  <svg viewBox="0 0 60 60" fill="none" aria-hidden="true">
                   <defs>
                     <linearGradient id="lineage-now-fade" x1="0" y1="1" x2="0" y2="0">
                       <stop offset="0%" stopColor="#1d1d1f" stopOpacity="0" />
@@ -32,10 +35,14 @@ export default function Lineage({ items }) {
                   </defs>
                   <path d="M 48,58 C 54,38 42,18 16,6" stroke="url(#lineage-now-fade)" strokeWidth="1" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
                   <path d="M 23,5.6 L 16,6 L 20.2,11.6" stroke="#1d1d1f" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
-                </svg>
+                  </svg>
+                </span>
               )}
             </span>
-            <span className="lineage-label">{item.label}</span>
+            <span className="lineage-label">
+              {item.version && <span className="lineage-version">{item.version}</span>}
+              {item.label}
+            </span>
           </li>
         ))}
       </ol>

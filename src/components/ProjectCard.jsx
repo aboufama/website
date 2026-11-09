@@ -4,7 +4,7 @@ import Lineage from './Lineage'
 import './ProjectCard.css'
 
 export default function ProjectCard({ project }) {
-  const { id, title, image, imageLarge, imageBleed, imageFlush, lineage, gallery, galleryTint, galleryLayout, flip } = project
+  const { id, title, image, imageLarge, imageBleed, imageFlush, lineage, version, gallery, galleryTint, galleryLayout, flip } = project
   const { alt, ...imageProps } = image
 
   return (
@@ -22,7 +22,7 @@ export default function ProjectCard({ project }) {
         <div className="project-images">
           <img {...imageProps} alt={alt || title} loading="lazy" decoding="async" className="project-image" />
         </div>
-        {lineage && <Lineage items={lineage} />}
+        {lineage && <Lineage items={lineage} current={version} />}
       </div>
 
       <ProjectInfo {...project} />
