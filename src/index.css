@@ -13,14 +13,32 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
   background: #ffffff;
   color: #1d1d1f;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
 }
 
 html {
   overflow-x: hidden;
+}
+
+/* Keyboard focus: one quiet ring everywhere */
+:focus-visible {
+  outline: 2px solid #0071e3;
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(0, 113, 227, 0.16);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

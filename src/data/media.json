@@ -1,0 +1,239 @@
+{
+ "CutoutAndre.webp": [
+  260,
+  680
+ ],
+ "projects/autonomous-rover/Image1.webp": [
+  900,
+  620
+ ],
+ "projects/autonomous-rover/Image2.webp": [
+  900,
+  590
+ ],
+ "projects/autonomous-rover/Image3.webp": [
+  900,
+  512
+ ],
+ "projects/autonomous-rover/Image4.webp": [
+  900,
+  896
+ ],
+ "projects/autonomous-rover/Rover.webp": [
+  1600,
+  1011
+ ],
+ "projects/face-mask/ExplodedView.webp": [
+  900,
+  444
+ ],
+ "projects/face-mask/FaceMask.webp": [
+  852,
+  1280
+ ],
+ "projects/face-mask/MaskMoving.mp4": [
+  640,
+  800
+ ],
+ "projects/face-mask/MaskMoving.webp": [
+  640,
+  800
+ ],
+ "projects/face-mask/MechanismA.webp": [
+  800,
+  800
+ ],
+ "projects/face-mask/MechanismB.webp": [
+  800,
+  800
+ ],
+ "projects/gauntlet/Closed.webp": [
+  804,
+  900
+ ],
+ "projects/gauntlet/FusionGauntlet.webp": [
+  900,
+  656
+ ],
+ "projects/gauntlet/Gauntlet.webp": [
+  675,
+  900
+ ],
+ "projects/gauntlet/GloveHands.webp": [
+  1129,
+  1200
+ ],
+ "projects/gauntlet/HandTesting.webp": [
+  636,
+  648
+ ],
+ "projects/gauntlet/HappyTesting.webp": [
+  675,
+  900
+ ],
+ "projects/gauntlet/Open.webp": [
+  853,
+  900
+ ],
+ "projects/gauntlet/WithHandModel.webp": [
+  900,
+  502
+ ],
+ "projects/helios-x/Field-1100.webp": [
+  1100,
+  481
+ ],
+ "projects/helios-x/Field.webp": [
+  2000,
+  875
+ ],
+ "projects/hexapod/HexapodCAD.webp": [
+  900,
+  585
+ ],
+ "projects/hexapod/LegDetail.webp": [
+  900,
+  600
+ ],
+ "projects/hexapod/LegJump.mp4": [
+  800,
+  600
+ ],
+ "projects/hexapod/LegJump.webp": [
+  800,
+  600
+ ],
+ "projects/hexapod/LegOnRail.webp": [
+  675,
+  900
+ ],
+ "projects/hexapod/LegStand.mp4": [
+  720,
+  406
+ ],
+ "projects/hexapod/LegStand.webp": [
+  720,
+  406
+ ],
+ "projects/hexapod/LineageLongLegs.webp": [
+  520,
+  352
+ ],
+ "projects/hexapod/LineageServo.webp": [
+  480,
+  276
+ ],
+ "projects/hexapod/Prototype.webp": [
+  640,
+  953
+ ],
+ "projects/hexapod/RocksHero-960.webp": [
+  960,
+  691
+ ],
+ "projects/hexapod/RocksHero.webp": [
+  1800,
+  1296
+ ],
+ "projects/hexapod/Stairs.mp4": [
+  960,
+  540
+ ],
+ "projects/hexapod/Stairs.webp": [
+  960,
+  540
+ ],
+ "projects/hexapod/Walks.mp4": [
+  720,
+  406
+ ],
+ "projects/hexapod/Walks.webp": [
+  720,
+  406
+ ],
+ "projects/modular-hydroponics/Hydroponics.webp": [
+  960,
+  1200
+ ],
+ "projects/modular-hydroponics/Image1.webp": [
+  1100,
+  778
+ ],
+ "projects/modular-hydroponics/Image2.webp": [
+  804,
+  900
+ ],
+ "projects/modular-hydroponics/Image3.webp": [
+  900,
+  829
+ ],
+ "projects/modular-hydroponics/Image4.webp": [
+  900,
+  669
+ ],
+ "projects/plant-bot/Autonomy.mp4": [
+  536,
+  598
+ ],
+ "projects/plant-bot/Autonomy.webp": [
+  536,
+  598
+ ],
+ "projects/plant-bot/CutePlant.webp": [
+  975,
+  1000
+ ],
+ "projects/plant-bot/ExplodedView.webp": [
+  900,
+  900
+ ],
+ "projects/plant-bot/Misbehaved.webp": [
+  836,
+  900
+ ],
+ "projects/plant-bot/RobotCad.webp": [
+  900,
+  671
+ ],
+ "projects/plant-bot/Used.webp": [
+  900,
+  839
+ ],
+ "projects/plant-bot/Walking.mp4": [
+  640,
+  692
+ ],
+ "projects/plant-bot/Walking.webp": [
+  640,
+  692
+ ],
+ "projects/veridien/MachineVision.webp": [
+  1000,
+  562
+ ],
+ "projects/veridien/Operating.webp": [
+  1000,
+  562
+ ],
+ "projects/veridien/RigCameras.webp": [
+  1000,
+  562
+ ],
+ "projects/veridien/SessionSummary.webp": [
+  1000,
+  562
+ ],
+ "projects/veridien/VeridienFilm-720.mp4": [
+  1280,
+  720
+ ],
+ "projects/veridien/VeridienFilm-720.webp": [
+  1280,
+  720
+ ],
+ "projects/veridien/opening": [
+  900,
+  707,
+  46
+ ]
+}

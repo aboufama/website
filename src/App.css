@@ -76,6 +76,7 @@
 
 
 .hero-cutout {
+  display: block;
   height: 270px;
   width: auto;
   object-fit: contain;
@@ -158,7 +159,10 @@
   color: #0071e3;
   text-decoration-color: #0071e3;
 }
-
+.hero-star {
+  display: inline-block;
+  color: #f5c518;
+}
 
 /* Projects — full bleed, edge to edge */
 .projects {
@@ -171,41 +175,82 @@
   padding-bottom: 140px;
 }
 
-/* Scroll-lock arrow under highlight project */
-.scroll-unlock {
+/* A small switch, shared by "Highlight what I did" and "Blur the organ" */
+.switch {
+  position: relative;
+  flex: none;
+  width: 26px;
+  height: 15px;
+  background: #d2d2d7;
+  border-radius: 100vw; /* pill — G2-degenerate exception */
+  transition: background 0.2s ease;
+}
+
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 11px;
+  height: 11px;
+  background: #fff;
+  border-radius: 100vw; /* circle — G2-degenerate exception */
+  transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+input:checked + .switch {
+  background: #1d1d1f;
+}
+
+input:checked + .switch::after {
+  transform: translateX(11px);
+}
+
+input:focus-visible + .switch {
+  outline: 2px solid #0071e3;
+  outline-offset: 3px;
+}
+
+/* Stays in the corner the whole way down the page */
+.mine-toggle {
   position: fixed;
-  bottom: 36px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  background: rgba(255, 255, 255, 0.35);
-  color: #1d1d1f;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 100vw;
-  cursor: pointer;
-  display: flex;
+  top: 16px;
+  right: 16px;
+  z-index: 20;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-  animation: arrow-bounce 1.6s ease-in-out infinite;
-  transition: background 0.15s ease;
-  font: inherit;
+  gap: 8px;
+  padding: 7px 13px 7px 9px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6e6e73;
+  letter-spacing: 0.01em;
+  background: rgba(245, 245, 247, 0.78);
+  backdrop-filter: blur(14px) saturate(1.6);
+  -webkit-backdrop-filter: blur(14px) saturate(1.6);
+  border-radius: 100vw; /* pill — G2-degenerate exception */
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s ease;
 }
 
-.scroll-unlock:hover {
-  background: rgba(255, 255, 255, 0.7);
+.mine-toggle:hover,
+.app--mine .mine-toggle {
+  color: #1d1d1f;
 }
 
-.scroll-unlock svg {
-  display: block;
+.mine-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
 }
 
-@keyframes arrow-bounce {
-  0%, 100% { transform: translate(-50%, 0); }
-  50%      { transform: translate(-50%, 6px); }
+@media (prefers-reduced-motion: reduce) {
+  .switch,
+  .switch::after {
+    transition: none;
+  }
 }
 
 /* Landscape required on small screens */

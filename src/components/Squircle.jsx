@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react'
+import { forwardRef, useLayoutEffect, useRef } from 'react'
 import { getSvgPath } from 'figma-squircle'
 
 /**
@@ -6,7 +6,7 @@ import { getSvgPath } from 'figma-squircle'
  * Drop-in replacement for any div that would otherwise use border-radius.
  * Uses figma-squircle to generate the clip path, updated via ResizeObserver.
  */
-export default function Squircle({
+const Squircle = forwardRef(function Squircle({
   children,
   radius = 18,
   smoothing = 0.4,
@@ -14,7 +14,7 @@ export default function Squircle({
   className,
   style,
   ...props
-}) {
+}, outerRef) {
   const ref = useRef(null)
 
   useLayoutEffect(() => {
@@ -39,9 +39,17 @@ export default function Squircle({
     return () => ro.disconnect()
   }, [radius, smoothing])
 
+  const setRef = (el) => {
+    ref.current = el
+    if (typeof outerRef === 'function') outerRef(el)
+    else if (outerRef) outerRef.current = el
+  }
+
   return (
-    <Tag ref={ref} className={className} style={style} {...props}>
+    <Tag ref={setRef} className={className} style={style} {...props}>
       {children}
     </Tag>
   )
-}
+})
+
+export default Squircle

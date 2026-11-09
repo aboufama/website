@@ -1,4 +1,4 @@
-/* Fixed 3×2 grid — popped item redistributes tracks inside, nothing spills */
+/* Fixed 3×2 grid — the hovered item redistributes the tracks inside, nothing spills */
 .media-gallery {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -6,7 +6,7 @@
   gap: 6px;
   width: 100%;
   aspect-ratio: 3 / 2;
-  padding: 0 12px 0 6px;
+  padding: 0 16px 0 0;
   box-sizing: border-box;
   transition:
     grid-template-columns 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
@@ -27,57 +27,62 @@
 .media-gallery:has(> .gallery-item:nth-child(-n+3):hover) { grid-template-rows: 2fr 1fr; }
 .media-gallery:has(> .gallery-item:nth-child(n+4):hover)  { grid-template-rows: 1fr 2fr; }
 
-/* ── featured-left: Image1 big square, Images 2-4 stacked right ── */
+/* ── double-feature: a 16:9 film across the top, a second large film under it with two
+   tiles beside it, then a row of three ──
+   With W the gallery width the rows are 9W/16 and 3 × W/4, so the first film is exactly 16:9
+   and the second (two columns by two rows) close to 4:3. */
+.media-gallery[data-layout="double-feature"] {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 2.25fr 1fr 1fr 1fr;
+  aspect-ratio: 0.766;
+}
+
+.media-gallery[data-layout="double-feature"] > .gallery-item:nth-child(1) { grid-column: 1 / -1; grid-row: 1; }
+.media-gallery[data-layout="double-feature"] > .gallery-item:nth-child(2) { grid-column: 1 / span 2; grid-row: 2 / span 2; }
+.media-gallery[data-layout="double-feature"] > .gallery-item:nth-child(3) { grid-column: 3; grid-row: 2; }
+.media-gallery[data-layout="double-feature"] > .gallery-item:nth-child(4) { grid-column: 3; grid-row: 3; }
+.media-gallery[data-layout="double-feature"] > .gallery-item:nth-child(n+5) { grid-row: 4; }
+
+.media-gallery[data-layout="double-feature"]:has(> .gallery-item:hover)              { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 2.25fr 1fr 1fr 1fr; }
+.media-gallery[data-layout="double-feature"]:has(> .gallery-item:nth-child(1):hover) { grid-template-rows: 3fr 1fr 1fr 1fr; }
+.media-gallery[data-layout="double-feature"]:has(> .gallery-item:nth-child(2):hover) { grid-template-columns: 1.2fr 1.2fr 0.7fr; grid-template-rows: 1.8fr 1.3fr 1.3fr 0.8fr; }
+.media-gallery[data-layout="double-feature"]:has(> .gallery-item:nth-child(3):hover) { grid-template-columns: 0.8fr 0.8fr 1.5fr; grid-template-rows: 2fr 1.5fr 0.7fr 1fr; }
+.media-gallery[data-layout="double-feature"]:has(> .gallery-item:nth-child(4):hover) { grid-template-columns: 0.8fr 0.8fr 1.5fr; grid-template-rows: 2fr 0.7fr 1.5fr 1fr; }
+.media-gallery[data-layout="double-feature"]:has(> .gallery-item:nth-child(n+5):hover) { grid-template-rows: 2fr 0.85fr 0.85fr 1.7fr; }
+.media-gallery[data-layout="double-feature"]:has(> .gallery-item:nth-child(5):hover) { grid-template-columns: 2fr 1fr 1fr; }
+.media-gallery[data-layout="double-feature"]:has(> .gallery-item:nth-child(6):hover) { grid-template-columns: 1fr 2fr 1fr; }
+.media-gallery[data-layout="double-feature"]:has(> .gallery-item:nth-child(7):hover) { grid-template-columns: 1fr 1fr 2fr; }
+
+/* ── pair: two stills side by side ── */
+.media-gallery[data-layout="pair"] {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  aspect-ratio: 3.2;
+}
+
+.media-gallery[data-layout="pair"]:has(> .gallery-item:hover)              { grid-template-rows: 1fr; }
+.media-gallery[data-layout="pair"]:has(> .gallery-item:nth-child(1):hover) { grid-template-columns: 1.8fr 1fr; }
+.media-gallery[data-layout="pair"]:has(> .gallery-item:nth-child(2):hover) { grid-template-columns: 1fr 1.8fr; }
+
+/* ── featured-left: one portrait film on the left, two stills stacked on the right ── */
 .media-gallery[data-layout="featured-left"] {
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  aspect-ratio: 2.12;
+  grid-template-columns: 1.5fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  aspect-ratio: 4 / 3;
 }
 
 .media-gallery[data-layout="featured-left"] > .gallery-item:first-child {
   grid-column: 1;
-  grid-row: 1 / span 3;
+  grid-row: 1 / span 2;
 }
 
 .media-gallery[data-layout="featured-left"] > .gallery-item:nth-child(n+2) {
   grid-column: 2;
 }
 
-/* Reset default hover expansion for featured-left */
-.media-gallery[data-layout="featured-left"]:has(> .gallery-item:hover) {
-  grid-template-columns: 2fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-}
-
-/* ── featured-bottom: 3 small images top row, big image bottom row ── */
-/* aspect-ratio tuned so bottom cell = Image1's native 1600×1131 ratio (1.414:1) */
-/* cell_ratio = gallery_ratio / 0.6  →  gallery_ratio = 1.414 × 0.6 = 0.848       */
-.media-gallery[data-layout="featured-bottom"] {
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 0.7fr 1.5fr;
-  aspect-ratio: 0.964;
-}
-
-/* Image1 (big) — bottom row, spans all 3 columns */
-.media-gallery[data-layout="featured-bottom"] > .gallery-item:first-child {
-  grid-column: 1 / -1;
-  grid-row: 2;
-}
-
-/* Image2, Image3, Image4 — top row */
-.media-gallery[data-layout="featured-bottom"] > .gallery-item:nth-child(2) { grid-column: 1; grid-row: 1; }
-.media-gallery[data-layout="featured-bottom"] > .gallery-item:nth-child(3) { grid-column: 2; grid-row: 1; }
-.media-gallery[data-layout="featured-bottom"] > .gallery-item:nth-child(4) { grid-column: 3; grid-row: 1; }
-
-/* Hover expansion for top-row images (big image always spans all cols) */
-.media-gallery[data-layout="featured-bottom"]:has(> .gallery-item:nth-child(2):hover) { grid-template-columns: 2fr 1fr 1fr; }
-.media-gallery[data-layout="featured-bottom"]:has(> .gallery-item:nth-child(3):hover) { grid-template-columns: 1fr 2fr 1fr; }
-.media-gallery[data-layout="featured-bottom"]:has(> .gallery-item:nth-child(4):hover) { grid-template-columns: 1fr 1fr 2fr; }
-
-/* Lock rows during hover */
-.media-gallery[data-layout="featured-bottom"]:has(> .gallery-item:hover) {
-  grid-template-rows: 0.7fr 1.5fr;
-}
+.media-gallery[data-layout="featured-left"]:has(> .gallery-item:first-child:hover) { grid-template-columns: 2.2fr 1fr; grid-template-rows: 1fr 1fr; }
+.media-gallery[data-layout="featured-left"]:has(> .gallery-item:nth-child(2):hover) { grid-template-columns: 1fr 1.25fr; grid-template-rows: 1.7fr 1fr; }
+.media-gallery[data-layout="featured-left"]:has(> .gallery-item:nth-child(3):hover) { grid-template-columns: 1fr 1.25fr; grid-template-rows: 1fr 1.7fr; }
 
 /* ── grid-2x2: 4 equal cells ── */
 .media-gallery[data-layout="grid-2x2"] {
@@ -86,7 +91,6 @@
   aspect-ratio: 1;
 }
 
-/* grid-2x2 hover expansion */
 .media-gallery[data-layout="grid-2x2"]:has(> .gallery-item:nth-child(1):hover),
 .media-gallery[data-layout="grid-2x2"]:has(> .gallery-item:nth-child(3):hover) { grid-template-columns: 2fr 1fr; }
 
@@ -101,9 +105,22 @@
 
 /* ── Items ── */
 .gallery-item {
+  position: relative;
   overflow: hidden;
+  min-width: 0;
+  min-height: 0;
   background: #ebebed;
   border-radius: 14px !important; /* G1 exception: clip-path can't transition smoothly */
+}
+
+/* A hairline so a white drawing or a pale photo still has an edge on the white page */
+.gallery-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  box-shadow: inset 0 0 0 1px rgba(29, 29, 31, 0.06);
+  border-radius: 14px !important; /* matches the tile */
+  pointer-events: none;
 }
 
 .gallery-item--transparent {
@@ -118,34 +135,6 @@
   transform: scale(1.6);
 }
 
-/* ── Video play badge ── */
-.gallery-item--video {
-  position: relative;
-  cursor: default;
-}
-
-.gallery-item--video::after {
-  content: '▶';
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  padding: 5px 9px;
-  font-size: 11px;
-  line-height: 1;
-  color: rgba(255, 255, 255, 0.95);
-  background: rgba(0, 0, 0, 0.22);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 8px !important;
-  pointer-events: none;
-  opacity: 1;
-  transition: opacity 0.25s ease;
-}
-
-.gallery-item--video:hover::after {
-  opacity: 0;
-}
-
 .gallery-media {
   width: 100%;
   height: 100%;
@@ -153,25 +142,35 @@
   display: block;
 }
 
-/* ── Open / Closed toggle ── */
-.gallery-item--toggle {
-  position: relative;
+/* ── Play chip on films that wait for a hover ── */
+.gallery-play {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  padding-left: 1px;
+  color: #fff;
+  background: rgba(29, 29, 31, 0.34);
+  backdrop-filter: blur(10px) saturate(1.4);
+  -webkit-backdrop-filter: blur(10px) saturate(1.4);
+  border-radius: 100vw; /* circle — G2-degenerate exception */
+  pointer-events: none;
+  transition: opacity 0.2s ease;
 }
 
+.gallery-item--video:hover .gallery-play {
+  opacity: 0;
+}
+
+/* ── Open / Closed toggle ── */
 .gallery-toggle-a,
 .gallery-toggle-b {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   transition: opacity 0.45s ease;
-}
-
-/* Only use contain when the toggle images have no background */
-.gallery-item--toggle.gallery-item--transparent .gallery-toggle-a,
-.gallery-item--toggle.gallery-item--transparent .gallery-toggle-b {
-  object-fit: contain;
 }
 
 .gallery-toggle-a { opacity: 1; }
@@ -179,3 +178,11 @@
 
 .gallery-item--toggle:hover .gallery-toggle-a { opacity: 0; }
 .gallery-item--toggle:hover .gallery-toggle-b { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .media-gallery,
+  .gallery-toggle-a,
+  .gallery-toggle-b {
+    transition: none;
+  }
+}

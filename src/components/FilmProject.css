@@ -1,0 +1,215 @@
+/* Veridien: [cut-out | text | film and stills], the same row as every other project */
+.film-project {
+  display: grid;
+  grid-template-columns: 0.8fr 1.3fr 0.8fr;
+  align-items: center;
+  width: 100%;
+}
+
+.film-project--flip {
+  direction: rtl;
+}
+
+.film-project--flip > * {
+  direction: ltr;
+}
+
+/* The cut-out is the simulator, which opens as the row scrolls into view */
+.film-cutout {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Media column: the film, its two controls, then two stills */
+.film-media {
+  min-width: 0;
+  padding: 0 16px 0 0;
+}
+
+.film-project--flip .film-media {
+  padding: 0 0 0 16px;
+}
+
+.film-media .media-gallery,
+.film-project--flip .film-media .media-gallery {
+  padding: 0;
+}
+
+.film-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: #0b0c0c;
+  /* border-radius intentionally absent — G2 corners via <Squircle> clip-path */
+}
+
+.film-frame video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: filter 0.5s ease, transform 0.5s ease;
+}
+
+/* Close-ups of the (hydrogel) organ stay soft until the viewer unticks the box under the film.
+   The slight zoom keeps the blurred edge outside the frame. */
+.film-frame[data-soft="1"][data-closeup="1"] video {
+  filter: blur(clamp(4px, 0.42vw, 9px)) saturate(0.85);
+  transform: scale(1.06);
+}
+
+/* The step panel, redrawn sharp over the blur so the walkthrough stays readable */
+.film-panel {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.film-panel canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.film-frame[data-soft="1"][data-closeup="1"][data-panel="1"] .film-panel {
+  opacity: 1;
+}
+
+/* The way out of the blur, on the film itself */
+.film-note {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  padding: 5px 11px;
+  font: inherit;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.94);
+  background: rgba(29, 29, 31, 0.42);
+  backdrop-filter: blur(12px) saturate(1.4);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  border: none;
+  border-radius: 100vw; /* pill — G2-degenerate exception */
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s, background 0.15s ease;
+}
+
+.film-note:hover {
+  background: rgba(29, 29, 31, 0.62);
+}
+
+.film-frame[data-soft="1"][data-closeup="1"] .film-note {
+  opacity: 1;
+  visibility: visible;
+}
+
+.film-progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.film-progress span {
+  display: block;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+.film-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 2px 11px 4px;
+}
+
+.film-soften {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6e6e73;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+.film-soften input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.film-soften-note {
+  font-weight: 400;
+  color: #86868b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.film-toggle {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border: none;
+  color: #6e6e73;
+  background: #f5f5f7;
+  border-radius: 100vw; /* circle — G2-degenerate exception */
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.film-toggle:hover {
+  background: #e5e5ea;
+  color: #1d1d1f;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .film-frame video,
+  .film-panel,
+  .film-note {
+    transition: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .film-project {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .film-media,
+  .film-project--flip .film-media {
+    grid-column: 1 / -1;
+    padding: 0 22px;
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 680px) {
+  .film-project,
+  .film-project--flip {
+    grid-template-columns: 1fr;
+    direction: ltr;
+  }
+
+  .film-cutout {
+    max-width: 60%;
+    margin: 0 auto;
+  }
+}

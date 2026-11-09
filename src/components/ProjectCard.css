@@ -1,9 +1,11 @@
+/* One project: [cut-out | text | gallery], edge to edge. `--flip` mirrors it. */
 .project-card {
   display: grid;
-  grid-template-columns: 0.75fr 1.25fr;
+  grid-template-columns: 0.8fr 1.3fr 0.8fr;
   gap: 0;
   align-items: center;
   width: 100%;
+  overflow: visible;
 }
 
 .project-card--flip {
@@ -14,58 +16,17 @@
   direction: ltr;
 }
 
-.project-card--with-gallery {
-  grid-template-columns: 0.8fr 1.3fr 0.8fr;
-  align-items: center;
-  overflow: visible;
+.project-card--flip .media-gallery {
+  padding: 0 0 0 16px;
 }
 
-/* Hydroponics: portrait gallery — give text more lateral room */
-.project-card--with-gallery:has(.media-gallery[data-layout="featured-bottom"]) {
-  grid-template-columns: 0.8fr 1.15fr 0.85fr;
+/* Cut-out side */
+.project-visual {
+  min-width: 0;
 }
 
-/* Drone: two plain flanking images, no effects */
-.project-card--flanked {
-  grid-template-columns: 1.3fr 0.7fr 1.3fr;
-}
-
-.project-card--flanked .project-images {
-  max-width: none;
-  width: 100%;
-}
-
-.project-image-right {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.project-card--with-gallery .project-images {
-  max-width: 80%;
-}
-
-.project-card--image-large {
-  overflow: hidden;
-}
-
-.project-card--image-large .project-images--large {
-  max-width: none;
-  width: 100%;
-  transform: translateX(-20%);
-}
-
-.project-card--image-large .project-images--large .project-image {
-  width: 120%;
-  max-width: none;
-}
-
-/* Images side */
 .project-images {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  max-width: 58%;
+  max-width: 80%;
   margin: 0 auto;
 }
 
@@ -73,24 +34,48 @@
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
 }
 
-.project-image-placeholder {
+/* Rover: the cut-out is larger than its column and runs off the page edge */
+.project-card--image-large {
+  overflow: hidden;
+}
+
+.project-card--image-large .project-images {
+  max-width: none;
   width: 100%;
-  aspect-ratio: 4/3;
-  background: #ebebed;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* border-radius intentionally absent — G2 fillet via <Squircle> clip-path */
+  transform: translateX(-20%);
 }
 
-.project-image-placeholder span {
-  font-size: 80px;
-  font-weight: 600;
-  color: #d2d2d7;
-  letter-spacing: -0.04em;
+.project-card--image-large .project-image {
+  width: 120%;
+  max-width: none;
+}
+
+/* mirrored row: the cut-out runs off the right edge instead */
+.project-card--image-large.project-card--flip .project-images {
+  transform: none;
+}
+
+/* Hexapod: a render on a white ground, so it can fill the column and blend into the page */
+.project-card--image-bleed .project-images {
+  max-width: 96%;
+}
+
+.project-card--image-bleed .project-image {
+  mix-blend-mode: multiply;
+}
+
+/* Living Guide: the portrait is cropped straight down its right side, so that side meets the
+   page edge, and its cut-off bottom fades out instead of ending in a line */
+.project-card--image-flush .project-images {
+  max-width: 84%;
+  margin: 0 0 0 auto;
+}
+
+.project-card--image-flush .project-image {
+  -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 99%);
+  mask-image: linear-gradient(to bottom, #000 80%, transparent 99%);
 }
 
 /* Text side */
@@ -99,6 +84,7 @@
   flex-direction: column;
   gap: 16px;
   padding: 60px 64px;
+  min-width: 0;
 }
 
 .project-title-row {
@@ -111,13 +97,13 @@
 .project-title {
   font-size: clamp(32px, 4vw, 52px);
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.022em;
   color: #1d1d1f;
   line-height: 1.1;
 }
 
 .project-subtitle {
-  font-size: 13px;
+  font-size: clamp(13px, 0.88vw, 15px);
   font-weight: 400;
   color: #6e6e73;
   letter-spacing: 0;
@@ -125,12 +111,27 @@
 }
 
 .project-desc {
-  font-size: 13.5px;
+  font-size: clamp(13.5px, 0.92vw, 16px); /* unchanged on a laptop, keeps its measure on a wide display */
   font-weight: 300;
   color: #6e6e73;
   line-height: 1.7;
   letter-spacing: 0.01em;
   text-align: left;
+  text-wrap: pretty;
+}
+
+/* "What I did" switch: everything fades except the sentences about my own part */
+.project-desc,
+.project-desc .mine {
+  transition: color 0.35s ease;
+}
+
+.app--mine .project-desc {
+  color: rgba(110, 110, 115, 0.3);
+}
+
+.app--mine .project-desc .mine {
+  color: #1d1d1f;
 }
 
 .project-tags {
@@ -139,19 +140,6 @@
   gap: 8px;
   list-style: none;
   margin-top: 4px;
-}
-
-.project-tag--link {
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  text-decoration-color: rgba(0, 0, 0, 0.25);
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease, text-decoration-color 0.15s ease;
-}
-
-.project-tag--link:hover {
-  background: #e5e5ea;
-  color: #1d1d1f;
 }
 
 .project-tag {
@@ -164,234 +152,72 @@
   letter-spacing: 0.01em;
 }
 
-/* Living Guide highlight: title + exploded view left, huge image bleeds off right */
-.project-card--highlight {
-  grid-template-columns: 0.7fr 0.235fr 1.065fr;
-  align-items: center;
-  overflow: hidden;
-}
-
-
-.project-highlight-eyebrow {
-  font-size: 12px;
-  font-weight: 500;
-  color: #86868b;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.project-title--highlight {
-  font-size: clamp(28px, 3.6vw, 60px);
-}
-
-.project-card--highlight .project-desc {
-  font-size: clamp(11px, 1vw, 14px);
-}
-
-.project-card--highlight .project-info {
-  padding: clamp(28px, 4vw, 60px) clamp(28px, 4vw, 64px);
-  gap: clamp(10px, 1.2vw, 18px);
-}
-
-.project-images--highlight {
-  max-width: none;
-  width: 100%;
-  margin: 0;
-  overflow: visible;
-}
-
-.highlight-image-stack {
-  position: relative;
-  width: 72%;
-  margin-left: auto;
-  transform: translateX(12%);
+.project-tag--link {
+  display: inline-block;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(0, 0, 0, 0.25);
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, text-decoration-color 0.15s ease;
 }
 
-.highlight-image-stack img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.highlight-image-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  pointer-events: none;
-  will-change: opacity;
-}
-
-.highlight-image-stack.flap-active .highlight-image-overlay {
-  animation: flap-flip-on 1s step-end forwards;
-}
-
-.highlight-image-stack.flap-active .highlight-image-base {
-  animation: flap-flip-off 1s step-end forwards;
-}
-
-.highlight-image-stack.flap-active-twice .highlight-image-overlay {
-  animation: flap-flip-on-twice 1.6s step-end forwards;
-}
-
-.highlight-image-stack.flap-active-twice .highlight-image-base {
-  animation: flap-flip-off-twice 1.6s step-end forwards;
-}
-
-@keyframes flap-flip-on {
-  0%   { opacity: 0; }
-  33%  { opacity: 1; }
-  66%  { opacity: 0; }
-  100% { opacity: 0; }
-}
-
-@keyframes flap-flip-off {
-  0%   { opacity: 1; }
-  33%  { opacity: 0; }
-  66%  { opacity: 1; }
-  100% { opacity: 1; }
-}
-
-@keyframes flap-flip-on-twice {
-  0%    { opacity: 0; }
-  12.5% { opacity: 1; }
-  25%   { opacity: 0; }
-  37.5% { opacity: 1; }
-  50%   { opacity: 0; }
-  100%  { opacity: 0; }
-}
-
-@keyframes flap-flip-off-twice {
-  0%    { opacity: 1; }
-  12.5% { opacity: 0; }
-  25%   { opacity: 1; }
-  37.5% { opacity: 0; }
-  50%   { opacity: 1; }
-  100%  { opacity: 1; }
-}
-
-.mechanism-slot {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 935 / 2407;
-  align-self: center;
-  cursor: pointer;
-  opacity: 0;
-  transform: translateX(150%);
-  transition: opacity 0.5s ease;
-}
-
-.mechanism-slot.mech-visible {
-  opacity: 1;
-}
-
-.mechanism-line {
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  height: 1px;
-  width: 50%;
-  background: rgba(29, 29, 31, 0.3);
-  transform: translateY(-50%) rotate(15deg);
-  transform-origin: left center;
-  pointer-events: none;
-}
-
-.mechanism-stack {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: calc(100% * 2407 / 935);
-  height: auto;
-  transform: translate(-50%, -50%) rotate(-75deg) scale(1.25);
-  transform-origin: center;
-}
-
-.mechanism-stack .mechanism-frame {
-  width: 100%;
-  height: auto;
-  display: block;
-  opacity: 0;
-}
-
-.mechanism-stack .mechanism-frame:not(:first-child) {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.mechanism-stack .mechanism-frame.active {
-  opacity: 1;
-}
-
-@media (max-width: 680px) {
-  .mechanism-slot {
-    display: none;
-  }
+.project-tag--link:hover {
+  background: #e5e5ea;
+  color: #1d1d1f;
 }
 
 /* Responsive */
 @media (max-width: 860px) {
-  .project-card--with-gallery {
+  .project-card {
     grid-template-columns: 1fr 1fr;
   }
 
-  .project-card--with-gallery .media-gallery {
+  .project-info {
+    padding: 40px 32px;
+  }
+
+  .project-card .media-gallery,
+  .project-card--flip .media-gallery {
     grid-column: 1 / -1;
+    padding: 0 22px;
+    max-width: 640px;
+    margin: 0 auto 24px;
+  }
+
+  .project-card .media-gallery:not([data-layout]) {
     aspect-ratio: 3 / 1;
-    padding: 0 22px 24px;
+    max-width: none;
   }
 }
 
 @media (max-width: 680px) {
   .project-card,
-  .project-card--flip,
-  .project-card--with-gallery {
+  .project-card--flip {
     grid-template-columns: 1fr;
     direction: ltr;
-    align-items: center;
+  }
+
+  .project-images {
+    max-width: 60%;
   }
 
   .project-info {
     padding: 32px 22px;
   }
 
-  .project-card--with-gallery .media-gallery {
-    aspect-ratio: 3 / 1;
-    padding: 0 22px 24px;
-  }
-
   .project-card--image-large {
     overflow: visible;
   }
 
-  .project-card--image-large .project-images--large {
+  .project-card--image-large .project-images {
     width: 70%;
     max-width: 70%;
     margin: 0 auto;
     transform: none;
-    padding: 0;
   }
 
-  .project-card--image-large .project-images--large .project-image {
+  .project-card--image-large .project-image {
     width: 100%;
     max-width: 100%;
-    height: auto;
-    object-fit: contain;
-  }
-
-  .project-card--highlight {
-    grid-template-columns: 1fr;
-  }
-
-  .project-card--highlight .project-info {
-    padding: 32px 22px 0;
-  }
-
-  .highlight-image-stack {
-    width: 115%;
-    transform: none;
-    margin-left: 0;
   }
 }

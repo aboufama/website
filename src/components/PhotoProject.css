@@ -1,0 +1,159 @@
+/* Helios X: one wide photograph with the text beside it */
+.photo-project {
+  display: grid;
+  grid-template-columns: 1.9fr 1fr;
+  align-items: center;
+  width: 100%;
+}
+
+.photo-figure {
+  min-width: 0;
+  padding-left: 16px;
+}
+
+.photo-frame {
+  position: relative;
+  overflow: hidden;
+  background: #ebebed;
+  /* border-radius intentionally absent — G2 corners via <Squircle> clip-path */
+}
+
+.photo-frame img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Hovering the photo: everything but the case dims a little and its figures come up */
+.photo-dim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: rgba(10, 10, 12, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.photo-frame:hover .photo-dim,
+.photo-frame:focus-visible .photo-dim {
+  opacity: 1;
+}
+
+.photo-note {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: filter 0.4s ease;
+}
+
+/* the label and its arrow turn light once the sky behind them is dimmed */
+.photo-frame:hover .photo-note,
+.photo-frame:focus-visible .photo-note {
+  filter: invert(1);
+}
+
+.photo-specs {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 7%;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.photo-frame:hover .photo-specs,
+.photo-frame:focus-visible .photo-specs {
+  opacity: 1;
+}
+
+.photo-specs p {
+  margin-bottom: 10px;
+  font-size: clamp(11px, 0.86vw, 13.5px);
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.photo-specs dl {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4%;
+}
+
+.photo-specs dt {
+  font-size: clamp(20px, 2.2vw, 36px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.photo-specs dd {
+  margin-top: 4px;
+  font-size: clamp(11px, 0.86vw, 13.5px);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  color: rgba(255, 255, 255, 0.86);
+  text-wrap: balance;
+}
+
+.photo-frame:focus-visible {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-dim,
+  .photo-note,
+  .photo-specs {
+    transition: none;
+  }
+}
+
+.photo-note svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.photo-note-label {
+  position: absolute;
+  right: 50.6%;
+  top: 21%;
+  transform: translateY(-50%);
+  font-size: clamp(12px, 1vw, 15px);
+  font-weight: 400;
+  color: #1d1d1f;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.photo-credit {
+  margin-top: 10px;
+  padding-left: 30px;
+  font-size: 11.5px;
+  color: #86868b;
+  letter-spacing: 0.01em;
+}
+
+.photo-project .project-info {
+  padding: 40px 56px 40px 52px;
+}
+
+@media (max-width: 860px) {
+  .photo-project {
+    grid-template-columns: 1fr;
+  }
+
+  .photo-figure {
+    padding: 0 16px;
+  }
+
+  .photo-project .project-info {
+    padding: 32px 32px 0;
+  }
+}

@@ -1,3 +1,11 @@
 node_modules
 dist
 .DS_Store
+
+# local tooling
+.claude/
+
+# derived or one-off media: rebuilt by scripts/, not needed to build the site
+media-src/exports/
+media-src/projects/veridien/VeridienFilm-1080.mp4
+media-src/**/*.glb
