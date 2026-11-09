@@ -111,7 +111,7 @@ const projects = [
     id: 'living-guide',
     title: 'Living Guide',
     subtitle: 'Design Studio Project',
-    description: 'Living Guide is a wearable mask that turns other people\'s attention into tactile sensations and physical direction.\n\nThe wearer\'s vision is fully blocked, while five scale strips on the mask respond to how long people look from different directions. When one direction receives more gaze, the motors under that strip move, and the wearer follows that tactile signal and walks toward the gazer.\n\nThe project reflects attention-seeking behavior in contemporary social & social media culture, where attention becomes an invisible force that shapes how we move, perform, and define ourselves.',
+    description: 'Living Guide is a wearable mask that turns other people\'s attention into tactile sensations and physical direction.\n\nThe wearer\'s vision is fully blocked, while five scale strips on the mask respond to how long people look from different directions. When one direction receives more gaze, the motors under that strip move, and the wearer follows that tactile signal and walks toward the gazer.\n\nThe project reflects attention-seeking behavior in contemporary social & social media culture, where attention becomes an invisible force that shapes how we move, perform, and define ourselves.\n\n[[I did the full design and code of the project.]]',
     image: img(`${mask}FaceMask.webp`, { alt: 'Living Guide worn over the face' }),
     imageFlush: true,   // the photo is cropped straight down its right side: stand that side on the page edge
     galleryTint: '#f2f2f4',
@@ -127,7 +127,7 @@ const projects = [
     id: 'plant-bot',
     title: 'Plant Bot',
     subtitle: 'Agentic Plant Care Walking Robot',
-    description: 'What if a plant could act as a pet? That was the goal of this project, to make a system that could extend a plant\'s consciousness. [[By mimicking pet behavior through a cute appearance and clever agentic behaviors, I was able to create a companion people would actually want to care for.]] When happy, it would run towards people and be more enthusiastic, and when distressed (not watered or given enough sun) it had the ability to dump out the dirt from the back and mimic a pet soiling itself. Overall, it was a very fun project and [[I got to work on some unique locomotion morphologies.]]',
+    description: 'What if a plant could act as a pet? That was the goal of this project, to make a system that could extend a plant\'s consciousness. [[By mimicking pet behavior through a cute appearance and clever agentic behaviors, I was able to create a companion people would actually want to care for.]] When happy, it would run towards people and be more enthusiastic, and when distressed (not watered or given enough sun) it had the ability to dump out the dirt from the back and mimic a pet soiling itself. Overall, it was a very fun project and [[I got to work on some unique locomotion morphologies.]]\n\n[[I did the full design and code of the project.]]',
     image: img(`${plant}CutePlant.webp`),
     galleryTint: '#f2f5f0',
     gallery: [
