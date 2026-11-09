@@ -26,8 +26,9 @@ export default function ProjectInfo({ title, subtitle, org, description, tags, l
       <div className="project-title-row">
         <h2 className="project-title">{title}</h2>
         {org ? (
-          <a className="project-org" href={org.href} target="_blank" rel="noopener noreferrer" title={org.name}>
-            <img src={org.logo} alt={org.name} width={org.width} height={org.height} />
+          <a className="project-org" href={org.href} target="_blank" rel="noopener noreferrer">
+            <img src={org.logo} alt={org.wordmark ? org.name : ''} width={org.width} height={org.height} />
+            {!org.wordmark && org.name}
           </a>
         ) : subtitle && <span className="project-subtitle">{subtitle}</span>}
       </div>

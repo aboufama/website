@@ -110,21 +110,39 @@
   white-space: nowrap;
 }
 
-/* The organisation behind a project, as its logo beside the title */
+/* The organisation a project belongs to: a quiet outlined chip beside the title, with its
+   small logo and name (a wordmark is both at once) */
 .project-org {
   display: inline-flex;
-  align-self: center;
-  margin-top: 0.5em;
-  opacity: 0.9;
-  transition: opacity 0.15s ease;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 3px 8px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #6e6e73;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  text-decoration: none;
+  border: 1px solid #e5e5ea;
+  border-radius: 100vw; /* pill/capsule — G2-degenerate exception */
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+/* an empty first item gives every chip the same text baseline, wordmark or not */
+.project-org::before {
+  content: '\200b';
+  margin-right: -6px;
 }
 
 .project-org:hover {
-  opacity: 1;
+  color: #1d1d1f;
+  border-color: #c7c7cc;
 }
 
 .project-org img {
   display: block;
+  opacity: 0.78;
 }
 
 .project-desc {

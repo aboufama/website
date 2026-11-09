@@ -19,7 +19,7 @@ const projects = [
   {
     id: 'hexapod',
     title: 'Hexapod',
-    org: { name: 'Cornell Physical Intelligence', href: 'https://cornellphysicalintelligence.com/', logo: url('logos/cupi.svg'), width: 29, height: 21 },
+    org: { name: 'Cornell Physical Intelligence', href: 'https://cornellphysicalintelligence.com/', logo: url('logos/cupi.svg'), width: 17, height: 12 },
     description: 'The hexapod is the flagship Fall Semester project of my club ([Cornell Physical Intelligence](https://cornellphysicalintelligence.com/)). We are working in collaboration with [Cornell Geo Data](https://cornellgeodata.com/) to create a low profile walking robot that can survey forests from the ground up, as opposed to standard methods which use drones to survey from the top down. More generally, my hope with this robot is to create a general purpose "ground drone," which can be used for extremely easy data collection, in the way modern quadcopters operate.\n\nMost hexapod robots are designed with simple hobby servos and hard coded steps. I wanted to raise the standards for this project; all our motors are quasi direct drive (QDD motors often used in humanoid robots) that provide much finer feedback and torque control. The walking gait is trained in Isaac Sim to handle all types of terrain, and our perception stack handles higher level navigation.\n\n[[I personally did the full mechanical design of the robot, and a few minor PCBs.]]',
     image: img(`${hex}RocksHero.webp`, {
       srcSet: `${url(`${hex}RocksHero-960.webp`)} 960w, ${url(`${hex}RocksHero.webp`)} 1800w`,
@@ -50,7 +50,7 @@ const projects = [
     id: 'veridien',
     layout: 'film',
     title: 'Veridien',
-    org: { name: 'Veridien', href: 'https://veridienlabs.org', logo: url('logos/veridien.svg'), width: 23, height: 23 },
+    org: { name: 'Veridien', href: 'https://veridienlabs.org', logo: url('logos/veridien.svg'), width: 12, height: 12 },
     description: '[[Veridien is a startup I co-founded with two other Cornell undergrads]], where we build ultra realistic surgical simulators that use machine learning to grade and advise surgeons. The organs are custom hydrogel that cuts, chars and bleeds, and they can be made from a patient\'s CT or MRI, so residents can practice on many anatomies before they reach the OR.\n\nThree cameras built into the dome track each tool position and create live labels of each operation. The film is our first full myomectomy on the trainer, recorded at 1:30 a.m. in our lab. Next up is a pilot with a residency program in spring 2027. [[I am the CTO.]]',
     flip: true,    // [film and stills | text | cut-out]
     links: [{ label: 'veridienlabs.org', href: 'https://veridienlabs.org' }],
@@ -82,7 +82,7 @@ const projects = [
     id: 'helios-x',
     layout: 'photo',
     title: 'Helios X',
-    org: { name: 'Picogrid', href: 'https://picogrid.com/', logo: url('logos/picogrid.svg'), width: 118, height: 11 },
+    org: { name: 'Picogrid', href: 'https://picogrid.com/', logo: url('logos/picogrid.svg'), width: 75, height: 7, wordmark: true },
     description: 'Helios X is the hardware Picogrid announced as the ECN HX, its high performance Expeditionary C2 Node: a rugged computer in a carry case that connects drones, sensors and vehicles in the field and runs AI models on their feeds on the spot. [[I designed the majority of its hardware.]]\n\nIt is the tan case in the photo. Compared with the Helios before it, it is more than 10 lb lighter and small enough to fit in the old one\'s case, with 7x the AI compute. It is now deployed with the U.S. Army.',
     links: [
       { label: 'Picogrid announcement', href: 'https://picogrid.com/newsroom/picogrid-launches-high-performance-ecns-to-bring-more-computing-power-to-the-tactical-edge' },
