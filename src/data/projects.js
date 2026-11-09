@@ -83,7 +83,7 @@ const projects = [
     layout: 'photo',
     title: 'Helios X',
     org: { name: 'Picogrid', href: 'https://picogrid.com/', logo: url('logos/picogrid.svg'), width: 75, height: 7, wordmark: true },
-    description: 'Helios X is the hardware Picogrid announced as the ECN HX, its high performance Expeditionary C2 Node: a rugged computer in a carry case that connects drones, sensors and vehicles in the field and runs AI models on their feeds on the spot. [[I designed the majority of its hardware.]]\n\nIt is the tan case in the photo. Compared with the Helios before it, it is more than 10 lb lighter and small enough to fit in the old one\'s case, with 7x the AI compute. It is now deployed with the U.S. Army.',
+    description: 'Helios X is the hardware Picogrid announced as the ECN HX, its high performance Expeditionary C2 Node: a rugged computer in a carry case that connects drones, sensors and vehicles in the field and runs AI models on their feeds on the spot. [[I designed the majority of its hardware.]]\n\nIt is the tan case in the photo. Compared with the Helios before it, it is more than 10 lb lighter and small enough to fit in the old one\'s case, with 7x the compute. It is now deployed with the U.S. Army.',
     links: [
       { label: 'Picogrid announcement', href: 'https://picogrid.com/newsroom/picogrid-launches-high-performance-ecns-to-bring-more-computing-power-to-the-tactical-edge' },
       { label: 'LinkedIn post', href: 'https://lnkd.in/p/eXG2UHz7' },
@@ -100,7 +100,7 @@ const projects = [
       // How it compares with the Helios before it; shown while hovering.
       specsCaption: 'Compared with the previous Helios',
       specs: [
-        { value: '7x', label: 'the AI compute' },
+        { value: '7x', label: 'the compute' },
         { value: '10+ lb', label: 'lighter' },
         { value: 'Smaller', label: 'it fits in the old Helios case' },
       ],
