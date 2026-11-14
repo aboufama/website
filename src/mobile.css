@@ -1,6 +1,6 @@
 /* A phone held sideways (the page asks for that): every project is one screen. The three
    columns stay, the type gets smaller, the text is cut to what fits with "Read more" under
-   it, and the smaller extras (the hexapod's earlier designs, the hover hint) are left out. */
+   it, and the hexapod's earlier designs are left out. */
 @media (orientation: landscape) and (max-height: 520px) {
   html {
     scroll-snap-type: y proximity;
@@ -34,7 +34,6 @@
     line-height: 1.45;
   }
 
-  .hero-tagline,
   .hero-cue,
   .speech-bubble {
     display: none;
@@ -293,8 +292,17 @@
   }
 
   .projects-note {
-    max-width: 440px;
     padding: 34px 22px;
-    font-size: 12px;
+    font-size: 11px;
+  }
+
+  .projects-note {
+    gap: 10px;
+  }
+
+  .note-arrow {
+    width: 18px;
+    height: 36px;
+    transform: translateY(9px);
   }
 }

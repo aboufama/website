@@ -20,7 +20,7 @@ const projects = [
     id: 'hexapod',
     title: 'Hexapod',
     org: { name: 'Cornell Physical Intelligence', href: 'https://cornellphysicalintelligence.com/', logo: url('logos/cupi.svg'), width: 17, height: 12 },
-    description: 'The hexapod is the flagship Fall Semester project of my club ([Cornell Physical Intelligence](https://cornellphysicalintelligence.com/)). We are working in collaboration with [Cornell Geo Data](https://cornellgeodata.com/) to create a low profile walking robot that can survey forests from the ground up, as opposed to standard methods which use drones to survey from the top down. More generally, my hope with this robot is to create a general purpose "ground drone," which can be used for extremely easy data collection, in the way modern quadcopters operate.\n\nMost hexapod robots are designed with simple hobby servos and hard coded steps. I wanted to raise the standards for this project; all our motors are quasi direct drive (QDD motors often used in humanoid robots) that provide much finer feedback and torque control. The walking gait is trained in Isaac Sim to handle all types of terrain, and our perception stack handles higher level navigation.\n\n[[I personally did the full mechanical design of the robot, and a few minor PCBs.]]',
+    description: 'The hexapod is the flagship fall semester project of my club ([Cornell Physical Intelligence](https://cornellphysicalintelligence.com/)). We are working in collaboration with [Cornell Geo Data](https://cornellgeodata.com/) to create a low profile walking robot that can survey forests from the ground up, as opposed to standard methods which use drones to survey from the top down. More generally, my hope with this robot is to create a general purpose "ground drone," which can be used for extremely easy data collection, in the way modern quadcopters operate.\n\nMost hexapod robots are designed with simple hobby servos and hard coded steps. I wanted to raise the standards for this project; all our motors are quasi direct drive (QDD) motors, often used in humanoid robots, which provide much finer feedback and torque control. The walking gait is trained in Isaac Sim to handle all types of terrain, and our perception stack handles higher level navigation.\n\n[[I personally did the full mechanical design of the robot, and a few minor PCBs.]]',
     image: img(`${hex}RocksHero.webp`, {
       srcSet: `${url(`${hex}RocksHero-960.webp`)} 960w, ${url(`${hex}RocksHero.webp`)} 1800w`,
       sizes: '(max-width: 860px) 60vw, 34vw',
@@ -53,7 +53,7 @@ const projects = [
     title: 'Machine Vision Surgical Simulator',
     titleLong: true,
     org: { name: 'Veridien', href: 'https://veridienlabs.org', logo: url('logos/veridien.svg'), width: 12, height: 12 },
-    description: '[[Veridien is a startup I co-founded with two other Cornell undergrads]], where we build ultra realistic surgical simulators that use machine learning to grade and advise surgeons. The organs are custom hydrogel that cuts, chars and bleeds, and they can be made from a patient\'s CT or MRI, so residents can practice on many anatomies before they reach the OR.\n\nThree cameras built into the dome track each tool position and create live labels of each operation. The film is our first full myomectomy on the trainer, recorded at 1:30 a.m. in our lab. Next up is a pilot with a residency program in spring 2027.\n\n[[As CTO, I did the full hardware design of the simulator with its three cameras, and did all the coding to set up the machine vision and train a working π0.5 based surgical model.]]',
+    description: '[[Veridien is a startup I co-founded with two other Cornell undergrads]], where we build ultra realistic surgical simulators that use machine learning to grade and advise surgeons. The organs are custom hydrogel that cut, char and bleed, and they can be made from a patient\'s CT or MRI, so residents can practice on many anatomies before they reach the OR.\n\nThree cameras built into the dome track each tool position and create live labels of each operation. The film is our first full myomectomy on the trainer, recorded at 1:30 a.m. in our lab. Next up is a pilot with a residency program in spring 2027.\n\n[[As CTO, I did the full hardware design of the simulator with its three cameras, and did all the coding to set up the machine vision and train a working π0.5 based surgical model.]]',
     flip: true,    // [film and stills | text | cut-out]
     links: [{ label: 'veridienlabs.org', href: 'https://veridienlabs.org' }],
     film: {
@@ -85,7 +85,7 @@ const projects = [
     layout: 'photo',
     title: 'Helios X',
     org: { name: 'Picogrid', href: 'https://picogrid.com/', logo: url('logos/picogrid.svg'), width: 75, height: 7, wordmark: true },
-    description: 'Helios X is the hardware Picogrid announced as the ECN HX, its high performance Expeditionary C2 Node: a rugged computer in a carry case that connects drones, sensors and vehicles in the field and runs AI models on their feeds on the spot. [[I designed the majority of its hardware.]]\n\nIt is the tan case in the photo. Compared with the Helios before it, it is more than 10 lb lighter and small enough to fit in the old one\'s case, with 7x the compute. It is now deployed with the U.S. Army.',
+    description: 'Helios X is the hardware Picogrid announced as the ECN HX, its high performance Expeditionary C2 Node: a rugged computer in a carry case that connects drones, sensors and vehicles in the field and runs AI models on their feeds on the spot. [[I designed the majority of its hardware.]]\n\nIt is the tan case in the photo. Compared with the Helios before it, it is more than 10 lb lighter and small enough to fit in the old Helios case, with 7x the compute. It is now deployed with the U.S. Army.',
     links: [
       { label: 'Picogrid announcement', href: 'https://picogrid.com/newsroom/picogrid-launches-high-performance-ecns-to-bring-more-computing-power-to-the-tactical-edge' },
       { label: 'LinkedIn post', href: 'https://lnkd.in/p/eXG2UHz7' },
@@ -100,8 +100,8 @@ const projects = [
       // Outline of the case in the photo (viewBox 0 0 1000 437.5). Hovering dims everything else.
       subject: 'M666.4,228.6 L660.7,222.9 L657.9,212.9 L653.6,210.0 L604.3,208.6 L602.1,211.4 L587.9,211.4 L587.1,210.0 L423.6,211.4 L420.0,215.7 L419.3,222.1 L412.9,227.9 L412.9,238.6 L419.3,240.0 L420.0,282.1 L418.6,289.3 L412.1,297.9 L412.1,304.3 L413.6,308.6 L418.6,313.6 L462.9,312.1 L468.6,317.9 L497.1,317.1 L500.0,314.3 L510.7,314.3 L513.6,312.1 L575.7,312.9 L580.7,310.0 L596.4,309.3 L602.9,313.6 L624.3,312.1 L659.3,313.6 L663.6,310.0 L662.1,298.6 L658.6,297.9 L659.3,280.0 L663.6,278.6 L665.7,274.3 L664.3,251.4 L665.0,240.7 L667.1,237.1 Z',
       // How it compares with the Helios before it; shown while hovering.
-      specsCaption: 'Next to the Helios before it:',
-      specs: ['7x the compute', 'more than 10 lb lighter', "small enough to fit in the old one's case"],
+      specsCaption: "Compared to Helios MKI, it's a full redesign:",
+      specs: ['7x the compute', 'more than 10 lb lighter', 'small enough to fit in the old Helios case'],
     },
   },
   {
@@ -124,7 +124,7 @@ const projects = [
     id: 'plant-bot',
     title: 'Plant Bot',
     subtitle: 'Agentic Plant Care Walking Robot',
-    description: 'What if a plant could act as a pet? That was the goal of this project, to make a system that could extend a plant\'s consciousness. [[By mimicking pet behavior through a cute appearance and clever agentic behaviors, I was able to create a companion people would actually want to care for.]] When happy, it would run towards people and be more enthusiastic, and when distressed (not watered or given enough sun) it had the ability to dump out the dirt from the back and mimic a pet soiling itself. Overall, it was a very fun project and [[I got to work on some unique locomotion morphologies.]]\n\n[[I did the full design and code of the project.]]',
+    description: 'What if a plant could act as a pet? That was the goal of this project: to make a system that could extend a plant\'s consciousness. [[By mimicking pet behavior through a cute appearance and clever agentic behaviors, I was able to create a companion people would actually want to care for.]] When happy, it would run towards people and be more enthusiastic, and when distressed (not watered or given enough sun) it had the ability to dump out the dirt from the back and mimic a pet soiling itself. Overall, it was a very fun project and [[I got to work on some unique locomotion morphologies.]]\n\n[[I did the full design and code of the project.]]',
     image: img(`${plant}CutePlant.webp`),
     galleryTint: '#f2f5f0',
     gallery: [

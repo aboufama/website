@@ -19,6 +19,24 @@ const sites = [
   { label: 'Old Display', href: 'https://aboufama.github.io/tilted-display-test/', shot: 'sites/display.webp', clip: 'sites/display.mp4' },
 ]
 
+/* Every arrow on the page is drawn the way the hexapod's are: a thin curved stroke that fades
+   in from its tail, with an open head. `d` is the stroke, `head` its two barbs; all of these
+   point down the page, so the fade runs top to bottom. */
+function DrawnArrow({ id, className, viewBox, d, head }) {
+  return (
+    <svg className={className} viewBox={viewBox} fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="currentColor" stopOpacity="0" />
+          <stop offset="45%" stopColor="currentColor" stopOpacity="1" />
+        </linearGradient>
+      </defs>
+      <path d={d} stroke={`url(#${id})`} strokeWidth="1" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      <path d={head} stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
+    </svg>
+  )
+}
+
 const still = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 export default function App() {
@@ -109,11 +127,10 @@ export default function App() {
             <div className="hero-text">
               <h1 className="hero-title">Hi! I'm Andre.</h1>
               <p className="hero-intro">
-                I'm a Junior at Cornell and I love physical design. I started and lead{' '}
+                I'm a junior at Cornell and I love physical design. I started and lead{' '}
                 <a href="https://cornellphysicalintelligence.com/" target="_blank" rel="noopener noreferrer">Cornell Physical Intelligence</a>{' '}
                 and enjoy skiing, reading, and playing basketball when I'm not in the lab.
               </p>
-              <p className="hero-tagline">Hover over the gallery images to enhance (or play video). These are my favorites, but there are quite a few more projects that I've had fun with :)</p>
               <div className="hero-links-box">
                 <span className="hero-links-title">Software Projects</span>
                 <div className="hero-sites">
@@ -140,14 +157,36 @@ export default function App() {
             </div>
           </div>
         </section>
-        <svg className="hero-cue" viewBox="0 0 16 9" width="16" height="9" fill="none" aria-hidden="true">
-          <path d="M1.5 1.5 8 7.5l6.5-6" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <DrawnArrow
+          id="hero-cue-fade"
+          className="hero-cue"
+          viewBox="0 0 20 34"
+          d="M 9,2 C 13,10 10,20 10,31"
+          head="M 6.6,25.6 L 10,31 L 13.4,24.9"
+        />
       </header>
       <div className="hero-spacer"></div>
       <main className="projects">
         {projects.map((project) => (
-          project.layout === 'note' ? <p key={project.id} className="projects-note">{project.text}</p>
+          project.layout === 'note' ? (
+            <p key={project.id} className="projects-note">
+              <DrawnArrow
+                id="note-fade-left"
+                className="note-arrow"
+                viewBox="0 0 30 60"
+                d="M 24,3 C 8,12 3,34 13,55"
+                head="M 13.3,48 L 13,55 L 7.4,50.8"
+              />
+              <span>{project.text}</span>
+              <DrawnArrow
+                id="note-fade-right"
+                className="note-arrow"
+                viewBox="0 0 30 60"
+                d="M 6,5 C 21,13 27,33 18,55"
+                head="M 23.4,50.5 L 18,55 L 17.3,48"
+              />
+            </p>
+          )
             : project.layout === 'film' ? <FilmProject key={project.id} project={project} />
             : project.layout === 'photo' ? <PhotoProject key={project.id} project={project} />
               : <ProjectCard key={project.id} project={project} />

@@ -143,17 +143,6 @@
   text-decoration-color: #0071e3;
 }
 
-.hero-tagline {
-  margin-top: 10px;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #86868b;
-  letter-spacing: 0.01em;
-  text-align: left;
-  text-wrap: pretty;
-}
-
 .hero-links-box {
   margin-top: 18px;
 }
@@ -267,7 +256,6 @@
 .app--loaded .hero-text > :nth-child(2) { animation-delay: 0.07s; }
 .app--loaded .hero-text > :nth-child(3) { animation-delay: 0.14s; }
 .app--loaded .hero-text > :nth-child(4) { animation-delay: 0.21s; }
-.app--loaded .hero-text > :nth-child(5) { animation-delay: 0.28s; }
 
 @keyframes hero-rise {
   from { opacity: 0; transform: translateY(8px); }
@@ -277,9 +265,12 @@
 .hero-cue {
   position: absolute;
   left: 50%;
-  bottom: 26px;
-  margin-left: -8px;
-  color: #c7c7cc;
+  bottom: 22px;
+  width: 15px;
+  height: 25.5px;
+  margin-left: -7.5px;
+  overflow: visible;
+  color: #8e8e93;
   animation: hero-cue 2.6s ease-in-out infinite;
 }
 
@@ -321,16 +312,33 @@
 
 /* A line of my own between two projects */
 .projects-note {
-  max-width: 560px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   margin: 0 auto;
   padding: 0 22px;
-  font-size: clamp(14px, 1vw, 16px);
+  font-size: clamp(12px, 0.85vw, 13.5px);
   font-weight: 400;
-  line-height: 1.65;
-  color: #6e6e73;
+  line-height: 1.6;
+  color: #98989d;
   letter-spacing: 0.01em;
   text-align: center;
+}
+
+.projects-note span {
+  max-width: 380px;
   text-wrap: balance;
+}
+
+/* one drawn arrow each side, their heads a little below the last line, towards the two projects */
+.note-arrow {
+  flex: none;
+  width: 24px;
+  height: 48px;
+  overflow: visible;
+  color: #a1a1a6;
+  transform: translateY(12px);
 }
 
 /* A small switch, shared by "Highlight what I did" and "Blur the organ" */
