@@ -50,7 +50,8 @@ const projects = [
   {
     id: 'veridien',
     layout: 'film',
-    title: 'Veridien',
+    title: 'Machine Vision Surgical Simulator',
+    titleLong: true,
     org: { name: 'Veridien', href: 'https://veridienlabs.org', logo: url('logos/veridien.svg'), width: 12, height: 12 },
     description: '[[Veridien is a startup I co-founded with two other Cornell undergrads]], where we build ultra realistic surgical simulators that use machine learning to grade and advise surgeons. The organs are custom hydrogel that cuts, chars and bleeds, and they can be made from a patient\'s CT or MRI, so residents can practice on many anatomies before they reach the OR.\n\nThree cameras built into the dome track each tool position and create live labels of each operation. The film is our first full myomectomy on the trainer, recorded at 1:30 a.m. in our lab. Next up is a pilot with a residency program in spring 2027.\n\n[[As CTO, I did the full hardware design of the simulator with its three cameras, and did all the coding to set up the machine vision and train a working π0.5 based surgical model.]]',
     flip: true,    // [film and stills | text | cut-out]
@@ -99,12 +100,8 @@ const projects = [
       // Outline of the case in the photo (viewBox 0 0 1000 437.5). Hovering dims everything else.
       subject: 'M666.4,228.6 L660.7,222.9 L657.9,212.9 L653.6,210.0 L604.3,208.6 L602.1,211.4 L587.9,211.4 L587.1,210.0 L423.6,211.4 L420.0,215.7 L419.3,222.1 L412.9,227.9 L412.9,238.6 L419.3,240.0 L420.0,282.1 L418.6,289.3 L412.1,297.9 L412.1,304.3 L413.6,308.6 L418.6,313.6 L462.9,312.1 L468.6,317.9 L497.1,317.1 L500.0,314.3 L510.7,314.3 L513.6,312.1 L575.7,312.9 L580.7,310.0 L596.4,309.3 L602.9,313.6 L624.3,312.1 L659.3,313.6 L663.6,310.0 L662.1,298.6 L658.6,297.9 L659.3,280.0 L663.6,278.6 L665.7,274.3 L664.3,251.4 L665.0,240.7 L667.1,237.1 Z',
       // How it compares with the Helios before it; shown while hovering.
-      specsCaption: 'Compared with the previous Helios',
-      specs: [
-        { value: '7x', label: 'the compute' },
-        { value: '10+ lb', label: 'lighter' },
-        { value: 'Smaller', label: 'it fits in the old Helios case' },
-      ],
+      specsCaption: 'Next to the Helios before it:',
+      specs: ['7x the compute', 'more than 10 lb lighter', "small enough to fit in the old one's case"],
     },
   },
   {
@@ -156,6 +153,11 @@ const projects = [
       toggle(`${glove}Open.webp`, `${glove}Closed.webp`),
     ],
     flip: true,
+  },
+  {
+    id: 'high-school',
+    layout: 'note',
+    text: "These last two are from high school. They aren't as impressive as my later projects, but they have a special place in my heart for building the engineering foundation I'd use later.",
   },
   {
     id: 'modular-hydroponics',

@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react'
+
 // Descriptions carry two light marks: [text](https://...) is a link, and [[double brackets]]
 // wrap the sentences about my own part.
 const LINK = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g
@@ -20,11 +22,27 @@ function withMarks(text) {
   ))
 }
 
-export default function ProjectInfo({ title, subtitle, org, description, tags, links }) {
+export default function ProjectInfo({ title, titleLong, subtitle, org, description, tags, links }) {
+  // On a phone the text is cut to one screen (see mobile.css); `clipped` says whether anything
+  // is actually hidden, so "Read more" appears only when it has something to show.
+  const bodyRef = useRef(null)
+  const [open, setOpen] = useState(false)
+  const [clipped, setClipped] = useState(false)
+
+  useEffect(() => {
+    const body = bodyRef.current
+    if (!body) return
+    const measure = () => setClipped(body.scrollHeight > body.clientHeight + 2)
+    measure()
+    const watcher = new ResizeObserver(measure)
+    watcher.observe(body)
+    return () => watcher.disconnect()
+  }, [open])
+
   return (
-    <div className="project-info">
+    <div className={`project-info${open ? ' project-info--open' : ''}`}>
       <div className="project-title-row">
-        <h2 className="project-title">{title}</h2>
+        <h2 className={`project-title${titleLong ? ' project-title--long' : ''}`}>{title}</h2>
         {org ? (
           <a className="project-org" href={org.href} target="_blank" rel="noopener noreferrer">
             <img src={org.logo} alt={org.wordmark ? org.name : ''} width={org.width} height={org.height} />
@@ -32,9 +50,14 @@ export default function ProjectInfo({ title, subtitle, org, description, tags, l
           </a>
         ) : subtitle && <span className="project-subtitle">{subtitle}</span>}
       </div>
-      {description && description.split('\n\n').map((para, i) => (
-        <p key={i} className="project-desc">{withMarks(para)}</p>
-      ))}
+      <div className="project-body" ref={bodyRef} data-clipped={clipped && !open ? '' : undefined}>
+        {description && description.split('\n\n').map((para, i) => (
+          <p key={i} className="project-desc">{withMarks(para)}</p>
+        ))}
+      </div>
+      {(clipped || open) && (
+        <button type="button" className="project-more" onClick={() => setOpen(!open)}>{open ? 'Show less' : 'Read more'}</button>
+      )}
       {(tags?.length > 0 || links?.length > 0) && (
         <ul className="project-tags">
           {tags?.map((tag) => (

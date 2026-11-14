@@ -102,6 +102,14 @@
   line-height: 1.1;
 }
 
+/* a title that is a whole phrase, not a name */
+.project-title--long {
+  font-size: clamp(24px, 2.7vw, 36px);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
 .project-subtitle {
   font-size: clamp(13px, 0.88vw, 15px);
   font-weight: 400;
@@ -153,6 +161,15 @@
   letter-spacing: 0.01em;
   text-align: left;
   text-wrap: pretty;
+}
+
+/* The paragraphs. On a phone this box is cut to what fits the screen, with "Read more" under it */
+.project-body {
+  display: contents;
+}
+
+.project-more {
+  display: none;
 }
 
 .project-desc a {

@@ -4,7 +4,7 @@ import './PhotoProject.css'
 
 /* A project told by one wide photograph: the photo, large, with the text beside it. A small
    drawn arrow names the thing in the picture; hovering dims everything but that thing and
-   brings up its headline figures. */
+   brings up a few plain lines about it. */
 export default function PhotoProject({ project }) {
   const { id, title, photo } = project
   const { alt, credit, subject, specs, specsCaption, ...image } = photo
@@ -35,14 +35,9 @@ export default function PhotoProject({ project }) {
           {specs && (
             <div className="photo-specs">
               {specsCaption && <p>{specsCaption}</p>}
-              <dl>
-                {specs.map(({ value, label }) => (
-                  <div key={value}>
-                    <dt>{value}</dt>
-                    <dd>{label}</dd>
-                  </div>
-                ))}
-              </dl>
+              <ul>
+                {specs.map((spec) => <li key={spec}>{spec}</li>)}
+              </ul>
             </div>
           )}
         </Squircle>

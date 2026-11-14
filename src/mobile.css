@@ -1,0 +1,300 @@
+/* A phone held sideways (the page asks for that): every project is one screen. The three
+   columns stay, the type gets smaller, the text is cut to what fits with "Read more" under
+   it, and the smaller extras (the hexapod's earlier designs, the hover hint) are left out. */
+@media (orientation: landscape) and (max-height: 520px) {
+  html {
+    scroll-snap-type: y proximity;
+  }
+
+  .hero-spacer,
+  .projects > * {
+    scroll-snap-align: start;
+  }
+
+  /* First page */
+  .hero-content {
+    gap: 22px;
+  }
+
+  .hero-cutout {
+    height: min(270px, 64svh);
+  }
+
+  .hero-text {
+    max-width: 430px;
+  }
+
+  .hero-title {
+    font-size: 22px;
+  }
+
+  .hero-intro {
+    margin-top: 6px;
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+
+  .hero-tagline,
+  .hero-cue,
+  .speech-bubble {
+    display: none;
+  }
+
+  .hero-links-box {
+    margin-top: 10px;
+  }
+
+  .hero-links-title {
+    font-size: 11px;
+  }
+
+  .hero-sites {
+    gap: 6px;
+    margin-top: 5px;
+  }
+
+  .hero-site {
+    gap: 4px;
+  }
+
+  .hero-site-label {
+    font-size: 10px;
+  }
+
+  .hero-links {
+    margin-top: 3px;
+  }
+
+  .hero-links a {
+    font-size: 12px;
+  }
+
+  .mine-toggle {
+    top: 8px;
+    right: 8px;
+    padding: 5px 10px 5px 7px;
+    font-size: 10.5px;
+  }
+
+  /* Projects */
+  .projects {
+    gap: 0;
+    padding-bottom: 0;
+  }
+
+  .project-card,
+  .project-card--flip,
+  .film-project,
+  .film-project--flip {
+    grid-template-columns: 0.75fr 1.3fr 0.95fr;
+    min-height: 100svh;
+    padding: 10px 0;
+  }
+
+  .project-card--flip,
+  .film-project--flip {
+    direction: rtl;
+  }
+
+  .photo-project {
+    grid-template-columns: 1.55fr 1fr;
+    min-height: 100svh;
+    padding: 10px 0;
+  }
+
+  .photo-figure {
+    padding: 0 0 0 12px;
+  }
+
+  .photo-credit {
+    margin-top: 5px;
+    padding-left: 14px;
+    font-size: 9.5px;
+  }
+
+  .photo-specs p,
+  .photo-specs li {
+    font-size: 10.5px;
+    line-height: 1.4;
+  }
+
+  /* Text column: never taller than the screen; the paragraphs give way first */
+  .project-info,
+  .photo-project .project-info {
+    gap: 8px;
+    padding: 0 18px;
+    max-height: calc(100svh - 20px);
+  }
+
+  .project-info--open,
+  .photo-project .project-info--open {
+    max-height: none;
+    padding-top: 26px;
+    padding-bottom: 26px;
+  }
+
+  .project-title-row {
+    gap: 7px;
+    padding-right: 0;
+  }
+
+  .project-title {
+    font-size: 21px;
+  }
+
+  .project-title--long {
+    font-size: 17px;
+  }
+
+  .project-subtitle {
+    font-size: 10.5px;
+  }
+
+  .project-org {
+    padding: 2px 8px 2px 6px;
+    font-size: 10px;
+  }
+
+  .project-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 0 1 auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .project-body[data-clipped] {
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 26px), transparent);
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 26px), transparent);
+  }
+
+  .project-desc {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .project-more {
+    display: block;
+    flex: none;
+    align-self: flex-start;
+    margin-top: -2px;
+    padding: 0;
+    font: inherit;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: #1d1d1f;
+    letter-spacing: 0.01em;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-color: rgba(0, 0, 0, 0.25);
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .project-tags {
+    flex: none;
+    gap: 5px;
+    margin-top: 0;
+  }
+
+  .project-tag {
+    padding: 2px 9px;
+    font-size: 10px;
+  }
+
+  /* Cut-out column */
+  .project-images,
+  .project-card--image-bleed .project-images {
+    max-width: 88%;
+  }
+
+  .project-image {
+    max-height: calc(100svh - 28px);
+    object-fit: contain;
+  }
+
+  .project-card--image-large {
+    overflow: hidden;
+  }
+
+  .project-card--image-large .project-images {
+    width: 100%;
+    max-width: none;
+    margin: 0 auto;
+    transform: translateX(-20%);
+  }
+
+  .project-card--image-large .project-image {
+    width: 120%;
+    max-width: none;
+  }
+
+  .lineage {
+    display: none;
+  }
+
+  .film-cutout {
+    max-width: none;
+    margin: 0;
+  }
+
+  /* Gallery column */
+  .project-card .media-gallery,
+  .project-card .media-gallery:not([data-layout]) {
+    grid-column: auto;
+    max-width: none;
+    max-height: calc(100svh - 84px); /* clears the "Highlight what I did" switch in the corner */
+    margin: 0;
+    padding: 0 12px 0 0;
+    gap: 4px;
+  }
+
+  .project-card .media-gallery:not([data-layout]) {
+    aspect-ratio: 3 / 2;
+  }
+
+  .project-card--flip .media-gallery {
+    padding: 0 0 0 12px;
+  }
+
+  .gallery-item,
+  .gallery-item::after {
+    border-radius: 9px !important;
+  }
+
+  .film-media,
+  .film-project--flip .film-media {
+    grid-column: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0 12px 0 0;
+  }
+
+  .film-project--flip .film-media {
+    padding: 0 0 0 12px;
+  }
+
+  .film-media .media-gallery {
+    gap: 4px;
+  }
+
+  .film-controls {
+    padding: 5px 2px 6px 3px;
+  }
+
+  .film-soften {
+    font-size: 10px;
+  }
+
+  .film-soften-note {
+    display: none;
+  }
+
+  .projects-note {
+    max-width: 440px;
+    padding: 34px 22px;
+    font-size: 12px;
+  }
+}
